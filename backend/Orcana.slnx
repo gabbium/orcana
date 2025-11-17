@@ -1,10 +1,17 @@
 <Solution>
-  <Folder Name="/src/">
+  <Folder Name="/src/" />
+  <Folder Name="/src/Application/">
+    <Project Path="src/Orcana.Application/Orcana.Application.csproj" Id="07cb416b-d0dc-414c-bc30-8d62cc9d16b9" />
+  </Folder>
+  <Folder Name="/src/Domain/">
+    <Project Path="src/Orcana.Domain/Orcana.Domain.csproj" Id="85ac1d9f-2702-4b69-a097-77ca8f03844d" />
+  </Folder>
+  <Folder Name="/src/Infrastructure/">
+    <Project Path="src/Orcana.Infrastructure/Orcana.Infrastructure.csproj" Id="becc3d1d-850d-49d7-a5e2-4522db1aef03" />
+  </Folder>
+  <Folder Name="/src/Presentation/">
     <Project Path="src/Orcana.Api/Orcana.Api.csproj" Id="9003410a-246b-49f2-a59a-4f80d2bddd46" />
     <Project Path="src/Orcana.AppHost/Orcana.AppHost.csproj" Id="4abba1a5-5b76-4d03-a5f6-7f97b722bf41" />
-    <Project Path="src/Orcana.Application/Orcana.Application.csproj" Id="07cb416b-d0dc-414c-bc30-8d62cc9d16b9" />
-    <Project Path="src/Orcana.Domain/Orcana.Domain.csproj" Id="85ac1d9f-2702-4b69-a097-77ca8f03844d" />
-    <Project Path="src/Orcana.Infrastructure/Orcana.Infrastructure.csproj" Id="becc3d1d-850d-49d7-a5e2-4522db1aef03" />
     <Project Path="src/Orcana.ServiceDefaults/Orcana.ServiceDefaults.csproj" Id="51527dc3-8b86-42ea-bcda-23df9dca42fd" />
   </Folder>
   <Folder Name="/tests/" />

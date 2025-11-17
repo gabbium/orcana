@@ -18,6 +18,8 @@ public static class DependencyInjection
             options.UseNpgsql(builder.Configuration.GetConnectionString("OrcanaDb"));
         });
 
+        builder.EnrichNpgsqlDbContext<OrcanaContext>();
+
         builder.Services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<OrcanaContext>());
 
         builder.Services.AddScoped<OrcanaContextInitializer>();
