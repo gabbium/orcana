@@ -21,10 +21,10 @@ public sealed class AssistantApi : IMinimalApi
 
     public static async Task<IResult> SendMessage(
         AssistantMessageRequest request,
-        IAnaClient assistantClient,
+        IAnaClient anaClient,
         CancellationToken cancellationToken)
     {
-        var reply = await assistantClient.SendMessageAsync(
+        var reply = await anaClient.SendMessageAsync(
             request.Message,
             cancellationToken);
 
