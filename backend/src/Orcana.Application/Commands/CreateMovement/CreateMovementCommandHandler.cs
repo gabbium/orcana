@@ -15,7 +15,7 @@ internal sealed class CreateMovementCommandHandler(
     {
         var movement = new Movement(
             Guid.Empty,
-            command.Kind,
+            command.Direction,
             command.Amount,
             command.Description,
             command.OccurredAt);
@@ -26,7 +26,7 @@ internal sealed class CreateMovementCommandHandler(
         return new MovementDto()
         {
             Id = movement.Id,
-            Kind = movement.Kind,
+            Direction = movement.Direction,
             Amount = movement.Amount,
             Description = movement.Description,
             OccurredAt = movement.OccurredAt

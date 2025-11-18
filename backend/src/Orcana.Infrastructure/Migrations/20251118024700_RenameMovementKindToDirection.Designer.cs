@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Orcana.Infrastructure;
@@ -11,9 +12,11 @@ using Orcana.Infrastructure;
 namespace Orcana.Infrastructure.Migrations
 {
     [DbContext(typeof(OrcanaContext))]
-    partial class OrcanaContextModelSnapshot : ModelSnapshot
+    [Migration("20251118024700_RenameMovementKindToDirection")]
+    partial class RenameMovementKindToDirection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

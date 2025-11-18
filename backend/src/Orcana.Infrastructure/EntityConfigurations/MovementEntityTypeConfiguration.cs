@@ -6,7 +6,7 @@ internal sealed class MovementEntityTypeConfiguration : IEntityTypeConfiguration
 {
     public void Configure(EntityTypeBuilder<Movement> builder)
     {
-        builder.Property(m => m.Kind)
+        builder.Property(m => m.Direction)
             .HasConversion<string>()
             .HasMaxLength(30);
 

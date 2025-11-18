@@ -27,7 +27,7 @@ public sealed class MovementsApi : IMinimalApi
     {
         var command = new CreateMovementCommand()
         {
-            Kind = request.Kind,
+            Direction = request.Direction,
             Amount = request.Amount,
             Description = request.Description,
             OccurredAt = request.OccurredAt,

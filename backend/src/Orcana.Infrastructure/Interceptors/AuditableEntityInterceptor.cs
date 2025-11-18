@@ -2,7 +2,7 @@
 
 namespace Orcana.Infrastructure.Interceptors;
 
-internal sealed class AuditableEntityInterceptor(TimeProvider dateTime) : SaveChangesInterceptor
+internal sealed class AuditableEntityInterceptor : SaveChangesInterceptor
 {
     public override InterceptionResult<int> SavingChanges(
         DbContextEventData eventData,
@@ -34,7 +34,7 @@ internal sealed class AuditableEntityInterceptor(TimeProvider dateTime) : SaveCh
         {
             if (entry.State is EntityState.Added or EntityState.Modified || entry.HasChangedOwnedEntities())
             {
-                var utcNow = dateTime.GetUtcNow();
+                var utcNow = DateTimeOffset.UtcNow;
 
                 if (entry.State == EntityState.Added)
                 {
