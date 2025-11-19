@@ -1,4 +1,5 @@
 ﻿using Orcana.Api.Extensions.ApiVersioning;
+using Orcana.Api.Extensions.Cors;
 using Orcana.Api.Extensions.OpenApi;
 using Orcana.Api.Extensions.ProblemDetail;
 
@@ -11,6 +12,8 @@ public static class DependencyInjection
         builder.AddApiVersioningAndExplorer();
 
         builder.AddOpenApiWithTransformers(["v1"]);
+
+        builder.AddSpaCors();
 
         builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
 
@@ -50,6 +53,8 @@ public static class DependencyInjection
             .MapMinimalApis();
 
         app.MapOpenApiAndScalar();
+
+        app.UseSpaCors();
 
         return app;
     }
