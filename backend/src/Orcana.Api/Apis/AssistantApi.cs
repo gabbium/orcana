@@ -11,26 +11,26 @@ public sealed class AssistantApi : IMinimalApi
             .WithTags("Assistant")
             .HasApiVersion(1, 0);
 
-        v1.MapPost("messages", SendMessage)
-            .WithName(nameof(SendMessage))
-            .WithSummary("Send message")
+        v1.MapPost("chat", Chat)
+            .WithName(nameof(Chat))
+            .WithSummary("Chat")
             .WithDescription("Process a user message and return Ana’s reply.")
-            .Produces<AssistantMessageResponse>(StatusCodes.Status200OK)
+            .Produces<ChatAssistantResponse>(StatusCodes.Status200OK)
             .ProducesValidationProblem(StatusCodes.Status400BadRequest);
     }
 
-    public static async Task<IResult> SendMessage(
-        AssistantMessageRequest request,
+    public static async Task<IResult> Chat(
+        ChatAssistantRequest request,
         IAnaClient anaClient,
         CancellationToken cancellationToken)
     {
         var reply = await anaClient.SendMessageAsync(
-            request.Message,
+            request.Content,
             cancellationToken);
 
-        return Results.Ok(new AssistantMessageResponse()
+        return Results.Ok(new ChatAssistantResponse()
         {
-            Reply = reply
+            Content = reply
         });
     }
 }
