@@ -1,14 +1,19 @@
+import { fileURLToPath } from "node:url";
+
+import { includeIgnoreFile } from "@eslint/compat";
 import js from "@eslint/js";
 import query from "@tanstack/eslint-plugin-query";
 import router from "@tanstack/eslint-plugin-router";
-import { defineConfig, globalIgnores } from "eslint/config";
+import { defineConfig } from "eslint/config";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 import globals from "globals";
 
+const ignorePath = fileURLToPath(new URL(".prettierignore", import.meta.url));
+
 export default defineConfig([
-  globalIgnores(["dist"]),
+  includeIgnoreFile(ignorePath, "Imported .prettierignore patterns"),
   {
     files: ["**/*.{ts,tsx}"],
     extends: [

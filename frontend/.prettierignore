@@ -6,12 +6,10 @@
 
 # production
 /dist
-
-# misc
-.env
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+.output
+.nitro
+.netlify
 
 # tanstack
 .tanstack
+routeTree.gen.ts
