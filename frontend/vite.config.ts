@@ -1,3 +1,4 @@
+import tailwindcss from "@tailwindcss/vite";
 import { devtools } from "@tanstack/devtools-vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react-swc";
@@ -14,6 +15,7 @@ export default defineConfig({
       generatedRouteTree: "./src/app/routeTree.gen.ts",
     }),
     react(),
+    tailwindcss(),
     tsConfigPaths({
       projects: ["./tsconfig.app.json"],
     }),
