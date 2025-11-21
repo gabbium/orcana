@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Movements } from "@/features/movements";
 
 export const Route = createFileRoute("/")({
-  component: () => <main className="text-xl font-bold">Hello world!</main>,
+  component: Movements,
 });
