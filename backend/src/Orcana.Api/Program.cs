@@ -1,15 +1,16 @@
 using Orcana.Api;
 using Orcana.Application;
 using Orcana.Infrastructure;
+using Orcana.Infrastructure.Data;
 using Orcana.ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-builder.AddApplicationServices();
-builder.AddInfrastructureServices();
-builder.AddApiServices();
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddApiServices();
 
 var app = builder.Build();
 

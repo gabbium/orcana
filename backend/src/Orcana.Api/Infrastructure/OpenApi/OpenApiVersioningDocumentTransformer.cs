@@ -1,6 +1,6 @@
-﻿namespace Orcana.Api.Extensions.OpenApi.Transformers;
+﻿namespace Orcana.Api.Infrastructure.OpenApi;
 
-internal sealed class OpenApiVersioningDocumentTransformer(
+public class OpenApiVersioningDocumentTransformer(
     IApiVersionDescriptionProvider apiVersionDescriptionProvider)
     : IOpenApiDocumentTransformer
 {

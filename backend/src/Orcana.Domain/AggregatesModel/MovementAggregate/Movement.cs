@@ -2,7 +2,7 @@
 
 namespace Orcana.Domain.AggregatesModel.MovementAggregate;
 
-public sealed class Movement : AuditableEntity, IAggregateRoot
+public class Movement : Entity, IAggregateRoot
 {
     public Guid UserId { get; private set; }
     public MovementDirection Direction { get; private set; }
@@ -10,7 +10,7 @@ public sealed class Movement : AuditableEntity, IAggregateRoot
     public string? Description { get; private set; }
     public DateTimeOffset OccurredAt { get; private set; }
 
-    private Movement()
+    protected Movement()
     {
     }
 

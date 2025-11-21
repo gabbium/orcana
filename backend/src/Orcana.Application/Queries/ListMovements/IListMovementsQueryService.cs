@@ -6,5 +6,5 @@ public interface IListMovementsQueryService
 {
     Task<PaginatedList<MovementDto>> ListAsync(
         ListMovementsQuery query,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

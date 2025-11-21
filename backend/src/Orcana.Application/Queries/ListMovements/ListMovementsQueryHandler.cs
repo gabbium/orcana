@@ -2,13 +2,13 @@
 
 namespace Orcana.Application.Queries.ListMovements;
 
-internal sealed class ListMovementsQueryHandler(
+public class ListMovementsQueryHandler(
     IListMovementsQueryService listMovementsQueryService)
     : IQueryHandler<ListMovementsQuery, Result<PaginatedList<MovementDto>>>
 {
-    public async Task<Result<PaginatedList<MovementDto>>> HandleAsync(
+    public async ValueTask<Result<PaginatedList<MovementDto>>> Handle(
         ListMovementsQuery query,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         return await listMovementsQueryService.ListAsync(query, cancellationToken);
     }

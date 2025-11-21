@@ -1,9 +1,9 @@
 ﻿using Orcana.Application.Models;
 using Orcana.Application.Queries.ListMovements;
 
-namespace Orcana.Infrastructure.Queries;
+namespace Orcana.Infrastructure.Data.Queries;
 
-internal sealed class ListMovementsQueryService(OrcanaContext context) : IListMovementsQueryService
+public class ListMovementsQueryService(OrcanaContext context) : IListMovementsQueryService
 {
     public async Task<PaginatedList<MovementDto>> ListAsync(
         ListMovementsQuery query,

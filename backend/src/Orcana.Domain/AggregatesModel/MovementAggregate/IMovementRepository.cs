@@ -4,5 +4,5 @@ namespace Orcana.Domain.AggregatesModel.MovementAggregate;
 
 public interface IMovementRepository : IRepository<Movement>
 {
-    Task AddAsync(Movement movement, CancellationToken cancellationToken = default);
+    Task AddAsync(Movement movement, CancellationToken cancellationToken);
 }

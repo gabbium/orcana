@@ -1,8 +1,7 @@
-﻿using System.Text.RegularExpressions;
+﻿namespace Orcana.Application.Queries.ListMovements;
 
-namespace Orcana.Application.Queries.ListMovements;
-
-internal sealed class ListMovementsQueryValidator : AbstractValidator<ListMovementsQuery>
+public class ListMovementsQueryValidator
+    : AbstractValidator<ListMovementsQuery>
 {
     public ListMovementsQueryValidator()
     {

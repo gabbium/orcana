@@ -2,7 +2,7 @@
 
 namespace Orcana.Application.Models;
 
-public sealed record MovementDto
+public record MovementDto
 {
     [Description("Unique identifier of the movement.")]
     public Guid Id { get; init; }

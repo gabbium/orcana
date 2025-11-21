@@ -1,17 +1,15 @@
 ﻿using Orcana.Application.Models;
 using Orcana.Domain.AggregatesModel.MovementAggregate;
-using Orcana.Domain.SeedWork;
 
 namespace Orcana.Application.Commands.CreateMovement;
 
-internal sealed class CreateMovementCommandHandler(
-    IMovementRepository movementRepository,
-    IUnitOfWork unitOfWork)
+public class CreateMovementCommandHandler(
+    IMovementRepository movementRepository)
     : ICommandHandler<CreateMovementCommand, Result<MovementDto>>
 {
-    public async Task<Result<MovementDto>> HandleAsync(
+    public async ValueTask<Result<MovementDto>> Handle(
         CreateMovementCommand command,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         var movement = new Movement(
             Guid.Empty,
@@ -21,7 +19,7 @@ internal sealed class CreateMovementCommandHandler(
             command.OccurredAt);
 
         await movementRepository.AddAsync(movement, cancellationToken);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await movementRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return new MovementDto()
         {

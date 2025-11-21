@@ -1,21 +1,22 @@
 ﻿namespace Orcana.Application.Behaviors;
 
-internal sealed class ValidationBehavior<TRequest, TResponse>(
-    IEnumerable<IValidator<TRequest>> validators)
-    : IMediatorBehavior<TRequest, TResponse>
+public class ValidationBehavior<TMessage, TResponse>(
+    IEnumerable<IValidator<TMessage>> validators)
+    : IPipelineBehavior<TMessage, TResponse>
+    where TMessage : IMessage
 {
-    private readonly IValidator<TRequest>[] _validators = [.. validators];
+    private readonly IValidator<TMessage>[] _validators = [.. validators];
 
-    public async Task<TResponse> HandleAsync(
-        TRequest request,
-        Func<Task<TResponse>> next,
-        CancellationToken cancellationToken = default)
+    public async ValueTask<TResponse> Handle(
+        TMessage message,
+        MessageHandlerDelegate<TMessage, TResponse> next,
+        CancellationToken cancellationToken)
     {
         if (_validators.Length != 0)
         {
             var validationResults = await Task.WhenAll(
                 _validators.Select(v =>
-                    v.ValidateAsync(new ValidationContext<TRequest>(request), cancellationToken)));
+                    v.ValidateAsync(new ValidationContext<TMessage>(message), cancellationToken)));
 
             var failures = validationResults
                 .Where(r => r.Errors.Count != 0)
@@ -23,9 +24,11 @@ internal sealed class ValidationBehavior<TRequest, TResponse>(
                 .ToList();
 
             if (failures.Count != 0)
+            {
                 throw new ValidationException(failures);
+            }
         }
 
-        return await next();
+        return await next(message, cancellationToken);
     }
 }

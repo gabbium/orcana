@@ -3,7 +3,7 @@ using Orcana.Domain.AggregatesModel.MovementAggregate;
 
 namespace Orcana.Application.Queries.ListMovements;
 
-public sealed record ListMovementsQuery : IQuery<Result<PaginatedList<MovementDto>>>
+public record ListMovementsQuery : IQuery<Result<PaginatedList<MovementDto>>>
 {
     public int PageNumber { get; init; }
     public int PageSize { get; init; }

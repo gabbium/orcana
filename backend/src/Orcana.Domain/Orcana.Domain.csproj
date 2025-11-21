@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="Gabbium.Mediator.Primitives" />
+    <PackageReference Include="Ardalis.GuardClauses" />
+    <PackageReference Include="Mediator.Abstractions" />
   </ItemGroup>
-
+  
 </Project>

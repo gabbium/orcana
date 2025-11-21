@@ -32,4 +32,3 @@ public record PaginatedList<T>
         TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
     }
 }
-

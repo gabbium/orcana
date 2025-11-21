@@ -2,7 +2,7 @@
 
 namespace Orcana.Api.Models;
 
-public sealed class ListMovementsRequest
+public record ListMovementsRequest
 {
     [Required]
     [Range(1, int.MaxValue)]

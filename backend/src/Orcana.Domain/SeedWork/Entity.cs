@@ -1,6 +1,6 @@
 ﻿namespace Orcana.Domain.SeedWork;
 
-public abstract class Entity : HasDomainEventsBase
+public abstract class Entity
 {
     public Guid Id { get; protected set; }
 }

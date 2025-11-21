@@ -1,6 +1,6 @@
-﻿namespace Orcana.Api.Extensions.ProblemDetail;
+﻿namespace Orcana.Api.Infrastructure;
 
-public sealed class DefaultExceptionHandler : IExceptionHandler
+public class DefaultExceptionHandler : IExceptionHandler
 {
     private readonly ILogger<DefaultExceptionHandler> _logger;
     private readonly Dictionary<Type, Func<HttpContext, Exception, Task>> _exceptionHandlers;
@@ -21,7 +21,9 @@ public sealed class DefaultExceptionHandler : IExceptionHandler
     {
         var exceptionType = exception.GetType();
 
-        if (_exceptionHandlers.TryGetValue(exceptionType, out Func<HttpContext, Exception, Task>? value))
+        if (_exceptionHandlers.TryGetValue(
+            exceptionType,
+            out Func<HttpContext, Exception, Task>? value))
         {
             await value.Invoke(httpContext, exception);
             return true;
@@ -32,9 +34,8 @@ public sealed class DefaultExceptionHandler : IExceptionHandler
         var problem = Results.Problem(
             title: "Server failure",
             detail: "An unexpected error occurred",
-            type: "https://www.rfc-editor.org/rfc/rfc9110#name-500-internal-server-error",
-            statusCode: StatusCodes.Status500InternalServerError
-        );
+            statusCode: StatusCodes.Status500InternalServerError,
+            type: "https://www.rfc-editor.org/rfc/rfc9110#name-500-internal-server-error");
 
         await problem.ExecuteAsync(httpContext);
 
@@ -47,18 +48,18 @@ public sealed class DefaultExceptionHandler : IExceptionHandler
     {
         var exception = (FluentValidation.ValidationException)ex;
 
-        var errors = exception.Errors.GroupBy(e => e.PropertyName)
+        var errors = exception.Errors
+            .GroupBy(e => e.PropertyName)
             .ToDictionary(
                 group => group.Key,
-                group => group.Select(e => e.ErrorMessage).ToArray()
-            );
+                group => group.Select(e => e.ErrorMessage).ToArray());
 
         var problem = Results.ValidationProblem(
             errors: errors,
+            statusCode: StatusCodes.Status400BadRequest,
             title: "Bad Request",
             type: "https://www.rfc-editor.org/rfc/rfc9110#name-400-bad-request",
-            statusCode: StatusCodes.Status400BadRequest
-        );
+            detail: "One or more validation errors occurred.");
 
         await problem.ExecuteAsync(httpContext);
     }

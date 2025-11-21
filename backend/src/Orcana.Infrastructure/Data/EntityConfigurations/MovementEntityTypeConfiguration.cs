@@ -1,8 +1,8 @@
 ﻿using Orcana.Domain.AggregatesModel.MovementAggregate;
 
-namespace Orcana.Infrastructure.EntityConfigurations;
+namespace Orcana.Infrastructure.Data.EntityConfigurations;
 
-internal sealed class MovementEntityTypeConfiguration : IEntityTypeConfiguration<Movement>
+public class MovementEntityTypeConfiguration : IEntityTypeConfiguration<Movement>
 {
     public void Configure(EntityTypeBuilder<Movement> builder)
     {

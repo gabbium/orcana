@@ -2,7 +2,7 @@
 
 namespace Orcana.Api.Models;
 
-public sealed record CreateMovementRequest
+public record CreateMovementRequest
 {
     [Required]
     [Description("Direction of the movement.")]

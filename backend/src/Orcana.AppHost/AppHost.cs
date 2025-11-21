@@ -1,9 +1,7 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
 var postgres = builder.AddPostgres("postgres")
-    .WithDataVolume()
-    .WithHostPort(5432)
-    .WithLifetime(ContainerLifetime.Persistent);
+    .WithHostPort(54320);
 
 var orcanaDb = postgres.AddDatabase("orcanadb");
 

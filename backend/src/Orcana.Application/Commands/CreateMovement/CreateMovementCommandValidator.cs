@@ -1,6 +1,7 @@
 ﻿namespace Orcana.Application.Commands.CreateMovement;
 
-internal sealed class CreateMovementCommandValidator : AbstractValidator<CreateMovementCommand>
+public class CreateMovementCommandValidator
+    : AbstractValidator<CreateMovementCommand>
 {
     public CreateMovementCommandValidator()
     {

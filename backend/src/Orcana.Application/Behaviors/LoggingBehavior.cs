@@ -1,30 +1,37 @@
 ﻿namespace Orcana.Application.Behaviors;
 
-internal sealed class LoggingBehavior<TRequest, TResponse>(
-    ILogger<LoggingBehavior<TRequest, TResponse>> logger)
-    : IMediatorBehavior<TRequest, TResponse>
+public class LoggingBehavior<TMessage, TResponse>(
+    ILogger<LoggingBehavior<TMessage, TResponse>> logger)
+    : IPipelineBehavior<TMessage, TResponse>
+    where TMessage : IMessage
 {
-    public async Task<TResponse> HandleAsync(
-        TRequest request,
-        Func<Task<TResponse>> next,
-        CancellationToken cancellationToken = default)
+    public async ValueTask<TResponse> Handle(
+        TMessage message,
+        MessageHandlerDelegate<TMessage, TResponse> next,
+        CancellationToken cancellationToken)
     {
-        var requestName = typeof(TRequest).Name;
-
-        logger.LogInformation("Handling {RequestName} {@Request}",
-            requestName,
-            request);
+        if (logger.IsEnabled(LogLevel.Information))
+        {
+            logger.LogInformation(
+                "Handling {MessageName} with {@Message}",
+                typeof(TMessage).Name,
+                message);
+        }
 
         var sw = Stopwatch.StartNew();
 
-        var response = await next();
-
-        logger.LogInformation("Handled {RequestName} with {@Response} in {Ms} ms",
-            requestName,
-            response,
-            sw.ElapsedMilliseconds);
+        var response = await next(message, cancellationToken);
 
         sw.Stop();
+
+        if (logger.IsEnabled(LogLevel.Information))
+        {
+            logger.LogInformation(
+              "Handled {MessageName} with {@Response} in {ElapsedMilliseconds} ms",
+              typeof(TMessage).Name,
+              response,
+              sw.ElapsedMilliseconds);
+        }
 
         return response;
     }

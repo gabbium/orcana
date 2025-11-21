@@ -1,10 +1,10 @@
 ﻿using Orcana.Domain.AggregatesModel.MovementAggregate;
 using Orcana.Domain.SeedWork;
-using Orcana.Infrastructure.EntityConfigurations;
+using Orcana.Infrastructure.Data.EntityConfigurations;
 
-namespace Orcana.Infrastructure;
+namespace Orcana.Infrastructure.Data;
 
-public sealed class OrcanaContext(DbContextOptions options) : DbContext(options), IUnitOfWork
+public class OrcanaContext(DbContextOptions options) : DbContext(options), IUnitOfWork
 {
     public DbSet<Movement> Movements { get; set; }
 

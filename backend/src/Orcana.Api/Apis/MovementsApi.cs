@@ -1,31 +1,34 @@
-﻿using Orcana.Api.Models;
+﻿using Orcana.Api.Infrastructure;
+using Orcana.Api.Models;
 using Orcana.Application.Commands.CreateMovement;
 using Orcana.Application.Models;
 using Orcana.Application.Queries.ListMovements;
 
 namespace Orcana.Api.Apis;
 
-public sealed class MovementsApi : IMinimalApi
+public static class MovementsApi
 {
-    public void Map(IEndpointRouteBuilder app)
+    public static RouteGroupBuilder MapMovementsApiV1(this IEndpointRouteBuilder app)
     {
-        var v1 = app.MapGroup("movements")
+        var api = app.MapGroup("movements")
             .WithTags("Movements")
             .HasApiVersion(1, 0);
 
-        v1.MapGet(string.Empty, ListMovements)
+        api.MapGet(string.Empty, ListMovements)
             .WithName(nameof(ListMovements))
             .WithSummary("List movements")
             .WithDescription("Get all movements filtered by date range with optional ordering.")
             .Produces<PaginatedList<MovementDto>>(StatusCodes.Status200OK)
             .ProducesValidationProblem(StatusCodes.Status400BadRequest);
 
-        v1.MapPost(string.Empty, CreateMovement)
+        api.MapPost(string.Empty, CreateMovement)
             .WithName(nameof(CreateMovement))
             .WithSummary("Create movement")
             .WithDescription("Record a new expense or income.")
             .Produces<MovementDto>(StatusCodes.Status200OK)
             .ProducesValidationProblem(StatusCodes.Status400BadRequest);
+
+        return api;
     }
 
     public static async Task<IResult> ListMovements(
@@ -43,10 +46,9 @@ public sealed class MovementsApi : IMinimalApi
             MaxOccurredAt = request.MaxOccurredAt,
         };
 
-        var result = await mediator.SendAsync(query, cancellationToken);
+        var result = await mediator.Send(query, cancellationToken);
 
-        return result.ToMinimalApiResult(
-            () => Results.Ok(result.Value));
+        return result.ToMinimalApiResult();
     }
 
     public static async Task<IResult> CreateMovement(
@@ -62,9 +64,8 @@ public sealed class MovementsApi : IMinimalApi
             OccurredAt = request.OccurredAt,
         };
 
-        var result = await mediator.SendAsync(command, cancellationToken);
+        var result = await mediator.Send(command, cancellationToken);
 
-        return result.ToMinimalApiResult(
-            () => Results.Ok(result.Value));
+        return result.ToMinimalApiResult();
     }
 }
