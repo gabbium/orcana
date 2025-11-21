@@ -1,9 +1,8 @@
-﻿using Orcana.Application.Assistant;
-using Orcana.Application.Assistant.Tools.CreateMovement;
+﻿using Orcana.Application.Queries.ListMovements;
 using Orcana.Domain.AggregatesModel.MovementAggregate;
 using Orcana.Domain.SeedWork;
 using Orcana.Infrastructure.Interceptors;
-using Orcana.Infrastructure.LLM;
+using Orcana.Infrastructure.Queries;
 using Orcana.Infrastructure.Repositories;
 using Orcana.Infrastructure.Seeders;
 
@@ -29,11 +28,8 @@ public static class DependencyInjection
 
         builder.Services.AddScoped<IDataSeeder, MovementDataSeeder>();
 
+        builder.Services.AddScoped<IListMovementsQueryService, ListMovementsQueryService>();
         builder.Services.AddScoped<IMovementRepository, MovementRepository>();
-
-        builder.Services.AddScoped<CreateMovementTool>();
-
-        builder.Services.AddScoped<IAnaClient, AnaClient>();
 
         return builder;
     }

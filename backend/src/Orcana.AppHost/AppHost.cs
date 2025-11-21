@@ -7,13 +7,8 @@ var postgres = builder.AddPostgres("postgres")
 
 var orcanaDb = postgres.AddDatabase("orcanadb");
 
-var openAiApiKey = builder.AddParameter("OpenAiApiKey", true);
-var openAiModel = builder.AddParameter("OpenAiModel");
-
 builder.AddProject<Projects.Orcana_Api>("orcana-api")
-    .WithReference(orcanaDb).WaitFor(orcanaDb)
-    .WithEnvironment("OpenAI__ApiKey", openAiApiKey)
-    .WithEnvironment("OpenAI__Model", openAiModel);
+    .WithReference(orcanaDb).WaitFor(orcanaDb);
 
 var app = builder.Build();
 

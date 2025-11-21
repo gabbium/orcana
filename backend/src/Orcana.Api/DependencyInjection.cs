@@ -26,19 +26,6 @@ public static class DependencyInjection
 
         builder.Services.AddHttpContextAccessor();
 
-        builder.Services.AddChatClient(services =>
-        {
-            var apiKey = builder.Configuration["OpenAI:ApiKey"];
-            var model = builder.Configuration["OpenAI:Model"];
-
-            var openAiClient = new ChatClient(model, apiKey)
-                .AsIChatClient();
-
-            return new ChatClientBuilder(openAiClient)
-                .UseFunctionInvocation()
-                .Build();
-        });
-
         builder.Services.AddMinimalApisFromAssembly(Assembly.GetExecutingAssembly());
 
         return builder;
