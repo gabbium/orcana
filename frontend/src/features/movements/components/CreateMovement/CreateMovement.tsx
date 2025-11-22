@@ -1,6 +1,7 @@
 import type { FC } from "react";
-import { useCreateMovement } from "../api/create-movement";
+import { useCreateMovement } from "../../api/create-movement";
 import { MovementDirection } from "@/types/api";
+import { Spinner } from "@/components/ui/Spinner";
 
 export const CreateMovement: FC = () => {
   const createMovementMutation = useCreateMovement({
@@ -23,7 +24,7 @@ export const CreateMovement: FC = () => {
       }
       disabled={createMovementMutation.isPending}
     >
-      Create Movement
+      {createMovementMutation.isPending ? <Spinner /> : "Create Movement"}
     </button>
   );
 };

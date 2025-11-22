@@ -1,15 +1,15 @@
 import type { FC } from "react";
-import { MovementsList } from "./movements-list";
-import { CreateMovement } from "./create-movement";
+import { ListMovements } from "../ListMovements";
+import { CreateMovement } from "../CreateMovement";
 
 export const Movements: FC = () => {
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-xl font-bold">Comments:</h3>
+        <h3 className="text-xl font-bold">Movements</h3>
         <CreateMovement />
       </div>
-      <MovementsList />
+      <ListMovements />
     </div>
   );
 };

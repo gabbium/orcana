@@ -1,15 +1,16 @@
 import { type FC } from "react";
-import { useInfiniteMovements } from "../api/get-movements";
+import { useInfiniteMovements } from "../../api/get-movements";
 import { ArchiveXIcon } from "lucide-react";
 import { formatDate } from "@/utils/format";
+import { Spinner } from "@/components/ui/Spinner";
 
-export const MovementsList: FC = () => {
+export const ListMovements: FC = () => {
   const movementsQuery = useInfiniteMovements();
 
   if (movementsQuery.isLoading) {
     return (
       <div className="flex h-48 w-full items-center justify-center">
-        <span>Loading movements...</span>
+        <Spinner />
       </div>
     );
   }
@@ -20,11 +21,11 @@ export const MovementsList: FC = () => {
     return (
       <div
         role="list"
-        aria-label="comments"
+        aria-label="movements"
         className="flex h-40 flex-col items-center justify-center bg-white text-gray-500"
       >
         <ArchiveXIcon className="size-10" />
-        <h4>No Comments Found</h4>
+        <h4>No Movements Found</h4>
       </div>
     );
 
@@ -51,7 +52,7 @@ export const MovementsList: FC = () => {
       {movementsQuery.hasNextPage && (
         <div className="flex items-center justify-center py-4">
           <button onClick={() => movementsQuery.fetchNextPage()}>
-            {movementsQuery.isFetchingNextPage ? "Loading..." : "Load More Movements"}
+            {movementsQuery.isFetchingNextPage ? <Spinner /> : "Load More Movements"}
           </button>
         </div>
       )}

@@ -1,1 +1,1 @@
-export { Movements } from "./components/movements";
+export { Movements } from "./components/Movements";
