@@ -1,6 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Movements } from "@/features/movements";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
-  component: Movements,
+  component: () => (
+    <>
+      <div className="p-2 flex gap-2">
+        <Link to="/app/movements" className="[&.active]:font-bold">
+          Movements
+        </Link>
+      </div>
+    </>
+  ),
 });
