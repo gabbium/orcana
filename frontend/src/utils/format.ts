@@ -1,11 +1,11 @@
-import { default as dayjs } from "dayjs";
+import { format, parseISO } from "date-fns";
 
 export const formatDate = (
   value: string | Date | null | undefined,
-  format: string = "DD/MM/YYYY HH:mm",
+  fmt: string = "dd/MM/yyyy HH:mm",
 ): string => {
-  if (!value) {
-    return "";
-  }
-  return dayjs(value).format(format);
+  if (!value) return "";
+
+  const date = typeof value === "string" ? parseISO(value) : value;
+  return format(date, fmt);
 };
