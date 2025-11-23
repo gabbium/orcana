@@ -1,8 +1,6 @@
-import { type ComponentProps } from "react";
+import { type DialogProps } from "@/components/ui/Dialog";
 
-import { Dialog } from "@/components/ui/Dialog";
-
-export type CommandDialogProps = ComponentProps<typeof Dialog> & {
+export type CommandDialogProps = DialogProps & {
   title?: string;
   description?: string;
   className?: string;

@@ -24,15 +24,13 @@ export const DefaultCatchBoundary = () => {
       </div>
       <div className="flex flex-wrap justify-center gap-3">
         {isRoot ? (
-          <Button asChild aria-label="Go to home page">
+          <Button asChild>
             <Link to="/">Go to Home</Link>
           </Button>
         ) : (
-          <Button aria-label="Go back to previous page" onClick={() => window.history.back()}>
-            Go Back
-          </Button>
+          <Button onClick={() => window.history.back()}>Go Back</Button>
         )}
-        <Button variant="secondary" aria-label="Retry action" onClick={() => router.invalidate()}>
+        <Button variant="secondary" onClick={() => router.invalidate()}>
           Try Again
         </Button>
       </div>

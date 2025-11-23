@@ -1,5 +1,3 @@
-import { type ComponentProps } from "react";
+import { type LabelProps } from "@/components/ui/Label";
 
-import { Label } from "@/components/ui/Label";
-
-export type FieldLabelProps = ComponentProps<typeof Label>;
+export type FieldLabelProps = LabelProps;

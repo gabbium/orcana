@@ -16,7 +16,7 @@ export const NotFoundBoundary = () => {
         </p>
       </div>
       <div className="flex flex-wrap justify-center gap-3">
-        <Button asChild aria-label="Go to home page">
+        <Button asChild>
           <Link to="/">Go to Home</Link>
         </Button>
       </div>

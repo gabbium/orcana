@@ -74,9 +74,7 @@ export const ResponsiveDialog = ({
         <div className="px-4">{children}</div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
-            <Button variant="outline" aria-label="Cancel">
-              Cancel
-            </Button>
+            <Button variant="outline">Cancel</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
