@@ -1,7 +1,9 @@
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import { FormDevtoolsPanel } from "@tanstack/react-form-devtools";
 import type { QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
-
-import { Devtools } from "@/components/devtools";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
 type RouteContext = {
   queryClient: QueryClient;
@@ -10,7 +12,24 @@ type RouteContext = {
 const RootLayout = () => {
   return (
     <>
-      {import.meta.env.DEV && <Devtools />}
+      {import.meta.env.DEV && (
+        <TanStackDevtools
+          plugins={[
+            {
+              name: "TanStack Query",
+              render: <ReactQueryDevtoolsPanel />,
+            },
+            {
+              name: "TanStack Router",
+              render: <TanStackRouterDevtoolsPanel />,
+            },
+            {
+              name: "TanStack Form",
+              render: <FormDevtoolsPanel />,
+            },
+          ]}
+        />
+      )}
       <Outlet />
     </>
   );
