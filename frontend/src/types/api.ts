@@ -9,8 +9,8 @@ export type PaginatedList<T> = {
 };
 
 export const MovementDirection = {
-  Expense: "expense",
-  Income: "income",
+  EXPENSE: "expense",
+  INCOME: "income",
 } as const;
 
 export type MovementDirection = (typeof MovementDirection)[keyof typeof MovementDirection];

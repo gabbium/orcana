@@ -1,138 +1,18 @@
-import { type FC, type ComponentProps } from "react";
 import { Command as CommandPrimitive } from "cmdk";
-import { SearchIcon } from "lucide-react";
 
 import { cn } from "@/utils/cn";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/Dialog";
 
-export const Command: FC<ComponentProps<typeof CommandPrimitive>> = ({ className, ...props }) => (
-  <CommandPrimitive
-    data-slot="command"
-    className={cn(
-      "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md",
-      className,
-    )}
-    {...props}
-  />
-);
+import type { CommandProps } from "./Command.types";
 
-export const CommandDialog: FC<
-  ComponentProps<typeof Dialog> & {
-    title?: string;
-    description?: string;
-    className?: string;
-    showCloseButton?: boolean;
-  }
-> = ({
-  title = "Command Palette",
-  description = "Search for a command to run...",
-  children,
-  className,
-  showCloseButton = true,
-  ...props
-}) => (
-  <Dialog {...props}>
-    <DialogHeader className="sr-only">
-      <DialogTitle>{title}</DialogTitle>
-      <DialogDescription>{description}</DialogDescription>
-    </DialogHeader>
-
-    <DialogContent
-      className={cn("overflow-hidden p-0", className)}
-      showCloseButton={showCloseButton}
-    >
-      <Command className="**:[[cmdk-group-heading]]:text-muted-foreground **:data-[slot=command-input-wrapper]:h-12 **:[[cmdk-group-heading]]:px-2 **:[[cmdk-group-heading]]:font-medium **:[[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 **:[[cmdk-input]]:h-12 **:[[cmdk-item]]:px-2 **:[[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
-        {children}
-      </Command>
-    </DialogContent>
-  </Dialog>
-);
-
-export const CommandInput: FC<ComponentProps<typeof CommandPrimitive.Input>> = ({
-  className,
-  ...props
-}) => (
-  <div data-slot="command-input-wrapper" className="flex h-9 items-center gap-2 border-b px-3">
-    <SearchIcon className="size-4 shrink-0 opacity-50" />
-    <CommandPrimitive.Input
-      data-slot="command-input"
+export const Command = ({ className, ...props }: CommandProps) => {
+  return (
+    <CommandPrimitive
+      data-slot="command"
       className={cn(
-        "placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50",
+        "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md",
         className,
       )}
       {...props}
     />
-  </div>
-);
-
-export const CommandList: FC<ComponentProps<typeof CommandPrimitive.List>> = ({
-  className,
-  ...props
-}) => (
-  <CommandPrimitive.List
-    data-slot="command-list"
-    className={cn("max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto", className)}
-    {...props}
-  />
-);
-
-export const CommandEmpty: FC<ComponentProps<typeof CommandPrimitive.Empty>> = (props) => (
-  <CommandPrimitive.Empty
-    data-slot="command-empty"
-    className="py-6 text-center text-sm"
-    {...props}
-  />
-);
-
-export const CommandGroup: FC<ComponentProps<typeof CommandPrimitive.Group>> = ({
-  className,
-  ...props
-}) => (
-  <CommandPrimitive.Group
-    data-slot="command-group"
-    className={cn(
-      "text-foreground **:[[cmdk-group-heading]]:text-muted-foreground overflow-hidden p-1 **:[[cmdk-group-heading]]:px-2 **:[[cmdk-group-heading]]:py-1.5 **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:font-medium",
-      className,
-    )}
-    {...props}
-  />
-);
-
-export const CommandSeparator: FC<ComponentProps<typeof CommandPrimitive.Separator>> = ({
-  className,
-  ...props
-}) => (
-  <CommandPrimitive.Separator
-    data-slot="command-separator"
-    className={cn("bg-border -mx-1 h-px", className)}
-    {...props}
-  />
-);
-
-export const CommandItem: FC<ComponentProps<typeof CommandPrimitive.Item>> = ({
-  className,
-  ...props
-}) => (
-  <CommandPrimitive.Item
-    data-slot="command-item"
-    className={cn(
-      "data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-      className,
-    )}
-    {...props}
-  />
-);
-
-export const CommandShortcut: FC<ComponentProps<"span">> = ({ className, ...props }) => (
-  <span
-    data-slot="command-shortcut"
-    className={cn("text-muted-foreground ml-auto text-xs tracking-widest", className)}
-    {...props}
-  />
-);
+  );
+};
