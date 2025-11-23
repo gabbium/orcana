@@ -14,14 +14,12 @@ export const DataTableToolbarFilter = <TData,>({ column }: DataTableToolbarFilte
   switch (filter.type) {
     case "text":
       return (
-        // <Input
-        //   placeholder={filter.title ?? `Search by ${column.id}...`}
-        //   value={column.getFilterValue()?.toString() ?? ""}
-        //   onChange={(e) => column.setFilterValue(e.target.value)}
-        //   className="h-8 w-[150px] lg:w-[250px]"
-        // />
-        <InputGroup className="w-[200px] p-0">
-          <InputGroupInput placeholder={filter.title ?? `Search by ${column.id}...`} />
+        <InputGroup className="max-w-fit h-8">
+          <InputGroupInput
+            placeholder={filter.title ?? `Search by ${column.id}...`}
+            value={column.getFilterValue()?.toString() ?? ""}
+            onChange={(e) => column.setFilterValue(e.target.value)}
+          />
           <InputGroupAddon>
             <SearchIcon />
           </InputGroupAddon>

@@ -1,2 +1,2 @@
 export { DataTableViewOptions } from "./DataTableViewOptions";
-export type { DataTableViewOptionsProps } from "./DataTableViewOptions.types";
+export type { DataTableViewOptionsProps, ViewOptionsMeta } from "./DataTableViewOptions.types";

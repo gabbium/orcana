@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
+import { Label } from "@/components/ui/Label";
 import {
   Select,
   SelectContent,
@@ -18,21 +19,23 @@ import type { DataTablePaginationProps } from "./DataTablePagination.types";
 
 export const DataTablePagination = <TData,>({ table }: DataTablePaginationProps<TData>) => {
   return (
-    <div className="flex items-center justify-between px-2">
-      <div className="flex-1 text-sm text-muted-foreground">
+    <div className="flex items-center justify-between px-4">
+      <div className="text-muted-foreground hidden flex-1 text-sm lg:flex">
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
         {table.getFilteredRowModel().rows.length} row(s) selected.
       </div>
-      <div className="flex items-center space-x-6 lg:space-x-8">
-        <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium">Rows per page</p>
+      <div className="flex w-full items-center gap-8 lg:w-fit">
+        <div className="hidden items-center gap-2 lg:flex">
+          <Label htmlFor="rows-per-page" className="text-sm font-medium">
+            Rows per page
+          </Label>
           <Select
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={(value) => {
               table.setPageSize(Number(value));
             }}
           >
-            <SelectTrigger className="h-8 w-[70px]">
+            <SelectTrigger size="sm" id="rows-per-page">
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="top">
@@ -44,16 +47,10 @@ export const DataTablePagination = <TData,>({ table }: DataTablePaginationProps<
             </SelectContent>
           </Select>
         </div>
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          {table.getPageCount() > 0 ? (
-            <>
-              Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-            </>
-          ) : (
-            <>Page 0 of 0</>
-          )}
+        <div className="flex w-fit items-center justify-center text-sm font-medium">
+          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="ml-auto flex items-center gap-2 lg:ml-0">
           <Button
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
@@ -65,7 +62,8 @@ export const DataTablePagination = <TData,>({ table }: DataTablePaginationProps<
           </Button>
           <Button
             variant="outline"
-            className="h-8 w-8 p-0"
+            className="size-8"
+            size="icon"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
@@ -74,7 +72,8 @@ export const DataTablePagination = <TData,>({ table }: DataTablePaginationProps<
           </Button>
           <Button
             variant="outline"
-            className="h-8 w-8 p-0"
+            className="size-8"
+            size="icon"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
@@ -83,7 +82,8 @@ export const DataTablePagination = <TData,>({ table }: DataTablePaginationProps<
           </Button>
           <Button
             variant="outline"
-            className="hidden h-8 w-8 p-0 lg:flex"
+            className="hidden size-8 lg:flex"
+            size="icon"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >

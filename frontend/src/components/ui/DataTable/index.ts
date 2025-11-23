@@ -17,4 +17,4 @@ export { DataTableToolbarFilter } from "./DataTableToolbarFilter";
 export type { DataTableToolbarFilterProps, FilterMeta } from "./DataTableToolbarFilter";
 
 export { DataTableViewOptions } from "./DataTableViewOptions";
-export type { DataTableViewOptionsProps } from "./DataTableViewOptions";
+export type { DataTableViewOptionsProps, ViewOptionsMeta } from "./DataTableViewOptions";

@@ -1,5 +1,4 @@
-import { addMonths, subMonths } from "date-fns";
-import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/Button";
@@ -25,29 +24,16 @@ export const MonthYearPicker = ({ value, onChange }: MonthYearPickerProps) => {
     setViewYear(value.getFullYear());
   }, [value]);
 
-  const monthName = value.toLocaleString("pt-BR", { month: "long" });
+  const monthName = value.toLocaleString("en", { month: "long" });
   const monthCapitalized = monthName.charAt(0).toUpperCase() + monthName.slice(1);
   const label = `${monthCapitalized} ${value.getFullYear()}`;
 
   return (
     <div className="flex items-center justify-center gap-3">
-      <Button
-        variant="outline"
-        size="icon-sm"
-        aria-label="Previous month"
-        onClick={() => onChange(subMonths(value, 1))}
-      >
-        <ChevronLeftIcon />
-      </Button>
       <Popover open={isOpen} onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            className="flex items-center gap-2"
-            aria-label="Open month and year picker"
-          >
-            <CalendarIcon />
-            <span>{label}</span>
+          <Button variant="outline" size="sm">
+            <span className="text-sm">{label}</span>
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-64 space-y-3" align="center">
@@ -78,7 +64,6 @@ export const MonthYearPicker = ({ value, onChange }: MonthYearPickerProps) => {
                   key={m}
                   variant={isActive ? "default" : "outline"}
                   size="sm"
-                  aria-label={`Select month${m}`}
                   onClick={() => {
                     onChange(new Date(viewYear, index, 1));
                     close();
@@ -91,14 +76,6 @@ export const MonthYearPicker = ({ value, onChange }: MonthYearPickerProps) => {
           </div>
         </PopoverContent>
       </Popover>
-      <Button
-        variant="outline"
-        size="icon-sm"
-        aria-label="Next month"
-        onClick={() => onChange(addMonths(value, 1))}
-      >
-        <ChevronRightIcon />
-      </Button>
     </div>
   );
 };

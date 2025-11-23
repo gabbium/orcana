@@ -1,3 +1,5 @@
+import { ArrowDownCircleIcon, ArrowUpCircleIcon } from "lucide-react";
+
 export type PaginatedList<T> = {
   items: T[];
   pageNumber: number;
@@ -8,17 +10,25 @@ export type PaginatedList<T> = {
   hasNextPage: boolean;
 };
 
-export const MovementDirection = {
-  EXPENSE: "expense",
-  INCOME: "income",
-} as const;
+export const MovementDirection = [
+  {
+    label: "Income",
+    value: "income",
+    icon: ArrowUpCircleIcon,
+  },
+  {
+    label: "Expense",
+    value: "expense",
+    icon: ArrowDownCircleIcon,
+  },
+] as const;
 
-export type MovementDirection = (typeof MovementDirection)[keyof typeof MovementDirection];
+export type MovementDirection = (typeof MovementDirection)[number]["value"];
 
 export type Movement = {
   id: string;
   direction: MovementDirection;
   amount: number;
-  description?: string;
+  description: string;
   occurredAt: string;
 };

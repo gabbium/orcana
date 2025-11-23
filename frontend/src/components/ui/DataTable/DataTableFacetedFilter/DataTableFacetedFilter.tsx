@@ -1,4 +1,4 @@
-import { CheckIcon, PlusCircleIcon } from "lucide-react";
+import { PlusCircleIcon } from "lucide-react";
 
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -28,7 +28,7 @@ export const DataTableFacetedFilter = <TData, TValue>({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="h-8 border-dashed">
+        <Button variant="outline" size="sm" className="h-8">
           <PlusCircleIcon />
           {title}
           {selectedValues?.size > 0 && (
@@ -60,7 +60,7 @@ export const DataTableFacetedFilter = <TData, TValue>({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0" align="start">
+      <PopoverContent className="w-fit p-0" align="start">
         <Command>
           <CommandInput placeholder={title} />
           <CommandList>
@@ -88,9 +88,7 @@ export const DataTableFacetedFilter = <TData, TValue>({
                           ? "bg-primary text-primary-foreground"
                           : "opacity-50 [&_svg]:invisible",
                       )}
-                    >
-                      <CheckIcon />
-                    </div>
+                    />
                     {option.icon && <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />}
                     <span>{option.label}</span>
                     {facets?.get(option.value) && (

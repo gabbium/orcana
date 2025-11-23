@@ -5,6 +5,7 @@ export type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   serverSide?: boolean;
+  enableRowSelection?: boolean;
   pagination?: {
     pageIndex: number;
     pageSize: number;

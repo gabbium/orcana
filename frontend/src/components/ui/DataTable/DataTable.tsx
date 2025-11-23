@@ -28,6 +28,7 @@ export const DataTable = <TData, TValue>({
   columns,
   data,
   serverSide = false,
+  enableRowSelection = false,
   pagination,
   onPaginationChange,
   onSortingChange,
@@ -61,7 +62,7 @@ export const DataTable = <TData, TValue>({
     manualSorting: serverSide,
     manualFiltering: serverSide,
     pageCount: serverSide && pagination ? pagination.pageCount : undefined,
-    enableRowSelection: true,
+    enableRowSelection,
     onRowSelectionChange: setRowSelection,
     onSortingChange: (updaterOrValue) => {
       setSorting(updaterOrValue);
@@ -101,9 +102,9 @@ export const DataTable = <TData, TValue>({
   return (
     <div className="space-y-4">
       <DataTableToolbar table={table} actions={toolbarActions} />
-      <div className="rounded-md border">
+      <div className="overflow-hidden rounded-lg border">
         <Table>
-          <TableHeader>
+          <TableHeader className="bg-muted sticky top-0 z-10">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -118,7 +119,7 @@ export const DataTable = <TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody className="**:data-[slot=table-cell]:first:w-8">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
