@@ -30,6 +30,7 @@ export const ResponsiveDialog = ({
   children,
   isDone,
   triggerButton,
+  submitButton,
 }: ResponsiveDialogProps) => {
   const { close, open, isOpen } = useDisclosure();
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -58,6 +59,7 @@ export const ResponsiveDialog = ({
             {description && <DialogDescription>{description}</DialogDescription>}
           </DialogHeader>
           {children}
+          {submitButton}
         </DialogContent>
       </Dialog>
     );
@@ -73,6 +75,7 @@ export const ResponsiveDialog = ({
         </DrawerHeader>
         <div className="px-4">{children}</div>
         <DrawerFooter className="pt-2">
+          {submitButton}
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>

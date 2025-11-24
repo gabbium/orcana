@@ -1,24 +1,181 @@
+import { useForm } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import type { ColumnDef } from "@tanstack/react-table";
 import { startOfMonth } from "date-fns";
-import { MoreHorizontalIcon } from "lucide-react";
 import { useMemo, useState } from "react";
+import { z } from "zod";
 
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { DataTable, DataTableColumnHeader } from "@/components/ui/DataTable";
+import { DatePicker } from "@/components/ui/DatePicker";
+import { Field, FieldError, FieldLabel } from "@/components/ui/Field";
+import { Input } from "@/components/ui/Input";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/DropdownMenu";
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  InputGroupText,
+} from "@/components/ui/InputGroup";
+import { Label } from "@/components/ui/Label";
 import { MonthYearPicker } from "@/components/ui/MonthYearPicker";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { ResponsiveDialog } from "@/components/ui/ResponsiveDialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/Select";
 import { SummaryCard } from "@/components/ui/SummaryCard";
 import { type Movement, MovementDirection } from "@/types/api";
+
+const createMovementPayloadSchema = z.object({
+  direction: z.enum(["income", "expense"]),
+  amount: z.number().positive(),
+  description: z.string().max(128).optional(),
+  occurredAt: z.iso.date(),
+});
+
+type CreateMovementPayload = z.infer<typeof createMovementPayloadSchema>;
+
+const CreateMovementDialog = () => {
+  const [isDone, setIsDone] = useState(false);
+
+  const form = useForm({
+    defaultValues: {} as CreateMovementPayload,
+    validators: {
+      onSubmit: createMovementPayloadSchema,
+    },
+    onSubmit: async ({ value }) => {
+      console.log(value);
+      setIsDone(true);
+    },
+  });
+
+  return (
+    <ResponsiveDialog
+      title="Create movement"
+      description="Creates new income or expense."
+      isDone={isDone}
+      triggerButton={<Button size="sm">Create Movement</Button>}
+      submitButton={
+        <Button form="create-movement" type="submit" size="sm">
+          Submit
+        </Button>
+      }
+    >
+      <form
+        id="create-movement"
+        onSubmit={(e) => {
+          e.preventDefault();
+          setIsDone(false);
+          form.handleSubmit();
+        }}
+        className="space-y-4 pt-2"
+      >
+        <form.Field
+          name="amount"
+          children={(field) => {
+            const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+            return (
+              <Field data-invalid={isInvalid}>
+                <FieldLabel htmlFor={field.name}>Amount</FieldLabel>
+                <InputGroup>
+                  <InputGroupAddon>
+                    <InputGroupText>$</InputGroupText>
+                  </InputGroupAddon>
+                  <InputGroupInput
+                    type="number"
+                    placeholder="0.00"
+                    id={field.name}
+                    name={field.name}
+                    value={field.state.value === 0 ? "" : field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(Number(e.target.value))}
+                    aria-invalid={isInvalid}
+                  />
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupText>USD</InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              </Field>
+            );
+          }}
+        />
+        <form.Field
+          name="direction"
+          children={(field) => {
+            const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+            return (
+              <Field data-invalid={isInvalid}>
+                <FieldLabel htmlFor={field.name}>Direction</FieldLabel>
+                <Select
+                  name={field.name}
+                  value={field.state.value}
+                  onValueChange={(value) => field.handleChange(value as Movement["direction"])}
+                >
+                  <SelectTrigger id={field.name} aria-invalid={isInvalid} className="w-full">
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="income">Income</SelectItem>
+                    <SelectItem value="expense">Expense</SelectItem>
+                  </SelectContent>
+                </Select>
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              </Field>
+            );
+          }}
+        />
+        <form.Field
+          name="description"
+          children={(field) => {
+            const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+            return (
+              <Field data-invalid={isInvalid}>
+                <FieldLabel htmlFor={field.name}>Description</FieldLabel>
+                <Input
+                  placeholder="Monthly salary, Groceries..."
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  aria-invalid={isInvalid}
+                />
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              </Field>
+            );
+          }}
+        />
+        <form.Field
+          name="occurredAt"
+          children={(field) => {
+            const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+            return (
+              <Field data-invalid={isInvalid}>
+                <Label htmlFor={field.name}>Occurred at</Label>
+                <DatePicker
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onChange={field.handleChange}
+                  onBlur={field.handleBlur}
+                  aria-invalid={isInvalid}
+                />
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              </Field>
+            );
+          }}
+        />
+      </form>
+    </ResponsiveDialog>
+  );
+};
 
 const MOCK_MOVEMENTS: Movement[] = [
   {
@@ -37,13 +194,11 @@ const MOCK_MOVEMENTS: Movement[] = [
   },
 ];
 
-type MovementsTableProps = {
+type MovementsDataTableProps = {
   data: Movement[];
-  onEdit: (movement: Movement | null) => void;
-  onDelete: (movement: Movement) => void;
 };
 
-const MovementsTable = ({ data, onEdit, onDelete }: MovementsTableProps) => {
+const MovementsDataTable = ({ data }: MovementsDataTableProps) => {
   const columns = useMemo<ColumnDef<Movement>[]>(
     () => [
       {
@@ -153,32 +308,8 @@ const MovementsTable = ({ data, onEdit, onDelete }: MovementsTableProps) => {
         },
         enableSorting: false,
       },
-      {
-        id: "actions",
-        cell: ({ row }) => {
-          const movement = row.original;
-
-          return (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
-                  <MoreHorizontalIcon />
-                  <span className="sr-only">Open menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-fit">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem onClick={() => onEdit(movement)}>Edit</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => onDelete(movement)} className="text-destructive">
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          );
-        },
-      },
     ],
-    [onEdit, onDelete],
+    [],
   );
 
   return (
@@ -186,11 +317,7 @@ const MovementsTable = ({ data, onEdit, onDelete }: MovementsTableProps) => {
       columns={columns}
       data={data}
       enableRowSelection
-      toolbarActions={
-        <Button size="sm" onClick={() => onEdit(null)}>
-          New Movement
-        </Button>
-      }
+      toolbarActions={<CreateMovementDialog />}
     />
   );
 };
@@ -209,14 +336,6 @@ const RouteComponent = () => {
     .reduce((acc, m) => acc + m.amount, 0);
 
   const balance = income - expense;
-
-  const handleEdit = (movement: Movement | null) => {
-    console.log("EDIT MOVEMENT:", movement);
-  };
-
-  const handleDelete = (movement: Movement) => {
-    console.log("DELETE MOVEMENT:", movement);
-  };
 
   return (
     <>
@@ -248,7 +367,7 @@ const RouteComponent = () => {
           variant="neutral"
         />
       </div>
-      <MovementsTable data={movements} onEdit={handleEdit} onDelete={handleDelete} />
+      <MovementsDataTable data={movements} />
     </>
   );
 };

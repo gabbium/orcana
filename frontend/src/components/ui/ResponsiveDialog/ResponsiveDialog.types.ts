@@ -6,4 +6,5 @@ export type ResponsiveDialogProps = {
   isDone: boolean;
   children: ReactNode;
   triggerButton: ReactElement;
+  submitButton: ReactElement;
 };
