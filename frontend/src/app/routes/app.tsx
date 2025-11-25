@@ -1,13 +1,7 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 
-import { AppLayout } from "@/components/layouts/AppLayout";
-
 const AppRoot = () => {
-  return (
-    <AppLayout>
-      <Outlet />
-    </AppLayout>
-  );
+  return <Outlet />;
 };
 
 export const Route = createFileRoute("/app")({

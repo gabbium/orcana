@@ -1,4 +1,4 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { CalendarIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/Button";
@@ -33,7 +33,9 @@ export const MonthYearPicker = ({ value, onChange }: MonthYearPickerProps) => {
       <Popover open={isOpen} onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
           <Button variant="outline" size="sm">
+            <CalendarIcon />
             <span className="text-sm">{label}</span>
+            <ChevronDownIcon />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-64 space-y-3" align="center">
