@@ -2,16 +2,15 @@ import { useForm } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import type { ColumnDef } from "@tanstack/react-table";
 import { startOfMonth } from "date-fns";
+import { DollarSignIcon, FileIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { z } from "zod";
 
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { DataTable, DataTableColumnHeader } from "@/components/ui/DataTable";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { Field, FieldError, FieldLabel } from "@/components/ui/Field";
-import { Input } from "@/components/ui/Input";
 import {
   InputGroup,
   InputGroupAddon,
@@ -22,32 +21,24 @@ import { Label } from "@/components/ui/Label";
 import { MonthYearPicker } from "@/components/ui/MonthYearPicker";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ResponsiveDialog } from "@/components/ui/ResponsiveDialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/Select";
 import { SummaryCard } from "@/components/ui/SummaryCard";
-import { type Movement, MovementDirection } from "@/types/api";
+import { type Movement } from "@/types/api";
 
-const createMovementPayloadSchema = z.object({
-  direction: z.enum(["income", "expense"]),
+const createIncomePayloadSchema = z.object({
   amount: z.number().positive(),
   description: z.string().max(128).optional(),
   occurredAt: z.iso.date(),
 });
 
-type CreateMovementPayload = z.infer<typeof createMovementPayloadSchema>;
+type CreateIncomePayload = z.infer<typeof createIncomePayloadSchema>;
 
-const CreateMovementDialog = () => {
+const CreateIncomeDialog = () => {
   const [isDone, setIsDone] = useState(false);
 
   const form = useForm({
-    defaultValues: {} as CreateMovementPayload,
+    defaultValues: {} as CreateIncomePayload,
     validators: {
-      onSubmit: createMovementPayloadSchema,
+      onSubmit: createIncomePayloadSchema,
     },
     onSubmit: async ({ value }) => {
       console.log(value);
@@ -57,18 +48,18 @@ const CreateMovementDialog = () => {
 
   return (
     <ResponsiveDialog
-      title="Create movement"
-      description="Creates new income or expense."
+      title="Create income"
+      description="Creates new income."
       isDone={isDone}
-      triggerButton={<Button size="sm">Create Movement</Button>}
+      triggerButton={<Button size="sm">Create Income</Button>}
       submitButton={
-        <Button form="create-movement" type="submit" size="sm">
+        <Button form="create-income" type="submit" size="sm">
           Submit
         </Button>
       }
     >
       <form
-        id="create-movement"
+        id="create-income"
         onSubmit={(e) => {
           e.preventDefault();
           setIsDone(false);
@@ -85,7 +76,7 @@ const CreateMovementDialog = () => {
                 <FieldLabel htmlFor={field.name}>Amount</FieldLabel>
                 <InputGroup>
                   <InputGroupAddon>
-                    <InputGroupText>$</InputGroupText>
+                    <DollarSignIcon />
                   </InputGroupAddon>
                   <InputGroupInput
                     type="number"
@@ -107,46 +98,26 @@ const CreateMovementDialog = () => {
           }}
         />
         <form.Field
-          name="direction"
-          children={(field) => {
-            const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-            return (
-              <Field data-invalid={isInvalid}>
-                <FieldLabel htmlFor={field.name}>Direction</FieldLabel>
-                <Select
-                  name={field.name}
-                  value={field.state.value}
-                  onValueChange={(value) => field.handleChange(value as Movement["direction"])}
-                >
-                  <SelectTrigger id={field.name} aria-invalid={isInvalid} className="w-full">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="income">Income</SelectItem>
-                    <SelectItem value="expense">Expense</SelectItem>
-                  </SelectContent>
-                </Select>
-                {isInvalid && <FieldError errors={field.state.meta.errors} />}
-              </Field>
-            );
-          }}
-        />
-        <form.Field
           name="description"
           children={(field) => {
             const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
             return (
               <Field data-invalid={isInvalid}>
                 <FieldLabel htmlFor={field.name}>Description</FieldLabel>
-                <Input
-                  placeholder="Monthly salary, Groceries..."
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  aria-invalid={isInvalid}
-                />
+                <InputGroup>
+                  <InputGroupAddon>
+                    <FileIcon />
+                  </InputGroupAddon>
+                  <InputGroupInput
+                    placeholder="Monthly salary, Groceries..."
+                    id={field.name}
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    aria-invalid={isInvalid}
+                  />
+                </InputGroup>
                 {isInvalid && <FieldError errors={field.state.meta.errors} />}
               </Field>
             );
@@ -177,20 +148,13 @@ const CreateMovementDialog = () => {
   );
 };
 
-const MOCK_MOVEMENTS: Movement[] = [
+const MOCK_INCOMES: Movement[] = [
   {
     id: "1",
     direction: "income",
     amount: 5000,
     description: "Monthly salary",
     occurredAt: "2025-03-05T00:00:00.000Z",
-  },
-  {
-    id: "2",
-    direction: "expense",
-    amount: 350,
-    description: "Groceries",
-    occurredAt: "2025-03-07T00:00:00.000Z",
   },
 ];
 
@@ -257,41 +221,6 @@ const MovementsDataTable = ({ data }: MovementsDataTableProps) => {
         enableSorting: false,
       },
       {
-        accessorKey: "direction",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Direction" />,
-        cell: ({ row }) => {
-          const direction = MovementDirection.find(
-            (item) => item.value === row.getValue("direction"),
-          );
-
-          if (!direction) {
-            return null;
-          }
-
-          return (
-            <Badge variant="outline" className="text-muted-foreground px-1.5">
-              {direction.icon && <direction.icon />}
-              {direction.label}
-            </Badge>
-          );
-        },
-        filterFn: (row, id, value) => {
-          return value.includes(row.getValue(id));
-        },
-        meta: {
-          viewOptions: {
-            title: "Direction",
-          },
-          filter: {
-            type: "select",
-            title: "Direction",
-            options: [...MovementDirection],
-          },
-        },
-        enableColumnFilter: false,
-        enableSorting: false,
-      },
-      {
         accessorKey: "amount",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Amount" />,
         cell: ({ row }) => {
@@ -317,7 +246,7 @@ const MovementsDataTable = ({ data }: MovementsDataTableProps) => {
       columns={columns}
       data={data}
       enableRowSelection
-      toolbarActions={<CreateMovementDialog />}
+      toolbarActions={<CreateIncomeDialog />}
     />
   );
 };
@@ -325,7 +254,7 @@ const MovementsDataTable = ({ data }: MovementsDataTableProps) => {
 const RouteComponent = () => {
   const [period, setPeriod] = useState(() => startOfMonth(new Date()));
 
-  const movements = MOCK_MOVEMENTS;
+  const movements = MOCK_INCOMES;
 
   const income = movements
     .filter((m) => m.direction === "income")
