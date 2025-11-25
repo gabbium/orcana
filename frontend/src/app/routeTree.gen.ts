@@ -14,7 +14,6 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthIndexRouteImport } from './routes/auth/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
-import { Route as AppMovementsv2RouteImport } from './routes/app/movementsv2'
 import { Route as AppMovementsRouteImport } from './routes/app/movements'
 
 const AuthRoute = AuthRouteImport.update({
@@ -42,11 +41,6 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppMovementsv2Route = AppMovementsv2RouteImport.update({
-  id: '/movementsv2',
-  path: '/movementsv2',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppMovementsRoute = AppMovementsRouteImport.update({
   id: '/movements',
   path: '/movements',
@@ -58,14 +52,12 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
   '/app/movements': typeof AppMovementsRoute
-  '/app/movementsv2': typeof AppMovementsv2Route
   '/app/': typeof AppIndexRoute
   '/auth/': typeof AuthIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app/movements': typeof AppMovementsRoute
-  '/app/movementsv2': typeof AppMovementsv2Route
   '/app': typeof AppIndexRoute
   '/auth': typeof AuthIndexRoute
 }
@@ -75,29 +67,20 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
   '/app/movements': typeof AppMovementsRoute
-  '/app/movementsv2': typeof AppMovementsv2Route
   '/app/': typeof AppIndexRoute
   '/auth/': typeof AuthIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/app'
-    | '/auth'
-    | '/app/movements'
-    | '/app/movementsv2'
-    | '/app/'
-    | '/auth/'
+  fullPaths: '/' | '/app' | '/auth' | '/app/movements' | '/app/' | '/auth/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app/movements' | '/app/movementsv2' | '/app' | '/auth'
+  to: '/' | '/app/movements' | '/app' | '/auth'
   id:
     | '__root__'
     | '/'
     | '/app'
     | '/auth'
     | '/app/movements'
-    | '/app/movementsv2'
     | '/app/'
     | '/auth/'
   fileRoutesById: FileRoutesById
@@ -145,13 +128,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/app/movementsv2': {
-      id: '/app/movementsv2'
-      path: '/movementsv2'
-      fullPath: '/app/movementsv2'
-      preLoaderRoute: typeof AppMovementsv2RouteImport
-      parentRoute: typeof AppRoute
-    }
     '/app/movements': {
       id: '/app/movements'
       path: '/movements'
@@ -164,13 +140,11 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppMovementsRoute: typeof AppMovementsRoute
-  AppMovementsv2Route: typeof AppMovementsv2Route
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppMovementsRoute: AppMovementsRoute,
-  AppMovementsv2Route: AppMovementsv2Route,
   AppIndexRoute: AppIndexRoute,
 }
 

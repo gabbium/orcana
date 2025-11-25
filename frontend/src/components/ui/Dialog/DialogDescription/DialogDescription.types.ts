@@ -1,4 +1,0 @@
-import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { type ComponentProps } from "react";
-
-export type DialogDescriptionProps = ComponentProps<typeof DialogPrimitive.Description>;

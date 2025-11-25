@@ -1,8 +1,9 @@
 import { Loader2Icon } from "lucide-react";
+import type { ComponentProps } from "react";
 
 import { cn } from "@/utils/cn";
 
-import type { SpinnerProps } from "./Spinner.types";
+export type SpinnerProps = ComponentProps<"svg">;
 
 export const Spinner = ({ className, ...props }: SpinnerProps) => {
   return (

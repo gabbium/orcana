@@ -1,15 +1,14 @@
 import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
-import { createContext, useContext, type ComponentProps } from "react";
+import { createContext, useContext, type CSSProperties, type ComponentProps } from "react";
 
+import { toggleVariants, type ToggleVariants } from "@/components/ui/Toggle";
 import { cn } from "@/utils/cn";
 
-import { toggleVariants, type ToggleVariants } from "../Toggle/Toggle.variants";
+type ToggleGroupContextValue = ToggleVariants & {
+  spacing?: number;
+};
 
-const ToggleGroupContext = createContext<
-  ToggleVariants & {
-    spacing?: number;
-  }
->({
+const ToggleGroupContext = createContext<ToggleGroupContextValue>({
   size: "default",
   variant: "default",
   spacing: 0,
@@ -34,7 +33,7 @@ export const ToggleGroup = ({
       data-variant={variant}
       data-size={size}
       data-spacing={spacing}
-      style={{ "--gap": spacing } as React.CSSProperties}
+      style={{ "--gap": spacing } as CSSProperties}
       className={cn(
         "group/toggle-group flex w-fit items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=default]:data-[variant=outline]:shadow-xs",
         className,

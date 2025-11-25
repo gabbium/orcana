@@ -1,9 +1,4 @@
-import {
-  IconChevronLeft,
-  IconChevronRight,
-  IconTrendingDown,
-  IconTrendingUp,
-} from "@tabler/icons-react";
+import { ChevronLeftIcon, ChevronRightIcon, TrendingUpIcon, TrendingDownIcon } from "lucide-react";
 
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -24,11 +19,11 @@ export const MovementsHeader = () => {
       <h1 className="text-lg font-semibold">Movimentações</h1>
       <div className="flex gap-2">
         <Button variant="outline" size="sm">
-          <IconTrendingDown className="text-red-600" />
+          <TrendingDownIcon className="text-red-600" />
           Adicionar despesa
         </Button>
         <Button variant="outline" size="sm">
-          <IconTrendingUp className="text-emerald-600" />
+          <TrendingUpIcon className="text-emerald-600" />
           Adicionar receita
         </Button>
       </div>
@@ -43,11 +38,11 @@ export const MovementsFilters = () => {
         <span className="text-sm text-muted-foreground">Período</span>
         <div className="flex items-center overflow-hidden rounded-md border bg-background">
           <Button variant="ghost" size="sm" className="rounded-none">
-            <IconChevronLeft />
+            <ChevronLeftIcon />
           </Button>
           <div className="min-w-[120px] px-3 border-x text-center text-sm">Out 2025</div>
           <Button variant="ghost" size="sm" className="rounded-none">
-            <IconChevronRight />
+            <ChevronRightIcon />
           </Button>
         </div>
       </div>
@@ -110,7 +105,7 @@ export const MovementsTable = () => {
             <TableCell className="hidden w-[20%] md:table-cell">Renda fixa</TableCell>
             <TableCell className="w-[90px]">
               <Badge variant="outline" className="text-muted-foreground px-1.5">
-                <IconTrendingUp className="text-emerald-600" />
+                <TrendingUpIcon className="text-emerald-600" />
                 Receita
               </Badge>
             </TableCell>
@@ -122,7 +117,7 @@ export const MovementsTable = () => {
             <TableCell className="hidden md:table-cell">Alimentação</TableCell>
             <TableCell>
               <Badge variant="outline" className="text-muted-foreground px-1.5">
-                <IconTrendingDown className="text-red-600" />
+                <TrendingDownIcon className="text-red-600" />
                 Despesa
               </Badge>
             </TableCell>
@@ -134,7 +129,7 @@ export const MovementsTable = () => {
             <TableCell className="hidden md:table-cell">Moradia</TableCell>
             <TableCell>
               <Badge variant="outline" className="text-muted-foreground px-1.5">
-                <IconTrendingDown className="text-red-600" />
+                <TrendingDownIcon className="text-red-600" />
                 Despesa
               </Badge>
             </TableCell>
@@ -146,7 +141,7 @@ export const MovementsTable = () => {
             <TableCell className="hidden md:table-cell">Renda extra</TableCell>
             <TableCell>
               <Badge variant="outline" className="text-muted-foreground px-1.5">
-                <IconTrendingUp className="text-emerald-600" />
+                <TrendingUpIcon className="text-emerald-600" />
                 Receita
               </Badge>
             </TableCell>
