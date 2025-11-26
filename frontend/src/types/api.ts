@@ -7,3 +7,14 @@ export type PaginatedList<T> = {
   hasPreviousPage: boolean;
   hasNextPage: boolean;
 };
+
+export type MovementDirection = "income" | "expense";
+
+export type Movement = {
+  id: string;
+  direction: MovementDirection;
+  amount: number;
+  category: string;
+  description: string;
+  occurredAt: string;
+};
