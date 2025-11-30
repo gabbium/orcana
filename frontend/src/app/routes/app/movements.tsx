@@ -4,33 +4,29 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   MovementsFilters,
   MovementsHeader,
-  MovementsSearchDirection,
   MovementsSummary,
   MovementsTable,
   movementsQueries,
   movementsSearchSchema,
 } from "@/features/movements";
-import { addMonthYear, formatMonthYearLabel, mapSearchToDateRange } from "@/utils/format";
 
 const MovementsPage = () => {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
 
-  const { startDate, endDate } = mapSearchToDateRange(search.month, search.year);
-
   const movementsQuery = useSuspenseQuery(
     movementsQueries.list({
       pageNumber: search.pageNumber,
       pageSize: search.pageSize,
-      direction: search.direction == MovementsSearchDirection.All ? [] : [search.direction],
-      minOccurredAt: startDate,
-      maxOccurredAt: endDate,
+      direction: search.direction === "All" ? [] : [search.direction],
+      minOccurredAt: search.minOccurredAt,
+      maxOccurredAt: search.maxOccurredAt,
     }),
   );
   const summaryQuery = useSuspenseQuery(
     movementsQueries.summary({
-      minOccurredAt: startDate,
-      maxOccurredAt: endDate,
+      minOccurredAt: search.minOccurredAt,
+      maxOccurredAt: search.maxOccurredAt,
     }),
   );
 
@@ -39,21 +35,24 @@ const MovementsPage = () => {
       <MovementsHeader />
       <main className="flex flex-1 flex-col gap-4 px-6 py-4">
         <MovementsFilters
-          period={formatMonthYearLabel(search.month, search.year)}
-          onPrevPeriod={() =>
+          minOccurredAt={search.minOccurredAt}
+          maxOccurredAt={search.maxOccurredAt}
+          onMinOccurredAt={(minOccurredAt) =>
             navigate({
-              search: (old) => {
-                const { month, year } = addMonthYear(old.month, old.year, -1);
-                return { ...old, month, year };
-              },
+              search: (old) => ({
+                ...old,
+                pageNumber: 1,
+                minOccurredAt,
+              }),
             })
           }
-          onNextPeriod={() =>
+          onMaxOccurredAt={(maxOccurredAt) =>
             navigate({
-              search: (old) => {
-                const { month, year } = addMonthYear(old.month, old.year, 1);
-                return { ...old, month, year };
-              },
+              search: (old) => ({
+                ...old,
+                pageNumber: 1,
+                maxOccurredAt,
+              }),
             })
           }
           direction={search.direction}
@@ -61,13 +60,25 @@ const MovementsPage = () => {
             navigate({
               search: (old) => ({
                 ...old,
+                pageNumber: 1,
                 direction,
               }),
             });
           }}
         />
         <MovementsSummary summary={summaryQuery.data} />
-        <MovementsTable movements={movementsQuery.data.items} />
+        <MovementsTable
+          movements={movementsQuery.data}
+          onPaginationChange={(pageNumber, pageSize) =>
+            navigate({
+              search: (old) => ({
+                ...old,
+                pageNumber,
+                pageSize,
+              }),
+            })
+          }
+        />
       </main>
     </div>
   );
@@ -77,22 +88,19 @@ export const Route = createFileRoute("/app/movements")({
   validateSearch: movementsSearchSchema,
   loaderDeps: ({ search }) => ({ search }),
   loader: async ({ context, deps }) => {
-    const { startDate, endDate } = mapSearchToDateRange(deps.search.month, deps.search.year);
-
     await context.queryClient.ensureQueryData(
       movementsQueries.list({
         pageNumber: deps.search.pageNumber,
         pageSize: deps.search.pageSize,
-        direction:
-          deps.search.direction == MovementsSearchDirection.All ? [] : [deps.search.direction],
-        minOccurredAt: startDate,
-        maxOccurredAt: endDate,
+        direction: deps.search.direction === "All" ? [] : [deps.search.direction],
+        minOccurredAt: deps.search.minOccurredAt,
+        maxOccurredAt: deps.search.maxOccurredAt,
       }),
     );
     await context.queryClient.ensureQueryData(
       movementsQueries.summary({
-        minOccurredAt: startDate,
-        maxOccurredAt: endDate,
+        minOccurredAt: deps.search.minOccurredAt,
+        maxOccurredAt: deps.search.maxOccurredAt,
       }),
     );
   },

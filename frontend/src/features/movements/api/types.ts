@@ -1,9 +1,4 @@
-export const MovementDirection = {
-  Income: "Income",
-  Expense: "Expense",
-};
-
-export type MovementDirection = (typeof MovementDirection)[keyof typeof MovementDirection];
+export type MovementDirection = "Income" | "Expense";
 
 export type MovementDto = {
   id: string;

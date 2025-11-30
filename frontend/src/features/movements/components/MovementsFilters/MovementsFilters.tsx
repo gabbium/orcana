@@ -1,55 +1,82 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/Select";
 
-import { Button } from "@/components/ui/Button";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/ToggleGroup";
-
-import type { MovementsSearchDirection } from "../../api/schemas";
+import type { MovementDirectionSearch } from "../../api/schemas";
+import type { MovementDirection } from "../../api/types";
 
 type MovementsFiltersProps = {
-  period: string;
-  onPrevPeriod: () => void;
-  onNextPeriod: () => void;
-  direction: MovementsSearchDirection;
-  onDirectionChange: (direction: MovementsSearchDirection) => void;
+  minOccurredAt: string;
+  maxOccurredAt: string;
+  onMinOccurredAt: (value: string) => void;
+  onMaxOccurredAt: (value: string) => void;
+  direction?: MovementDirectionSearch;
+  onDirectionChange: (direction?: MovementDirectionSearch) => void;
 };
 
 export const MovementsFilters = ({
-  period,
-  onPrevPeriod,
-  onNextPeriod,
+  minOccurredAt,
+  maxOccurredAt,
+  onMinOccurredAt,
+  onMaxOccurredAt,
   direction,
   onDirectionChange,
 }: MovementsFiltersProps) => {
   return (
     <section className="flex flex-wrap items-center gap-3">
-      <div className="flex items-center gap-2">
-        <span className="text-sm text-muted-foreground">Período</span>
-        <div className="flex items-center overflow-hidden rounded-md border bg-background">
-          <Button variant="ghost" size="sm" className="rounded-none" onClick={onPrevPeriod}>
-            <ChevronLeftIcon />
-          </Button>
-          <div className="min-w-[120px] px-3 border-x text-center text-sm">{period}</div>
-          <Button variant="ghost" size="sm" className="rounded-none" onClick={onNextPeriod}>
-            <ChevronRightIcon />
-          </Button>
+      <div className="flex flex-wrap gap-3">
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="min-occurred-at" className="text-xs text-muted-foreground">
+            Data Inicial
+          </Label>
+          <Input
+            id="min-occurred-at"
+            type="date"
+            value={minOccurredAt}
+            onChange={(event) => onMinOccurredAt(event.target.value)}
+            className="bg-background"
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="max-occurred-at" className="text-xs text-muted-foreground">
+            Data final
+          </Label>
+          <Input
+            id="max-occurred-at"
+            type="date"
+            value={maxOccurredAt}
+            onChange={(event) => onMaxOccurredAt(event.target.value)}
+            className="bg-background"
+          />
         </div>
       </div>
-      <ToggleGroup
-        type="single"
-        variant="outline"
-        size="sm"
-        value={direction}
-        onValueChange={(value) => {
-          if (value) {
-            onDirectionChange(value as MovementsSearchDirection);
-          }
-        }}
-        className="bg-background"
-      >
-        <ToggleGroupItem value="All">Todos</ToggleGroupItem>
-        <ToggleGroupItem value="Expense">Despesas</ToggleGroupItem>
-        <ToggleGroupItem value="Income">Receitas</ToggleGroupItem>
-      </ToggleGroup>
+      <div className="flex flex-col gap-1">
+        <Label htmlFor="direction" className="text-xs text-muted-foreground">
+          Tipo
+        </Label>
+        <Select
+          name="direction"
+          value={direction}
+          onValueChange={(value) => {
+            onDirectionChange(value as MovementDirection);
+          }}
+        >
+          <SelectTrigger id="direction" className="w-[180px] bg-background">
+            <SelectValue placeholder="Select a type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="All">Todas</SelectItem>
+            <SelectItem value="Expense">Despesas</SelectItem>
+            <SelectItem value="Income">Receitas</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
     </section>
   );
 };
