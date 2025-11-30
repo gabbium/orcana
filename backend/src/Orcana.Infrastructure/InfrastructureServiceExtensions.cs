@@ -1,4 +1,5 @@
-﻿using Orcana.Application.Queries.ListMovements;
+﻿using Orcana.Application.Queries.GetMovementsSummary;
+using Orcana.Application.Queries.ListMovements;
 using Orcana.Domain.AggregatesModel.MovementAggregate;
 using Orcana.Domain.SeedWork;
 using Orcana.Infrastructure.Data;
@@ -27,6 +28,7 @@ public static class InfrastructureServiceExtensions
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<OrcanaContext>());
 
         services.AddScoped<IListMovementsQueryService, ListMovementsQueryService>();
+        services.AddScoped<IGetMovementsSummaryQueryService, GetMovementsSummaryQueryService>();
         services.AddScoped<IMovementRepository, MovementRepository>();
 
         return services;

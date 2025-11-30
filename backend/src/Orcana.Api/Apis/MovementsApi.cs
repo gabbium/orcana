@@ -2,6 +2,7 @@
 using Orcana.Api.Models;
 using Orcana.Application.Commands.CreateMovement;
 using Orcana.Application.Models;
+using Orcana.Application.Queries.GetMovementsSummary;
 using Orcana.Application.Queries.ListMovements;
 
 namespace Orcana.Api.Apis;
@@ -19,6 +20,13 @@ public static class MovementsApi
             .WithSummary("List movements")
             .WithDescription("Get all movements filtered by date range with optional ordering.")
             .Produces<PaginatedList<MovementDto>>(StatusCodes.Status200OK)
+            .ProducesValidationProblem(StatusCodes.Status400BadRequest);
+
+        api.MapGet("summary", GetMovementsSummary)
+            .WithName(nameof(GetMovementsSummary))
+            .WithSummary("Get movements summary")
+            .WithDescription("Return aggregated totals (income, expense, balance) filtered by date range.")
+            .Produces<MovementsSummaryDto>(StatusCodes.Status200OK)
             .ProducesValidationProblem(StatusCodes.Status400BadRequest);
 
         api.MapPost(string.Empty, CreateMovement)
@@ -44,6 +52,22 @@ public static class MovementsApi
             Direction = request.Direction?.ToList(),
             MinOccurredAt = request.MinOccurredAt,
             MaxOccurredAt = request.MaxOccurredAt,
+        };
+
+        var result = await mediator.Send(query, cancellationToken);
+
+        return result.ToMinimalApiResult();
+    }
+
+    public static async Task<IResult> GetMovementsSummary(
+        [AsParameters] GetMovementsSummaryRequest request,
+        IMediator mediator,
+        CancellationToken cancellationToken)
+    {
+        var query = new GetMovementsSummaryQuery
+        {
+            MinOccurredAt = request.MinOccurredAt,
+            MaxOccurredAt = request.MaxOccurredAt
         };
 
         var result = await mediator.Send(query, cancellationToken);
