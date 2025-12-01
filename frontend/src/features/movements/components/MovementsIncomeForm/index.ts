@@ -1,0 +1,1 @@
+export { MovementsIncomeForm } from "./MovementsIncomeForm";

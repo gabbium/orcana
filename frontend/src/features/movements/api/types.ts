@@ -4,7 +4,6 @@ export type MovementDto = {
   id: string;
   direction: MovementDirection;
   amount: number;
-  category: string;
   description: string;
   occurredAt: string;
 };
@@ -31,4 +30,11 @@ export type ListMovementsRequest = {
 export type GetMovementsSummaryRequest = {
   minOccurredAt?: string;
   maxOccurredAt?: string;
+};
+
+export type CreateMovementRequest = {
+  direction: MovementDirection;
+  amount: number;
+  description: string;
+  occurredAt: string;
 };

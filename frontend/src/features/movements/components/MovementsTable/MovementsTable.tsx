@@ -53,14 +53,6 @@ export const MovementsTable = ({ movements, onPaginationChange }: MovementsTable
         accessorKey: "description",
       },
       {
-        id: "category",
-        header: "Categoria",
-        accessorKey: "category",
-        meta: {
-          hideOnMobile: true,
-        },
-      },
-      {
         id: "direction",
         header: "Tipo",
         accessorKey: "direction",
@@ -88,10 +80,11 @@ export const MovementsTable = ({ movements, onPaginationChange }: MovementsTable
         cell: ({ row }) => {
           const isIncome = row.original.direction === "Income";
 
-          const formattedAmount = (row.original.amount / 100).toLocaleString("pt-BR", {
+          const formattedAmount = Intl.NumberFormat("pt-BR", {
             style: "currency",
             currency: "BRL",
-          });
+            minimumFractionDigits: 2,
+          }).format(row.original.amount);
 
           return (
             <span
@@ -138,7 +131,6 @@ export const MovementsTable = ({ movements, onPaginationChange }: MovementsTable
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 const hideOnMobile = header.column.columnDef.meta?.hideOnMobile;
-
                 return (
                   <TableHead
                     key={header.id}
@@ -160,7 +152,6 @@ export const MovementsTable = ({ movements, onPaginationChange }: MovementsTable
               <TableRow key={row.id} className="hover:bg-muted/40">
                 {row.getVisibleCells().map((cell) => {
                   const hideOnMobile = cell.column.columnDef.meta?.hideOnMobile;
-
                   return (
                     <TableCell
                       key={cell.id}
@@ -185,8 +176,8 @@ export const MovementsTable = ({ movements, onPaginationChange }: MovementsTable
         </TableBody>
       </Table>
       <div className="flex items-center justify-end border-t px-4 py-2 text-xs text-muted-foreground">
-        <div className="flex items-center space-x-6 lg:space-x-8">
-          <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 lg:space-x-8">
+          <div className="hidden sm:flex items-center space-x-2">
             <p className="text-sm font-medium">Linhas por página</p>
             <Select
               value={`${table.getState().pagination.pageSize}`}
@@ -217,7 +208,7 @@ export const MovementsTable = ({ movements, onPaginationChange }: MovementsTable
               disabled={!table.getCanPreviousPage()}
             >
               <span className="sr-only">Ir para a primeira página</span>
-              <ChevronsLeftIcon className="h-4 w-4" />
+              <ChevronsLeftIcon />
             </Button>
             <Button
               variant="outline"
@@ -226,7 +217,7 @@ export const MovementsTable = ({ movements, onPaginationChange }: MovementsTable
               disabled={!table.getCanPreviousPage()}
             >
               <span className="sr-only">Ir para a página anterior</span>
-              <ChevronLeftIcon className="h-4 w-4" />
+              <ChevronLeftIcon />
             </Button>
             <Button
               variant="outline"
@@ -235,7 +226,7 @@ export const MovementsTable = ({ movements, onPaginationChange }: MovementsTable
               disabled={!table.getCanNextPage()}
             >
               <span className="sr-only">Ir para a próxima página</span>
-              <ChevronRightIcon className="h-4 w-4" />
+              <ChevronRightIcon />
             </Button>
             <Button
               variant="outline"
@@ -244,7 +235,7 @@ export const MovementsTable = ({ movements, onPaginationChange }: MovementsTable
               disabled={!table.getCanNextPage()}
             >
               <span className="sr-only">Ir para a última página</span>
-              <ChevronsRightIcon className="h-4 w-4" />
+              <ChevronsRightIcon />
             </Button>
           </div>
         </div>

@@ -39,7 +39,7 @@ public static class ApiServiceExtensions
             options.AddPolicy("SpaCorsPolicy", policy =>
             {
                 policy
-                    .SetIsOriginAllowed(_ => true)
+                    .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });

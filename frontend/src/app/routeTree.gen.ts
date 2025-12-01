@@ -15,6 +15,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthIndexRouteImport } from './routes/auth/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppMovementsRouteImport } from './routes/app/movements'
+import { Route as AppMovementsCreateIncomeRouteImport } from './routes/app/movements/create/income'
+import { Route as AppMovementsCreateExpenseRouteImport } from './routes/app/movements/create/expense'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -46,35 +48,67 @@ const AppMovementsRoute = AppMovementsRouteImport.update({
   path: '/movements',
   getParentRoute: () => AppRoute,
 } as any)
+const AppMovementsCreateIncomeRoute =
+  AppMovementsCreateIncomeRouteImport.update({
+    id: '/create/income',
+    path: '/create/income',
+    getParentRoute: () => AppMovementsRoute,
+  } as any)
+const AppMovementsCreateExpenseRoute =
+  AppMovementsCreateExpenseRouteImport.update({
+    id: '/create/expense',
+    path: '/create/expense',
+    getParentRoute: () => AppMovementsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
-  '/app/movements': typeof AppMovementsRoute
+  '/app/movements': typeof AppMovementsRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/auth/': typeof AuthIndexRoute
+  '/app/movements/create/expense': typeof AppMovementsCreateExpenseRoute
+  '/app/movements/create/income': typeof AppMovementsCreateIncomeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/app/movements': typeof AppMovementsRoute
+  '/app/movements': typeof AppMovementsRouteWithChildren
   '/app': typeof AppIndexRoute
   '/auth': typeof AuthIndexRoute
+  '/app/movements/create/expense': typeof AppMovementsCreateExpenseRoute
+  '/app/movements/create/income': typeof AppMovementsCreateIncomeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
-  '/app/movements': typeof AppMovementsRoute
+  '/app/movements': typeof AppMovementsRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/auth/': typeof AuthIndexRoute
+  '/app/movements/create/expense': typeof AppMovementsCreateExpenseRoute
+  '/app/movements/create/income': typeof AppMovementsCreateIncomeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/auth' | '/app/movements' | '/app/' | '/auth/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/auth'
+    | '/app/movements'
+    | '/app/'
+    | '/auth/'
+    | '/app/movements/create/expense'
+    | '/app/movements/create/income'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app/movements' | '/app' | '/auth'
+  to:
+    | '/'
+    | '/app/movements'
+    | '/app'
+    | '/auth'
+    | '/app/movements/create/expense'
+    | '/app/movements/create/income'
   id:
     | '__root__'
     | '/'
@@ -83,6 +117,8 @@ export interface FileRouteTypes {
     | '/app/movements'
     | '/app/'
     | '/auth/'
+    | '/app/movements/create/expense'
+    | '/app/movements/create/income'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -135,16 +171,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMovementsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/movements/create/income': {
+      id: '/app/movements/create/income'
+      path: '/create/income'
+      fullPath: '/app/movements/create/income'
+      preLoaderRoute: typeof AppMovementsCreateIncomeRouteImport
+      parentRoute: typeof AppMovementsRoute
+    }
+    '/app/movements/create/expense': {
+      id: '/app/movements/create/expense'
+      path: '/create/expense'
+      fullPath: '/app/movements/create/expense'
+      preLoaderRoute: typeof AppMovementsCreateExpenseRouteImport
+      parentRoute: typeof AppMovementsRoute
+    }
   }
 }
 
+interface AppMovementsRouteChildren {
+  AppMovementsCreateExpenseRoute: typeof AppMovementsCreateExpenseRoute
+  AppMovementsCreateIncomeRoute: typeof AppMovementsCreateIncomeRoute
+}
+
+const AppMovementsRouteChildren: AppMovementsRouteChildren = {
+  AppMovementsCreateExpenseRoute: AppMovementsCreateExpenseRoute,
+  AppMovementsCreateIncomeRoute: AppMovementsCreateIncomeRoute,
+}
+
+const AppMovementsRouteWithChildren = AppMovementsRoute._addFileChildren(
+  AppMovementsRouteChildren,
+)
+
 interface AppRouteChildren {
-  AppMovementsRoute: typeof AppMovementsRoute
+  AppMovementsRoute: typeof AppMovementsRouteWithChildren
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
-  AppMovementsRoute: AppMovementsRoute,
+  AppMovementsRoute: AppMovementsRouteWithChildren,
   AppIndexRoute: AppIndexRoute,
 }
 

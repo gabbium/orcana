@@ -2,6 +2,7 @@ import { api } from "@/lib/api-client";
 import type { PaginatedList } from "@/types/api";
 
 import type {
+  CreateMovementRequest,
   GetMovementsSummaryRequest,
   ListMovementsRequest,
   MovementDto,
@@ -23,5 +24,10 @@ export const getMovementsSummary = async (
   const response = await api.get<MovementsSummaryDto>("/v1/movements/summary", {
     params,
   });
+  return response.data;
+};
+
+export const createMovement = async (data: CreateMovementRequest): Promise<MovementDto> => {
+  const response = await api.post<MovementDto>("v1/movements", data);
   return response.data;
 };

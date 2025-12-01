@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 import {
   MovementsFilters,
@@ -32,7 +32,20 @@ const MovementsPage = () => {
 
   return (
     <div className="flex min-h-screen flex-col bg-muted/40">
-      <MovementsHeader />
+      <MovementsHeader
+        onAddExpense={() =>
+          navigate({
+            to: "/app/movements/create/expense",
+            search: (old) => old,
+          })
+        }
+        onAddIncome={() =>
+          navigate({
+            to: "/app/movements/create/income",
+            search: (old) => old,
+          })
+        }
+      />
       <main className="flex flex-1 flex-col gap-4 px-6 py-4">
         <MovementsFilters
           minOccurredAt={search.minOccurredAt}
@@ -80,6 +93,7 @@ const MovementsPage = () => {
           }
         />
       </main>
+      <Outlet />
     </div>
   );
 };

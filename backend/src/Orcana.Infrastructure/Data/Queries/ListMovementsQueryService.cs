@@ -37,7 +37,7 @@ public class ListMovementsQueryService(OrcanaContext context) : IListMovementsQu
                 .OrderBy(m => m.Amount)
                 .ThenBy(m => m.Id),
             _ => queryable
-                .OrderByDescending(m => m.OccurredAt)
+                .OrderBy(m => m.OccurredAt)
                 .ThenBy(m => m.Id),
         };
 

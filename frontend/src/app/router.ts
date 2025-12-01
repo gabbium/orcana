@@ -9,6 +9,7 @@ import { routeTree } from "./routeTree.gen";
 export const router = createRouter({
   routeTree,
   defaultPreload: "intent",
+  defaultPreloadStaleTime: 0,
   defaultErrorComponent: DefaultCatchBoundary,
   defaultNotFoundComponent: NotFoundBoundary,
   context: {
