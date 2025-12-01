@@ -5,7 +5,7 @@ namespace Orcana.Domain.AggregatesModel.MovementAggregate;
 public class Movement : Entity, IAggregateRoot
 {
     public Guid UserId { get; private set; }
-    public MovementDirection Direction { get; private set; }
+    public MovementKind Kind { get; private set; }
     public decimal Amount { get; private set; }
     public string? Description { get; private set; }
     public DateTimeOffset OccurredAt { get; private set; }
@@ -16,13 +16,13 @@ public class Movement : Entity, IAggregateRoot
 
     public Movement(
         Guid userId,
-        MovementDirection direction,
+        MovementKind kind,
         decimal amount,
         string? description,
         DateTimeOffset occurredAt)
     {
         UserId = userId;
-        Direction = direction;
+        Kind = kind;
         Amount = amount;
         Description = description;
         OccurredAt = occurredAt;

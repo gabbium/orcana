@@ -20,7 +20,7 @@ public record ListMovementsRequest
     public string? Order { get; init; }
 
     [Description("Filter by movement kind.")]
-    public MovementDirection[]? Direction { get; init; }
+    public MovementKind[]? Kind { get; init; }
 
     [Description("Filter by minimum occurrence date (inclusive).")]
     public DateTimeOffset? MinOccurredAt { get; init; }

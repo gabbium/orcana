@@ -7,8 +7,8 @@ public record MovementDto
     [Description("Unique identifier of the movement.")]
     public Guid Id { get; init; }
 
-    [Description("Direction of the movement.")]
-    public MovementDirection Direction { get; init; }
+    [Description("Kind of the movement.")]
+    public MovementKind Kind { get; init; }
 
     [Description("Monetary value of the movement.")]
     public decimal Amount { get; init; }

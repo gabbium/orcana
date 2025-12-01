@@ -31,7 +31,7 @@ namespace Orcana.Infrastructure.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
-                    b.Property<string>("Direction")
+                    b.Property<string>("Kind")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");

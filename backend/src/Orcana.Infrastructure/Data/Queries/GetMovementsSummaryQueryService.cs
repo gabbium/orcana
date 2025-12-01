@@ -18,20 +18,20 @@ public class GetMovementsSummaryQueryService(OrcanaContext context) : IGetMoveme
         if (query.MaxOccurredAt is not null)
             queryable = queryable.Where(m => m.OccurredAt <= query.MaxOccurredAt.Value);
 
-        var totalsByDirection = await queryable
-            .GroupBy(m => m.Direction)
+        var totalsByKind = await queryable
+            .GroupBy(m => m.Kind)
             .Select(g => new
             {
-                Direction = g.Key,
+                Kind = g.Key,
                 TotalAmount = g.Sum(m => m.Amount)
             })
             .ToListAsync(cancellationToken);
 
-        var totalIncome = totalsByDirection
-            .FirstOrDefault(x => x.Direction == MovementDirection.Income)?.TotalAmount ?? 0m;
+        var totalIncome = totalsByKind
+            .FirstOrDefault(x => x.Kind == MovementKind.Income)?.TotalAmount ?? 0m;
 
-        var totalExpense = totalsByDirection
-            .FirstOrDefault(x => x.Direction == MovementDirection.Expense)?.TotalAmount ?? 0m;
+        var totalExpense = totalsByKind
+            .FirstOrDefault(x => x.Kind == MovementKind.Expense)?.TotalAmount ?? 0m;
 
         var balance = totalIncome - totalExpense;
 

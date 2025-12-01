@@ -6,7 +6,7 @@ public class MovementEntityTypeConfiguration : IEntityTypeConfiguration<Movement
 {
     public void Configure(EntityTypeBuilder<Movement> builder)
     {
-        builder.Property(m => m.Direction)
+        builder.Property(m => m.Kind)
             .HasConversion<string>()
             .HasMaxLength(30);
 

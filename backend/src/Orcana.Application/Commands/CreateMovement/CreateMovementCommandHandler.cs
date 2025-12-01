@@ -13,7 +13,7 @@ public class CreateMovementCommandHandler(
     {
         var movement = new Movement(
             Guid.Empty,
-            command.Direction,
+            command.Kind,
             command.Amount,
             command.Description,
             command.OccurredAt);
@@ -24,7 +24,7 @@ public class CreateMovementCommandHandler(
         return new MovementDto()
         {
             Id = movement.Id,
-            Direction = movement.Direction,
+            Kind = movement.Kind,
             Amount = movement.Amount,
             Description = movement.Description,
             OccurredAt = movement.OccurredAt

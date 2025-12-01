@@ -5,7 +5,7 @@ namespace Orcana.Application.Commands.CreateMovement;
 
 public record CreateMovementCommand : ICommand<Result<MovementDto>>
 {
-    public MovementDirection Direction { get; init; }
+    public MovementKind Kind { get; init; }
     public decimal Amount { get; init; }
     public string? Description { get; init; }
     public DateTimeOffset OccurredAt { get; init; }

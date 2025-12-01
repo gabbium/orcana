@@ -11,8 +11,8 @@ public class ListMovementsQueryService(OrcanaContext context) : IListMovementsQu
     {
         var queryable = context.Movements.AsNoTracking();
 
-        if (query.Direction is { Count: > 0 })
-            queryable = queryable.Where(m => query.Direction.Contains(m.Direction));
+        if (query.Kind is { Count: > 0 })
+            queryable = queryable.Where(m => query.Kind.Contains(m.Kind));
 
         if (query.MinOccurredAt is not null)
             queryable = queryable.Where(m => m.OccurredAt >= query.MinOccurredAt.Value);
@@ -49,7 +49,7 @@ public class ListMovementsQueryService(OrcanaContext context) : IListMovementsQu
             .Select(m => new MovementDto()
             {
                 Id = m.Id,
-                Direction = m.Direction,
+                Kind = m.Kind,
                 Amount = m.Amount,
                 Description = m.Description,
                 OccurredAt = m.OccurredAt

@@ -1,5 +1,4 @@
-﻿using Orcana.Api.Apis;
-using Orcana.Api.Infrastructure;
+﻿using Orcana.Api.Infrastructure;
 using Orcana.Api.Infrastructure.OpenApi;
 
 namespace Orcana.Api;
@@ -21,6 +20,24 @@ public static class ApiServiceExtensions
                 options.SubstituteApiVersionInUrl = true;
             });
 
+        services.AddEndpointsApiExplorer();
+
+        services
+            .AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(
+                    new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
+                );
+            });
+
+        services.ConfigureHttpJsonOptions(options =>
+        {
+            options.SerializerOptions.Converters.Add(
+                new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
+            );
+        });
+
         services.AddOpenApi(
             "v1",
             options =>
@@ -34,6 +51,10 @@ public static class ApiServiceExtensions
             }
         );
 
+        services.AddExceptionHandler<DefaultExceptionHandler>();
+
+        services.AddProblemDetails();
+
         services.AddCors(options =>
         {
             options.AddPolicy("SpaCorsPolicy", policy =>
@@ -45,17 +66,6 @@ public static class ApiServiceExtensions
             });
         });
 
-        services.AddExceptionHandler<DefaultExceptionHandler>();
-
-        services.AddProblemDetails();
-
-        services.ConfigureHttpJsonOptions(options =>
-        {
-            options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
-        });
-
-        services.AddHttpContextAccessor();
-
         return services;
     }
 
@@ -63,9 +73,7 @@ public static class ApiServiceExtensions
     {
         app.UseExceptionHandler();
 
-        app.MapGroup("/api/v{version:apiVersion}")
-            .WithApiVersionSet(app.NewApiVersionSet().ReportApiVersions().Build())
-            .MapMovementsApiV1();
+        app.MapControllers();
 
         app.MapOpenApi();
 

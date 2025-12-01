@@ -5,8 +5,8 @@ namespace Orcana.Api.Models;
 public record CreateMovementRequest
 {
     [Required]
-    [Description("Direction of the movement.")]
-    public MovementDirection Direction { get; init; }
+    [Description("Kind of the movement.")]
+    public MovementKind Kind { get; init; }
 
     [Required]
     [Range(0.01, double.MaxValue)]

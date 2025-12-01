@@ -14,7 +14,7 @@ namespace Orcana.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Direction = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    Kind = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     Amount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     Description = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
                     OccurredAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
