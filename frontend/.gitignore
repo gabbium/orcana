@@ -15,6 +15,3 @@ yarn-error.log*
 
 # tanstack
 .tanstack
-
-# mockups
-.mockups

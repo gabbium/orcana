@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Movimentos Financeiros</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background: #fafafa;
+        color: #111;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .flex {
+        display: flex;
+      }
+      .between {
+        justify-content: space-between;
+      }
+      .center {
+        align-items: center;
+      }
+      .gap-8 {
+        gap: 8px;
+      }
+      .gap-12 {
+        gap: 12px;
+      }
+      .gap-16 {
+        gap: 16px;
+      }
+
+      button {
+        padding: 10px 16px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        background: #fff;
+        cursor: pointer;
+        font-size: 14px;
+        white-space: nowrap;
+      }
+      button:hover {
+        background: #f1f1f1;
+      }
+
+      input,
+      select,
+      textarea {
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        width: 100%;
+        font-size: 14px;
+        font-family: inherit;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 70px;
+      }
+
+      .card {
+        background: #fff;
+        border-radius: 8px;
+        border: 1px solid #e5e5e5;
+        padding: 16px;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        color: #777;
+        margin-bottom: 4px;
+        display: block;
+      }
+      .stat-number {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .positive {
+        color: #16a34a;
+      }
+      .negative {
+        color: #dc2626;
+      }
+      .neutral {
+        color: #111;
+      }
+
+      /* Grid layouts */
+      @media (min-width: 768px) {
+        .grid-3 {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 16px;
+        }
+        .grid-filters {
+          display: grid;
+          grid-template-columns: 2fr 1fr 1fr 1fr;
+          gap: 12px;
+        }
+        .grid-form-2 {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
+      }
+
+      /* Desktop x mobile */
+      .desktop-only {
+        display: none;
+      }
+      .mobile-only {
+        display: block;
+      }
+
+      @media (min-width: 768px) {
+        .desktop-only {
+          display: block;
+        }
+        .mobile-only {
+          display: none;
+        }
+      }
+
+      /* Tabela */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #e5e5e5;
+      }
+      th,
+      td {
+        padding: 12px;
+        font-size: 14px;
+        border-bottom: 1px solid #eee;
+      }
+      th {
+        background: #f7f7f7;
+        text-align: left;
+        font-weight: 600;
+        font-size: 13px;
+        color: #555;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: 11px;
+        border: 1px solid #e5e5e5;
+        background: #fafafa;
+      }
+      .badge-income {
+        border-color: #bbf7d0;
+        background: #dcfce7;
+        color: #166534;
+      }
+      .badge-expense {
+        border-color: #fecaca;
+        background: #fee2e2;
+        color: #b91c1c;
+      }
+
+      .amount-income {
+        color: #16a34a;
+        font-weight: 600;
+      }
+      .amount-expense {
+        color: #dc2626;
+        font-weight: 600;
+      }
+
+      .movement-card {
+        background: #fff;
+        border-radius: 8px;
+        border: 1px solid #e5e5e5;
+        padding: 16px;
+      }
+      .movement-card + .movement-card {
+        margin-top: 12px;
+      }
+      .movement-title {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .movement-sub {
+        font-size: 12px;
+        color: #666;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 8px;
+        border-radius: 999px;
+        border: 1px solid #e5e5e5;
+        font-size: 11px;
+        color: #555;
+        background: #fafafa;
+      }
+
+      /* Paginação */
+      .pagination {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 13px;
+        color: #555;
+      }
+      .pagination-controls {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .page-btn {
+        padding: 6px 10px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        background: #fff;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      .page-btn:hover {
+        background: #f1f1f1;
+      }
+      .page-btn[disabled] {
+        opacity: 0.5;
+        cursor: default;
+      }
+      .page-btn.active {
+        background: #111;
+        color: #fff;
+        border-color: #111;
+      }
+
+      /* Dialog */
+      dialog {
+        border: none;
+        border-radius: 10px;
+        padding: 20px;
+        width: 90%;
+        max-width: 480px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+      dialog::backdrop {
+        background: rgba(0, 0, 0, 0.45);
+      }
+      .dialog-header {
+        margin-bottom: 16px;
+      }
+      .dialog-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 4px;
+      }
+      .dialog-subtitle {
+        font-size: 13px;
+        color: #666;
+      }
+      .dialog-footer {
+        margin-top: 16px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- HEADER -->
+      <header class="flex between center" style="margin-bottom: 20px; flex-wrap: wrap; gap: 12px">
+        <div>
+          <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 4px">
+            Movimentos Financeiros
+          </h1>
+          <p style="font-size: 13px; color: #666">
+            Acompanhe entradas, saídas e saldo no período selecionado.
+          </p>
+        </div>
+
+        <button onclick="openMovementForm()">+ Novo movimento</button>
+      </header>
+
+      <!-- TOTALIZADORES -->
+      <section class="grid-3" style="margin-bottom: 24px">
+        <div class="card">
+          <span class="stat-label">Entradas</span>
+          <div class="stat-number positive">R$ 12.500,00</div>
+        </div>
+
+        <div class="card">
+          <span class="stat-label">Saídas</span>
+          <div class="stat-number negative">R$ 7.320,00</div>
+        </div>
+
+        <div class="card">
+          <span class="stat-label">Saldo</span>
+          <div class="stat-number neutral">R$ 5.180,00</div>
+        </div>
+      </section>
+
+      <!-- FILTROS -->
+      <section class="grid-filters" style="margin-bottom: 24px">
+        <div>
+          <input type="text" placeholder="Buscar por descrição ou observação..." />
+        </div>
+        <div>
+          <select>
+            <option>Todos os tipos</option>
+            <option>Entradas</option>
+            <option>Saídas</option>
+          </select>
+        </div>
+        <div>
+          <select>
+            <option>Período: Este mês</option>
+            <option>Hoje</option>
+            <option>Esta semana</option>
+            <option>Este mês</option>
+            <option>Últimos 3 meses</option>
+            <option>Personalizado</option>
+          </select>
+        </div>
+        <div>
+          <select>
+            <option>Todas as categorias</option>
+            <option>Salário</option>
+            <option>Alimentação</option>
+            <option>Moradia</option>
+            <option>Lazer</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- LISTA DESKTOP (TABELA) -->
+      <section class="desktop-only">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Descrição</th>
+              <th>Categoria</th>
+              <th>Tipo</th>
+              <th>Valor</th>
+              <th style="text-align: right">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Linha exemplo 1 -->
+            <tr>
+              <td>05/12/2025</td>
+              <td>Salário Dezembro</td>
+              <td>Salário</td>
+              <td><span class="badge badge-income">Entrada</span></td>
+              <td class="amount-income">R$ 8.000,00</td>
+              <td style="text-align: right">
+                <button
+                  style="font-size: 12px; padding: 6px 10px; margin-right: 4px"
+                  onclick="openMovementForm('edit')"
+                >
+                  Editar
+                </button>
+                <button style="font-size: 12px; padding: 6px 10px">Excluir</button>
+              </td>
+            </tr>
+
+            <!-- Linha exemplo 2 -->
+            <tr>
+              <td>04/12/2025</td>
+              <td>Freelance Projeto X</td>
+              <td>Serviços</td>
+              <td><span class="badge badge-income">Entrada</span></td>
+              <td class="amount-income">R$ 1.500,00</td>
+              <td style="text-align: right">
+                <button
+                  style="font-size: 12px; padding: 6px 10px; margin-right: 4px"
+                  onclick="openMovementForm('edit')"
+                >
+                  Editar
+                </button>
+                <button style="font-size: 12px; padding: 6px 10px">Excluir</button>
+              </td>
+            </tr>
+
+            <!-- Linha exemplo 3 -->
+            <tr>
+              <td>03/12/2025</td>
+              <td>Aluguel</td>
+              <td>Moradia</td>
+              <td><span class="badge badge-expense">Saída</span></td>
+              <td class="amount-expense">R$ 2.200,00</td>
+              <td style="text-align: right">
+                <button
+                  style="font-size: 12px; padding: 6px 10px; margin-right: 4px"
+                  onclick="openMovementForm('edit')"
+                >
+                  Editar
+                </button>
+                <button style="font-size: 12px; padding: 6px 10px">Excluir</button>
+              </td>
+            </tr>
+
+            <!-- Linha exemplo 4 -->
+            <tr>
+              <td>02/12/2025</td>
+              <td>Supermercado</td>
+              <td>Alimentação</td>
+              <td><span class="badge badge-expense">Saída</span></td>
+              <td class="amount-expense">R$ 480,00</td>
+              <td style="text-align: right">
+                <button
+                  style="font-size: 12px; padding: 6px 10px; margin-right: 4px"
+                  onclick="openMovementForm('edit')"
+                >
+                  Editar
+                </button>
+                <button style="font-size: 12px; padding: 6px 10px">Excluir</button>
+              </td>
+            </tr>
+
+            <!-- Linha exemplo 5 -->
+            <tr>
+              <td>01/12/2025</td>
+              <td>Streaming</td>
+              <td>Lazer</td>
+              <td><span class="badge badge-expense">Saída</span></td>
+              <td class="amount-expense">R$ 39,90</td>
+              <td style="text-align: right">
+                <button
+                  style="font-size: 12px; padding: 6px 10px; margin-right: 4px"
+                  onclick="openMovementForm('edit')"
+                >
+                  Editar
+                </button>
+                <button style="font-size: 12px; padding: 6px 10px">Excluir</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Paginação desktop -->
+        <div class="pagination">
+          <div>Mostrando <strong>1–10</strong> de <strong>34</strong> movimentos</div>
+          <div class="pagination-controls">
+            <button class="page-btn" disabled>Anterior</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">Próximo</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- LISTA MOBILE (CARDS) -->
+      <section class="mobile-only" style="margin-top: 8px">
+        <!-- Card exemplo 1 -->
+        <article class="movement-card">
+          <header class="flex between center gap-8">
+            <div>
+              <div class="movement-title">Salário Dezembro</div>
+              <div class="movement-sub">05/12/2025 • Salário</div>
+            </div>
+            <div class="amount-income">R$ 8.000,00</div>
+          </header>
+
+          <div class="flex between center" style="margin-top: 10px">
+            <span class="badge badge-income">Entrada</span>
+            <span class="chip">Conta: Principal</span>
+          </div>
+
+          <footer style="margin-top: 12px" class="flex gap-8">
+            <button style="font-size: 12px; padding: 6px 10px" onclick="openMovementForm('edit')">
+              Editar
+            </button>
+            <button style="font-size: 12px; padding: 6px 10px">Excluir</button>
+          </footer>
+        </article>
+
+        <!-- Card exemplo 2 -->
+        <article class="movement-card">
+          <header class="flex between center gap-8">
+            <div>
+              <div class="movement-title">Supermercado</div>
+              <div class="movement-sub">02/12/2025 • Alimentação</div>
+            </div>
+            <div class="amount-expense">R$ 480,00</div>
+          </header>
+
+          <div class="flex between center" style="margin-top: 10px">
+            <span class="badge badge-expense">Saída</span>
+            <span class="chip">Cartão crédito</span>
+          </div>
+
+          <footer style="margin-top: 12px" class="flex gap-8">
+            <button style="font-size: 12px; padding: 6px 10px" onclick="openMovementForm('edit')">
+              Editar
+            </button>
+            <button style="font-size: 12px; padding: 6px 10px">Excluir</button>
+          </footer>
+        </article>
+
+        <!-- Paginação mobile -->
+        <div class="pagination" style="margin-top: 16px">
+          <div>Página <strong>1</strong> de <strong>4</strong></div>
+          <div class="pagination-controls">
+            <button class="page-btn" disabled>Anterior</button>
+            <button class="page-btn">Próximo</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- FORMULÁRIO DE MOVIMENTO (DIALOG) -->
+    <dialog id="movementDialog">
+      <div class="dialog-header">
+        <div class="dialog-title" id="movementDialogTitle">Novo movimento</div>
+        <div class="dialog-subtitle">Cadastre uma entrada ou saída no seu fluxo financeiro.</div>
+      </div>
+
+      <form method="dialog">
+        <div class="grid-form-2" style="margin-bottom: 12px">
+          <div>
+            <label style="font-size: 13px; display: block; margin-bottom: 4px">Data</label>
+            <input type="date" />
+          </div>
+          <div>
+            <label style="font-size: 13px; display: block; margin-bottom: 4px">Tipo</label>
+            <select>
+              <option value="income">Entrada</option>
+              <option value="expense">Saída</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-form-2" style="margin-bottom: 12px">
+          <div>
+            <label style="font-size: 13px; display: block; margin-bottom: 4px">Categoria</label>
+            <select>
+              <option>Selecione...</option>
+              <option>Salário</option>
+              <option>Alimentação</option>
+              <option>Moradia</option>
+              <option>Lazer</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 13px; display: block; margin-bottom: 4px">Conta</label>
+            <select>
+              <option>Conta principal</option>
+              <option>Cartão crédito</option>
+              <option>Poupança</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 12px">
+          <label style="font-size: 13px; display: block; margin-bottom: 4px">Descrição</label>
+          <input type="text" placeholder="Ex.: Salário Dezembro, Supermercado, Aluguel..." />
+        </div>
+
+        <div style="margin-bottom: 12px">
+          <label style="font-size: 13px; display: block; margin-bottom: 4px">Valor</label>
+          <input type="number" step="0.01" placeholder="0,00" />
+        </div>
+
+        <div style="margin-bottom: 12px">
+          <label style="font-size: 13px; display: block; margin-bottom: 4px"
+            >Observações (opcional)</label
+          >
+          <textarea placeholder="Detalhes adicionais, referência, etc."></textarea>
+        </div>
+
+        <div class="dialog-footer">
+          <button type="button" onclick="closeMovementForm()">Cancelar</button>
+          <button type="submit">Salvar</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script>
+      const dialog = document.getElementById("movementDialog");
+      const dialogTitle = document.getElementById("movementDialogTitle");
+
+      function openMovementForm(mode) {
+        if (mode === "edit") {
+          dialogTitle.textContent = "Editar movimento";
+        } else {
+          dialogTitle.textContent = "Novo movimento";
+        }
+        dialog.showModal();
+      }
+
+      function closeMovementForm() {
+        dialog.close();
+      }
+    </script>
+  </body>
+</html>

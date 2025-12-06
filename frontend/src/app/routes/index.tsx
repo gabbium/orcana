@@ -6,7 +6,7 @@ const RouteComponent = () => {
       <Link to="/app">App</Link>
       <Link to="/app/movements">Movements</Link>
       <Link to="/auth">Auth</Link>
-      <Link to="/auth/login">Login</Link>
+      <Link to="/app/categories">Categories</Link>
     </div>
   );
 };

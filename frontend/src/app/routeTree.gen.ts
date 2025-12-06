@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthIndexRouteImport } from './routes/auth/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppMovementsRouteImport } from './routes/app/movements'
+import { Route as AppCategoriesIndexRouteImport } from './routes/app/categories/index'
 import { Route as AppMovementsCreateIncomeRouteImport } from './routes/app/movements/create/income'
 import { Route as AppMovementsCreateExpenseRouteImport } from './routes/app/movements/create/expense'
 
@@ -48,6 +49,11 @@ const AppMovementsRoute = AppMovementsRouteImport.update({
   path: '/movements',
   getParentRoute: () => AppRoute,
 } as any)
+const AppCategoriesIndexRoute = AppCategoriesIndexRouteImport.update({
+  id: '/categories/',
+  path: '/categories/',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppMovementsCreateIncomeRoute =
   AppMovementsCreateIncomeRouteImport.update({
     id: '/create/income',
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/app/movements': typeof AppMovementsRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/auth/': typeof AuthIndexRoute
+  '/app/categories': typeof AppCategoriesIndexRoute
   '/app/movements/create/expense': typeof AppMovementsCreateExpenseRoute
   '/app/movements/create/income': typeof AppMovementsCreateIncomeRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/app/movements': typeof AppMovementsRouteWithChildren
   '/app': typeof AppIndexRoute
   '/auth': typeof AuthIndexRoute
+  '/app/categories': typeof AppCategoriesIndexRoute
   '/app/movements/create/expense': typeof AppMovementsCreateExpenseRoute
   '/app/movements/create/income': typeof AppMovementsCreateIncomeRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/app/movements': typeof AppMovementsRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/auth/': typeof AuthIndexRoute
+  '/app/categories/': typeof AppCategoriesIndexRoute
   '/app/movements/create/expense': typeof AppMovementsCreateExpenseRoute
   '/app/movements/create/income': typeof AppMovementsCreateIncomeRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/app/movements'
     | '/app/'
     | '/auth/'
+    | '/app/categories'
     | '/app/movements/create/expense'
     | '/app/movements/create/income'
   fileRoutesByTo: FileRoutesByTo
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/app/movements'
     | '/app'
     | '/auth'
+    | '/app/categories'
     | '/app/movements/create/expense'
     | '/app/movements/create/income'
   id:
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/app/movements'
     | '/app/'
     | '/auth/'
+    | '/app/categories/'
     | '/app/movements/create/expense'
     | '/app/movements/create/income'
   fileRoutesById: FileRoutesById
@@ -171,6 +183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMovementsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/categories/': {
+      id: '/app/categories/'
+      path: '/categories'
+      fullPath: '/app/categories'
+      preLoaderRoute: typeof AppCategoriesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/movements/create/income': {
       id: '/app/movements/create/income'
       path: '/create/income'
@@ -205,11 +224,13 @@ const AppMovementsRouteWithChildren = AppMovementsRoute._addFileChildren(
 interface AppRouteChildren {
   AppMovementsRoute: typeof AppMovementsRouteWithChildren
   AppIndexRoute: typeof AppIndexRoute
+  AppCategoriesIndexRoute: typeof AppCategoriesIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppMovementsRoute: AppMovementsRouteWithChildren,
   AppIndexRoute: AppIndexRoute,
+  AppCategoriesIndexRoute: AppCategoriesIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)

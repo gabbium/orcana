@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>App Layout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+      }
+
+      .layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* SIDEBAR */
+      .sidebar {
+        width: 240px;
+        background: #ffffff;
+        border-right: 1px solid #e5e5e5;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .logo {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .nav-group {
+        margin-top: 10px;
+      }
+      .nav-item {
+        padding: 10px 14px;
+        border-radius: 6px;
+        margin-bottom: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #444;
+      }
+      .nav-item:hover {
+        background: #f1f1f1;
+      }
+      .nav-item.active {
+        background: #111;
+        color: #fff;
+      }
+
+      /* TOPBAR (header global) */
+      .topbar {
+        position: sticky;
+        top: 0;
+        background: #ffffff;
+        border-bottom: 1px solid #e5e5e5;
+        padding: 14px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 5;
+      }
+
+      .user-area {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #ddd;
+      }
+
+      /* CONTENT */
+      .content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .page-container {
+        padding: 20px;
+        max-width: 1100px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      /* PAGE HEADER */
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .page-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 4px;
+      }
+
+      .page-desc {
+        font-size: 13px;
+        color: #666;
+      }
+
+      button {
+        padding: 10px 16px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        background: #fff;
+        cursor: pointer;
+        font-size: 14px;
+        white-space: nowrap;
+      }
+      button:hover {
+        background: #f1f1f1;
+      }
+
+      /* MOBILE MENU */
+      @media (max-width: 768px) {
+        .sidebar {
+          display: none;
+        }
+        .topbar {
+          justify-content: space-between;
+        }
+        .menu-button {
+          display: block;
+          width: 24px;
+          height: 24px;
+          background: #ddd;
+          border-radius: 4px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <!-- SIDEBAR (DESKTOP) -->
+      <aside class="sidebar">
+        <div class="logo">Minha Finança</div>
+
+        <div class="nav-group">
+          <div class="nav-item active">Dashboard</div>
+          <div class="nav-item">Movimentos</div>
+          <div class="nav-item">Categorias</div>
+          <div class="nav-item">Contas</div>
+          <div class="nav-item">Configurações</div>
+        </div>
+      </aside>
+
+      <!-- ÁREA PRINCIPAL -->
+      <div class="content">
+        <!-- HEADER GLOBAL -->
+        <header class="topbar">
+          <div class="menu-button" style="display: none"></div>
+          <div></div>
+
+          <div class="user-area">
+            <span style="font-size: 14px; color: #555">Olá, João</span>
+            <div class="avatar"></div>
+          </div>
+        </header>
+
+        <!-- CONTEÚDO DA PÁGINA -->
+        <main class="page-container">
+          <!-- PAGE HEADER -->
+          <div class="page-header">
+            <div>
+              <div class="page-title">Movimentos Financeiros</div>
+              <div class="page-desc">Acompanhe entradas e saídas do período.</div>
+            </div>
+
+            <button>+ Novo movimento</button>
+          </div>
+
+          <!-- AQUI ENTRARIA A TABELA OU CARDS -->
+          <div
+            style="
+              padding: 40px;
+              background: #fff;
+              border-radius: 8px;
+              border: 1px solid #eee;
+              text-align: center;
+              color: #777;
+            "
+          >
+            Conteúdo da página aqui...
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

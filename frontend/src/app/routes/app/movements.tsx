@@ -18,17 +18,9 @@ const MovementsPage = () => {
     movementsQueries.list({
       pageNumber: search.pageNumber,
       pageSize: search.pageSize,
-      direction: search.direction === "All" ? [] : [search.direction],
-      minOccurredAt: search.minOccurredAt,
-      maxOccurredAt: search.maxOccurredAt,
     }),
   );
-  const summaryQuery = useSuspenseQuery(
-    movementsQueries.summary({
-      minOccurredAt: search.minOccurredAt,
-      maxOccurredAt: search.maxOccurredAt,
-    }),
-  );
+  const summaryQuery = useSuspenseQuery(movementsQueries.summary({}));
 
   return (
     <div className="flex min-h-screen flex-col bg-muted/40">
@@ -106,17 +98,9 @@ export const Route = createFileRoute("/app/movements")({
       movementsQueries.list({
         pageNumber: deps.search.pageNumber,
         pageSize: deps.search.pageSize,
-        direction: deps.search.direction === "All" ? [] : [deps.search.direction],
-        minOccurredAt: deps.search.minOccurredAt,
-        maxOccurredAt: deps.search.maxOccurredAt,
       }),
     );
-    await context.queryClient.ensureQueryData(
-      movementsQueries.summary({
-        minOccurredAt: deps.search.minOccurredAt,
-        maxOccurredAt: deps.search.maxOccurredAt,
-      }),
-    );
+    await context.queryClient.ensureQueryData(movementsQueries.summary({}));
   },
   component: MovementsPage,
 });

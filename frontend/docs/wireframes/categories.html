@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Categories</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+      :root {
+        --bg: #f5f5f7;
+        --bg-card: #ffffff;
+        --border-subtle: #e5e7eb;
+        --border-strong: #d1d5db;
+        --text-main: #111827;
+        --text-muted: #6b7280;
+        --text-soft: #9ca3af;
+        --accent: #2563eb;
+        --accent-soft: #e0ebff;
+        --radius-lg: 12px;
+        --radius-md: 8px;
+        --radius-full: 999px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background: var(--bg);
+        color: var(--text-main);
+      }
+
+      .page {
+        max-width: 1120px;
+        margin: 24px auto 48px;
+        padding: 0 16px 32px;
+      }
+
+      .page-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .page-header-title {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .page-title {
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+
+      .page-subtitle {
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+
+      .page-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px 14px;
+        font-size: 14px;
+        border-radius: var(--radius-full);
+        border: 1px solid var(--border-subtle);
+        background: #ffffff;
+        color: var(--text-main);
+        cursor: pointer;
+        transition:
+          background 0.15s ease,
+          border-color 0.15s ease,
+          box-shadow 0.15s ease,
+          transform 0.05s ease;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #ffffff;
+      }
+
+      .btn-icon {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+      }
+
+      .btn:hover {
+        background: #f9fafb;
+        border-color: var(--border-strong);
+      }
+
+      .btn-primary:hover {
+        background: #1d4ed8;
+        border-color: #1d4ed8;
+        box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+      }
+
+      .btn:active {
+        transform: translateY(1px);
+        box-shadow: none;
+      }
+
+      /* Toolbar (filters) */
+
+      .toolbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: var(--radius-full);
+        background: #ffffff;
+        border: 1px solid var(--border-subtle);
+        margin-bottom: 16px;
+      }
+
+      .toolbar-left {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .toolbar-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .input {
+        flex: 1;
+        border-radius: 999px;
+        border: none;
+        padding: 8px 12px;
+        font-size: 14px;
+        background: #f3f4f6;
+        outline: none;
+        color: var(--text-main);
+      }
+
+      .input::placeholder {
+        color: var(--text-soft);
+      }
+
+      .filter-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border-radius: var(--radius-full);
+        border: 1px solid var(--border-subtle);
+        background: #ffffff;
+        font-size: 13px;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition:
+          background 0.15s ease,
+          border-color 0.15s ease,
+          color 0.15s ease;
+      }
+
+      .filter-chip span.icon {
+        font-size: 14px;
+      }
+
+      .filter-chip-active {
+        background: #eff6ff;
+        border-color: #bfdbfe;
+        color: #1d4ed8;
+      }
+
+      .filter-chip:hover {
+        background: #f9fafb;
+      }
+
+      .toolbar-text {
+        font-size: 12px;
+        color: var(--text-soft);
+      }
+
+      /* Table/card */
+
+      .card {
+        border-radius: var(--radius-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        overflow: hidden;
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .card-title {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .card-meta {
+        font-size: 12px;
+        color: var(--text-soft);
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      .table thead {
+        background: #f9fafb;
+      }
+
+      .table th,
+      .table td {
+        padding: 10px 16px;
+        border-bottom: 1px solid var(--border-subtle);
+        text-align: left;
+        vertical-align: middle;
+      }
+
+      .table th {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--text-soft);
+        font-weight: 500;
+      }
+
+      .table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .table-row {
+        background: #ffffff;
+        transition: background 0.12s ease;
+      }
+
+      .table-row:hover {
+        background: #f9fafb;
+      }
+
+      .checkbox-cell {
+        width: 40px;
+      }
+
+      .checkbox {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        border: 1px solid var(--border-strong);
+        display: inline-block;
+        background: #ffffff;
+      }
+
+      .task-name {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .task-name-title {
+        font-weight: 500;
+      }
+
+      .task-name-description {
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 8px;
+        border-radius: var(--radius-full);
+        font-size: 11px;
+        font-weight: 500;
+        border: 1px solid var(--border-subtle);
+        background: #f9fafb;
+        color: var(--text-muted);
+      }
+
+      .badge-accent {
+        background: var(--accent-soft);
+        border-color: #bfdbfe;
+        color: #1d4ed8;
+      }
+
+      .status-cell {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #9ca3af;
+      }
+
+      .status-dot-active {
+        background: #22c55e;
+      }
+
+      .status-dot-inactive {
+        background: #d1d5db;
+      }
+
+      .status-text {
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+
+      .date-text {
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+
+      .actions-cell {
+        width: 40px;
+        text-align: right;
+      }
+
+      .kebab {
+        border-radius: var(--radius-full);
+        border: none;
+        background: transparent;
+        width: 28px;
+        height: 28px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--text-soft);
+        transition:
+          background 0.12s ease,
+          color 0.12s ease;
+      }
+
+      .kebab:hover {
+        background: #f3f4f6;
+        color: var(--text-muted);
+      }
+
+      /* Footer / pagination */
+
+      .card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 16px 12px;
+        border-top: 1px solid var(--border-subtle);
+        font-size: 12px;
+        color: var(--text-soft);
+      }
+
+      .pagination {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .pagination button {
+        min-width: 28px;
+        height: 28px;
+        border-radius: var(--radius-full);
+        border: 1px solid transparent;
+        background: transparent;
+        font-size: 12px;
+        cursor: pointer;
+        color: var(--text-muted);
+        padding: 0 8px;
+        transition:
+          background 0.12s ease,
+          border-color 0.12s ease,
+          color 0.12s ease;
+      }
+
+      .pagination button:hover {
+        background: #f3f4f6;
+      }
+
+      .pagination .page-active {
+        background: #111827;
+        color: #ffffff;
+      }
+
+      @media (max-width: 768px) {
+        .page-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .page-header-actions {
+          width: 100%;
+          justify-content: flex-start;
+        }
+
+        .toolbar {
+          flex-direction: column;
+          align-items: stretch;
+          border-radius: var(--radius-lg);
+        }
+
+        .toolbar-left {
+          width: 100%;
+        }
+
+        .toolbar-right {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .table th:nth-child(2),
+        .table td:nth-child(2) {
+          min-width: 160px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="page-header">
+        <div class="page-header-title">
+          <h1 class="page-title">Categorias</h1>
+          <p class="page-subtitle">
+            Gerencie categorias e aplique filtros para encontrar o que precisa.
+          </p>
+        </div>
+
+        <div class="page-header-actions">
+          <button class="btn btn-primary">Nova categoria</button>
+        </div>
+      </header>
+
+      <section class="toolbar" aria-label="Category filters">
+        <div class="toolbar-left">
+          <input
+            class="input"
+            placeholder="Filtrar categorias..."
+            aria-label="Filtrar categorias"
+          />
+
+          <button class="filter-chip">
+            <span class="icon">⭮</span>
+            <span>Status</span>
+          </button>
+
+          <button class="filter-chip">
+            <span class="icon">⭮</span>
+            <span>Tipo</span>
+          </button>
+        </div>
+
+        <div class="toolbar-right">
+          <span class="toolbar-text">6 categorias encontradas</span>
+        </div>
+      </section>
+
+      <section class="card" aria-label="Category list">
+        <header class="card-header">
+          <div>
+            <span class="card-title">Categorias</span>
+          </div>
+          <div class="card-meta">Exibindo 6 de 6 categorias</div>
+        </header>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="checkbox-cell">
+                <span class="checkbox" aria-hidden="true"></span>
+              </th>
+              <th>Nome</th>
+              <th>Tipo</th>
+              <th>Status</th>
+              <th>Atualizado em</th>
+              <th class="actions-cell"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="table-row">
+              <td class="checkbox-cell">
+                <span class="checkbox" aria-hidden="true"></span>
+              </td>
+              <td>
+                <div class="task-name">
+                  <span class="task-name-title">Salário</span>
+                  <span class="task-name-description"> Receitas fixas mensais. </span>
+                </div>
+              </td>
+              <td>
+                <span class="badge badge-accent">Receita</span>
+              </td>
+              <td>
+                <div class="status-cell">
+                  <span class="status-dot status-dot-active"></span>
+                  <span class="status-text">Ativo</span>
+                </div>
+              </td>
+              <td>
+                <span class="date-text">2025-12-01</span>
+              </td>
+              <td class="actions-cell">
+                <button class="kebab" aria-label="Mais ações">⋯</button>
+              </td>
+            </tr>
+
+            <tr class="table-row">
+              <td class="checkbox-cell">
+                <span class="checkbox" aria-hidden="true"></span>
+              </td>
+              <td>
+                <div class="task-name">
+                  <span class="task-name-title">Aluguel</span>
+                  <span class="task-name-description"> Despesas com moradia. </span>
+                </div>
+              </td>
+              <td>
+                <span class="badge">Despesa</span>
+              </td>
+              <td>
+                <div class="status-cell">
+                  <span class="status-dot status-dot-active"></span>
+                  <span class="status-text">Ativo</span>
+                </div>
+              </td>
+              <td>
+                <span class="date-text">2025-11-25</span>
+              </td>
+              <td class="actions-cell">
+                <button class="kebab" aria-label="Mais ações">⋯</button>
+              </td>
+            </tr>
+
+            <tr class="table-row">
+              <td class="checkbox-cell">
+                <span class="checkbox" aria-hidden="true"></span>
+              </td>
+              <td>
+                <div class="task-name">
+                  <span class="task-name-title">Mercado</span>
+                  <span class="task-name-description"> Supermercado e alimentos. </span>
+                </div>
+              </td>
+              <td>
+                <span class="badge">Despesa</span>
+              </td>
+              <td>
+                <div class="status-cell">
+                  <span class="status-dot"></span>
+                  <span class="status-text">Inativo</span>
+                </div>
+              </td>
+              <td>
+                <span class="date-text">2025-10-10</span>
+              </td>
+              <td class="actions-cell">
+                <button class="kebab" aria-label="Mais ações">⋯</button>
+              </td>
+            </tr>
+
+            <tr class="table-row">
+              <td class="checkbox-cell">
+                <span class="checkbox" aria-hidden="true"></span>
+              </td>
+              <td>
+                <div class="task-name">
+                  <span class="task-name-title">Transferência interna</span>
+                  <span class="task-name-description"> Transferências entre contas. </span>
+                </div>
+              </td>
+              <td>
+                <span class="badge">Transferência</span>
+              </td>
+              <td>
+                <div class="status-cell">
+                  <span class="status-dot status-dot-active"></span>
+                  <span class="status-text">Ativo</span>
+                </div>
+              </td>
+              <td>
+                <span class="date-text">2025-09-18</span>
+              </td>
+              <td class="actions-cell">
+                <button class="kebab" aria-label="Mais ações">⋯</button>
+              </td>
+            </tr>
+
+            <tr class="table-row">
+              <td class="checkbox-cell">
+                <span class="checkbox" aria-hidden="true"></span>
+              </td>
+              <td>
+                <div class="task-name">
+                  <span class="task-name-title">Freelance</span>
+                  <span class="task-name-description"> Trabalhos pontuais. </span>
+                </div>
+              </td>
+              <td>
+                <span class="badge badge-accent">Receita</span>
+              </td>
+              <td>
+                <div class="status-cell">
+                  <span class="status-dot"></span>
+                  <span class="status-text">Inativo</span>
+                </div>
+              </td>
+              <td>
+                <span class="date-text">2025-08-05</span>
+              </td>
+              <td class="actions-cell">
+                <button class="kebab" aria-label="Mais ações">⋯</button>
+              </td>
+            </tr>
+
+            <tr class="table-row">
+              <td class="checkbox-cell">
+                <span class="checkbox" aria-hidden="true"></span>
+              </td>
+              <td>
+                <div class="task-name">
+                  <span class="task-name-title">Transporte</span>
+                  <span class="task-name-description"> Combustível, apps, etc. </span>
+                </div>
+              </td>
+              <td>
+                <span class="badge">Despesa</span>
+              </td>
+              <td>
+                <div class="status-cell">
+                  <span class="status-dot status-dot-active"></span>
+                  <span class="status-text">Ativo</span>
+                </div>
+              </td>
+              <td>
+                <span class="date-text">2025-11-30</span>
+              </td>
+              <td class="actions-cell">
+                <button class="kebab" aria-label="Mais ações">⋯</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <footer class="card-footer">
+          <span>Mostrando 1–6 de 6 categorias</span>
+
+          <div class="pagination">
+            <button aria-label="Página anterior">‹</button>
+            <button class="page-active">1</button>
+            <button>2</button>
+            <button aria-label="Próxima página">›</button>
+          </div>
+        </footer>
+      </section>
+    </div>
+  </body>
+</html>

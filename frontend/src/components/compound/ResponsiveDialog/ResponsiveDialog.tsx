@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/Drawer";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
-type ResponsiveDialogProps = {
+export type ResponsiveDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;

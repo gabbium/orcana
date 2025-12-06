@@ -2,6 +2,7 @@ import { useForm } from "@tanstack/react-form";
 import { format } from "date-fns";
 import { NumericFormat } from "react-number-format";
 
+import { ResponsiveDialog } from "@/components/compound/ResponsiveDialog";
 import { Button } from "@/components/ui/Button";
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "@/components/ui/Field";
 import { Input } from "@/components/ui/Input";
@@ -11,9 +12,9 @@ import {
   InputGroupInput,
   InputGroupText,
 } from "@/components/ui/InputGroup";
-import { ResponsiveDialog } from "@/components/ui/ResponsiveDialog";
 
 import { movementsCreateSchema, type MovementsCreateSchema } from "../../api/schemas";
+
 
 type MovementsExpenseFormProps = {
   onClose: () => void;
