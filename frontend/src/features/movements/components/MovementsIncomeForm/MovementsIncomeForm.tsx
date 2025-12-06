@@ -15,7 +15,6 @@ import {
 
 import { movementsCreateSchema, type MovementsCreateSchema } from "../../api/schemas";
 
-
 type MovementsIncomeFormProps = {
   onClose: () => void;
   onSubmit: (value: MovementsCreateSchema) => void;

@@ -1,9 +1,4 @@
-import {
-  BriefcaseIcon,
-  DollarSignIcon,
-  HomeIcon,
-  ShoppingCartIcon,
-} from "lucide-react";
+import { BriefcaseIcon, DollarSignIcon, HomeIcon, ShoppingCartIcon } from "lucide-react";
 
 import type { CategoryKind, CategoryStatus } from "../api/types";
 

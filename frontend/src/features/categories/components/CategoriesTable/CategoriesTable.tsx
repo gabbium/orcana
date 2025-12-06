@@ -1,21 +1,11 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import {
-  CircleIcon,
-  CircleSmallIcon,
-  PlusIcon,
-  TrendingDownIcon,
-  TrendingUpIcon,
-} from "lucide-react";
+import { CircleIcon, CircleSmallIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import { useMemo } from "react";
 
+import { DataTable, DataTableColumnHeader } from "@/components/compound/DataTable";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
-import {
-  DataTable,
-  DataTableColumnHeader,
-  type DataTableToolbarSlots,
-} from "@/components/compound/DataTable";
 
 import type { CategoryDto } from "../../api/types";
 import {
