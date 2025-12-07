@@ -1,34 +1,39 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Categories</title>
+    <title>Categorias - Wireframe UX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <style>
       :root {
-        --bg: #f5f5f7;
+        --bg: #f5f5f5;
         --bg-card: #ffffff;
-        --border-subtle: #e5e7eb;
-        --border-strong: #d1d5db;
-        --text-main: #111827;
+        --border-subtle: #e5e5e5;
+        --border-strong: #d4d4d4;
+        --text: #111827;
         --text-muted: #6b7280;
         --text-soft: #9ca3af;
+        --primary: #111827;
+        --primary-soft: #11182710;
+        --primary-soft-hover: #11182720;
         --accent: #2563eb;
-        --accent-soft: #e0ebff;
+        --accent-soft: #2563eb10;
+        --success: #16a34a;
+        --danger: #dc2626;
         --radius-lg: 12px;
-        --radius-md: 8px;
         --radius-full: 999px;
+        --shadow-card: 0 10px 40px rgba(15, 23, 42, 0.07);
       }
 
       * {
         box-sizing: border-box;
-        margin: 0;
-        padding: 0;
       }
 
+      html,
       body {
-        min-height: 100vh;
+        margin: 0;
+        padding: 0;
         font-family:
           system-ui,
           -apple-system,
@@ -36,33 +41,38 @@
           "Segoe UI",
           sans-serif;
         background: var(--bg);
-        color: var(--text-main);
+        color: var(--text);
+      }
+
+      body {
+        padding: 24px;
       }
 
       .page {
-        max-width: 1120px;
-        margin: 24px auto 48px;
-        padding: 0 16px 32px;
+        max-width: 1200px;
+        margin: 0 auto;
       }
+
+      /* PAGE HEADER */
 
       .page-header {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
         gap: 16px;
-        margin-bottom: 20px;
+        margin-bottom: 24px;
       }
 
-      .page-header-title {
+      .page-header-main {
         display: flex;
         flex-direction: column;
         gap: 4px;
       }
 
       .page-title {
-        font-size: 24px;
-        font-weight: 600;
-        letter-spacing: -0.02em;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
       }
 
       .page-subtitle {
@@ -81,193 +91,183 @@
         align-items: center;
         justify-content: center;
         gap: 6px;
-        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        background: var(--primary);
+        color: #ffffff;
+        padding: 8px 16px;
         font-size: 14px;
-        border-radius: var(--radius-full);
-        border: 1px solid var(--border-subtle);
-        background: #ffffff;
-        color: var(--text-main);
+        font-weight: 500;
         cursor: pointer;
-        transition:
-          background 0.15s ease,
-          border-color 0.15s ease,
-          box-shadow 0.15s ease,
-          transform 0.05s ease;
+        white-space: nowrap;
       }
 
-      .btn-primary {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: #ffffff;
+      .btn:hover {
+        filter: brightness(1.03);
+      }
+
+      .btn-outline {
+        background: #ffffff;
+        color: var(--text);
+        border-color: var(--border-subtle);
+      }
+
+      .btn-outline:hover {
+        background: #f9fafb;
       }
 
       .btn-icon {
         width: 32px;
         height: 32px;
         padding: 0;
+        border-radius: 999px;
       }
 
-      .btn:hover {
-        background: #f9fafb;
-        border-color: var(--border-strong);
+      .btn-icon svg {
+        width: 16px;
+        height: 16px;
       }
 
-      .btn-primary:hover {
-        background: #1d4ed8;
-        border-color: #1d4ed8;
-        box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+      .btn-primary svg {
+        width: 16px;
+        height: 16px;
       }
 
-      .btn:active {
-        transform: translateY(1px);
-        box-shadow: none;
-      }
+      /* FILTER BAR */
 
-      /* Toolbar (filters) */
-
-      .toolbar {
+      .filter-bar {
         display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
         align-items: center;
-        gap: 10px;
-        padding: 10px 14px;
-        border-radius: var(--radius-full);
-        background: #ffffff;
-        border: 1px solid var(--border-subtle);
         margin-bottom: 16px;
       }
 
-      .toolbar-left {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+      .filter-search {
+        position: relative;
+        min-width: 220px;
+        flex: 1 1 260px;
       }
 
-      .toolbar-right {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .input {
-        flex: 1;
+      .filter-search input {
+        width: 100%;
         border-radius: 999px;
-        border: none;
-        padding: 8px 12px;
+        border: 1px solid var(--border-subtle);
+        padding: 8px 12px 8px 32px;
         font-size: 14px;
-        background: #f3f4f6;
-        outline: none;
-        color: var(--text-main);
+        background: #ffffff;
       }
 
-      .input::placeholder {
+      .filter-search input::placeholder {
         color: var(--text-soft);
       }
 
-      .filter-chip {
+      .filter-search-icon {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 14px;
+        color: var(--text-soft);
+      }
+
+      .chip {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        padding: 6px 12px;
-        border-radius: var(--radius-full);
+        border-radius: 999px;
         border: 1px solid var(--border-subtle);
         background: #ffffff;
+        padding: 6px 10px;
         font-size: 13px;
-        color: var(--text-muted);
         cursor: pointer;
-        transition:
-          background 0.15s ease,
-          border-color 0.15s ease,
-          color 0.15s ease;
+        white-space: nowrap;
       }
 
-      .filter-chip span.icon {
+      .chip-icon {
         font-size: 14px;
       }
 
-      .filter-chip-active {
-        background: #eff6ff;
-        border-color: #bfdbfe;
-        color: #1d4ed8;
+      .chip--active {
+        border-color: var(--primary);
+        background: var(--primary-soft);
+        color: var(--primary);
       }
 
-      .filter-chip:hover {
-        background: #f9fafb;
+      .filter-clear {
+        margin-left: auto;
+        font-size: 13px;
+        color: var(--accent);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 4px 0;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        display: none;
       }
 
-      .toolbar-text {
-        font-size: 12px;
-        color: var(--text-soft);
+      .filter-clear.visible {
+        display: inline-flex;
       }
 
-      /* Table/card */
+      /* CARD + TABLE */
 
       .card {
-        border-radius: var(--radius-lg);
         background: var(--bg-card);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
         border: 1px solid var(--border-subtle);
         overflow: hidden;
       }
 
-      .card-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 12px 16px;
+      .table-wrapper {
+        max-height: 460px;
+        overflow: auto;
         border-bottom: 1px solid var(--border-subtle);
       }
 
-      .card-title {
-        font-size: 14px;
-        font-weight: 500;
-      }
-
-      .card-meta {
-        font-size: 12px;
-        color: var(--text-soft);
-      }
-
-      .table {
-        width: 100%;
+      table {
         border-collapse: collapse;
-        font-size: 14px;
+        width: 100%;
+        min-width: 780px;
       }
 
-      .table thead {
+      thead {
+        position: sticky;
+        top: 0;
+        z-index: 1;
         background: #f9fafb;
       }
 
-      .table th,
-      .table td {
-        padding: 10px 16px;
-        border-bottom: 1px solid var(--border-subtle);
+      th,
+      td {
+        padding: 12px 16px;
+        font-size: 14px;
         text-align: left;
-        vertical-align: middle;
+        border-bottom: 1px solid var(--border-subtle);
       }
 
-      .table th {
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: var(--text-soft);
-        font-weight: 500;
+      th {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-muted);
       }
 
-      .table tr:last-child td {
+      tbody tr:last-child td {
         border-bottom: none;
       }
 
-      .table-row {
-        background: #ffffff;
-        transition: background 0.12s ease;
-      }
-
-      .table-row:hover {
+      tbody tr:hover {
         background: #f9fafb;
       }
 
-      .checkbox-cell {
-        width: 40px;
+      .cell-checkbox {
+        width: 36px;
+      }
+
+      .cell-center {
+        text-align: center;
       }
 
       .checkbox {
@@ -275,145 +275,225 @@
         height: 16px;
         border-radius: 4px;
         border: 1px solid var(--border-strong);
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
         background: #ffffff;
       }
 
-      .task-name {
+      .checkbox input {
+        display: none;
+      }
+
+      .checkbox[data-checked="true"] {
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .checkbox[data-checked="true"] span {
+        width: 8px;
+        height: 8px;
+        background: #ffffff;
+        border-radius: 2px;
+      }
+
+      .category-main {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .color-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+      }
+
+      .category-text {
         display: flex;
         flex-direction: column;
         gap: 2px;
       }
 
-      .task-name-title {
-        font-weight: 500;
+      .category-name {
+        font-weight: 600;
       }
 
-      .task-name-description {
-        font-size: 12px;
+      .category-description {
+        font-size: 13px;
         color: var(--text-muted);
       }
 
       .badge {
         display: inline-flex;
         align-items: center;
-        padding: 2px 8px;
-        border-radius: var(--radius-full);
-        font-size: 11px;
-        font-weight: 500;
-        border: 1px solid var(--border-subtle);
-        background: #f9fafb;
-        color: var(--text-muted);
-      }
-
-      .badge-accent {
-        background: var(--accent-soft);
-        border-color: #bfdbfe;
-        color: #1d4ed8;
-      }
-
-      .status-cell {
-        display: flex;
-        align-items: center;
         gap: 6px;
-      }
-
-      .status-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #9ca3af;
-      }
-
-      .status-dot-active {
-        background: #22c55e;
-      }
-
-      .status-dot-inactive {
-        background: #d1d5db;
-      }
-
-      .status-text {
-        font-size: 13px;
-        color: var(--text-muted);
-      }
-
-      .date-text {
-        font-size: 13px;
-        color: var(--text-muted);
-      }
-
-      .actions-cell {
-        width: 40px;
-        text-align: right;
-      }
-
-      .kebab {
-        border-radius: var(--radius-full);
-        border: none;
-        background: transparent;
-        width: 28px;
-        height: 28px;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        color: var(--text-soft);
-        transition:
-          background 0.12s ease,
-          color 0.12s ease;
-      }
-
-      .kebab:hover {
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        border: 1px solid transparent;
         background: #f3f4f6;
         color: var(--text-muted);
       }
 
-      /* Footer / pagination */
+      .badge-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+      }
 
-      .card-footer {
+      .badge-type-receita {
+        color: var(--success);
+        background: #ecfdf3;
+        border-color: #bbf7d0;
+      }
+
+      .badge-type-despesa {
+        color: var(--danger);
+        background: #fef2f2;
+        border-color: #fecaca;
+      }
+
+      .badge-status-ativo {
+        color: var(--success);
+        background: #ecfdf3;
+        border-color: #bbf7d0;
+      }
+
+      .badge-status-inativo {
+        color: var(--text-muted);
+        background: #f3f4f6;
+        border-color: var(--border-strong);
+      }
+
+      .icon-placeholder {
+        font-size: 17px;
+        opacity: 0.7;
+      }
+
+      .btn-kebab {
+        width: 32px;
+        height: 32px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        background: transparent;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .btn-kebab:hover {
+        background: #f3f4f6;
+      }
+
+      /* TABLE FOOTER */
+
+      .table-footer {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 16px 12px;
-        border-top: 1px solid var(--border-subtle);
+        gap: 12px;
+        padding: 10px 16px;
+        font-size: 13px;
+        background: #ffffff;
+      }
+
+      .selection-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-muted);
+      }
+
+      .selection-actions {
+        display: flex;
+        gap: 6px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s ease;
+      }
+
+      .selection-actions.visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .selection-actions .btn-outline {
+        padding-inline: 12px;
         font-size: 12px;
-        color: var(--text-soft);
       }
 
       .pagination {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .pagination-group {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .pagination-label {
+        color: var(--text-muted);
+      }
+
+      select {
+        border-radius: 999px;
+        border: 1px solid var(--border-subtle);
+        padding: 6px 26px 6px 10px;
+        font-size: 13px;
+        background: #ffffff;
+        appearance: none;
+        position: relative;
+      }
+
+      .select-wrapper {
+        position: relative;
+      }
+
+      .select-wrapper::after {
+        content: "▾";
+        position: absolute;
+        right: 9px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 11px;
+        color: var(--text-soft);
+        pointer-events: none;
+      }
+
+      .pagination-buttons {
         display: inline-flex;
         align-items: center;
         gap: 4px;
       }
 
-      .pagination button {
-        min-width: 28px;
-        height: 28px;
-        border-radius: var(--radius-full);
-        border: 1px solid transparent;
-        background: transparent;
-        font-size: 12px;
+      .pagination-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 999px;
+        border: 1px solid var(--border-subtle);
+        background: #ffffff;
         cursor: pointer;
-        color: var(--text-muted);
-        padding: 0 8px;
-        transition:
-          background 0.12s ease,
-          border-color 0.12s ease,
-          color 0.12s ease;
+        font-size: 13px;
       }
 
-      .pagination button:hover {
-        background: #f3f4f6;
+      .pagination-btn:disabled {
+        opacity: 0.4;
+        cursor: default;
       }
 
-      .pagination .page-active {
-        background: #111827;
-        color: #ffffff;
-      }
+      /* RESPONSIVE */
 
       @media (max-width: 768px) {
+        body {
+          padding: 16px;
+        }
+
         .page-header {
           flex-direction: column;
           align-items: flex-start;
@@ -424,264 +504,376 @@
           justify-content: flex-start;
         }
 
-        .toolbar {
-          flex-direction: column;
-          align-items: stretch;
-          border-radius: var(--radius-lg);
-        }
-
-        .toolbar-left {
+        .page-header-actions .btn {
           width: 100%;
+          justify-content: center;
         }
 
-        .toolbar-right {
+        .table-footer {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .pagination {
           width: 100%;
           justify-content: space-between;
         }
+      }
 
-        .table th:nth-child(2),
-        .table td:nth-child(2) {
-          min-width: 160px;
+      @media (max-width: 540px) {
+        .pagination {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 6px;
+        }
+
+        .selection-info {
+          flex-wrap: wrap;
         }
       }
     </style>
   </head>
   <body>
     <div class="page">
+      <!-- PAGE HEADER -->
       <header class="page-header">
-        <div class="page-header-title">
+        <div class="page-header-main">
           <h1 class="page-title">Categorias</h1>
           <p class="page-subtitle">
-            Gerencie categorias e aplique filtros para encontrar o que precisa.
+            Gerencie categorias de receitas e despesas e aplique filtros para encontrar o que
+            precisa.
           </p>
         </div>
 
         <div class="page-header-actions">
-          <button class="btn btn-primary">Nova categoria</button>
+          <button type="button" class="btn btn-outline">Exportar</button>
+          <button type="button" class="btn btn-primary">
+            <span>+</span>
+            <span>Nova categoria</span>
+          </button>
         </div>
       </header>
 
-      <section class="toolbar" aria-label="Category filters">
-        <div class="toolbar-left">
-          <input
-            class="input"
-            placeholder="Filtrar categorias..."
-            aria-label="Filtrar categorias"
-          />
-
-          <button class="filter-chip">
-            <span class="icon">⭮</span>
-            <span>Status</span>
-          </button>
-
-          <button class="filter-chip">
-            <span class="icon">⭮</span>
-            <span>Tipo</span>
-          </button>
+      <!-- FILTER BAR -->
+      <section class="filter-bar" aria-label="Filtros">
+        <div class="filter-search">
+          <span class="filter-search-icon">🔍</span>
+          <input id="filter-name" type="search" placeholder="Buscar por nome ou descrição" />
         </div>
 
-        <div class="toolbar-right">
-          <span class="toolbar-text">6 categorias encontradas</span>
-        </div>
+        <button type="button" class="chip" data-filter-group="type" data-filter-value="receita">
+          <span class="chip-icon">+</span>
+          <span>Tipo: Receita</span>
+        </button>
+
+        <button type="button" class="chip" data-filter-group="type" data-filter-value="despesa">
+          <span class="chip-icon">+</span>
+          <span>Tipo: Despesa</span>
+        </button>
+
+        <button type="button" class="chip" data-filter-group="status" data-filter-value="ativo">
+          <span class="chip-icon">+</span>
+          <span>Status: Ativo</span>
+        </button>
+
+        <button type="button" class="chip" data-filter-group="status" data-filter-value="inativo">
+          <span class="chip-icon">+</span>
+          <span>Status: Inativo</span>
+        </button>
+
+        <button type="button" class="filter-clear" id="filter-clear">Limpar filtros</button>
       </section>
 
-      <section class="card" aria-label="Category list">
-        <header class="card-header">
-          <div>
-            <span class="card-title">Categorias</span>
+      <!-- TABLE CARD -->
+      <section class="card" aria-label="Lista de categorias">
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th class="cell-checkbox">
+                  <label class="checkbox" data-checkbox="master">
+                    <input type="checkbox" />
+                    <span></span>
+                  </label>
+                </th>
+                <th>Nome</th>
+                <th>Tipo</th>
+                <th>Status</th>
+                <th class="cell-center">Ícone</th>
+                <th class="cell-center">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-row>
+                <td class="cell-checkbox">
+                  <label class="checkbox">
+                    <input type="checkbox" />
+                    <span></span>
+                  </label>
+                </td>
+                <td>
+                  <div class="category-main">
+                    <span class="color-dot" style="background: #22c55e" aria-hidden="true"></span>
+                    <div class="category-text">
+                      <span class="category-name">Salário</span>
+                      <span class="category-description"> Receitas fixas mensais. </span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="badge badge-type-receita">
+                    <span>📈</span>
+                    <span>Receita</span>
+                  </span>
+                </td>
+                <td>
+                  <span class="badge badge-status-ativo">
+                    <span class="badge-dot" style="background: var(--success)"></span>
+                    <span>Ativo</span>
+                  </span>
+                </td>
+                <td class="cell-center">
+                  <span class="icon-placeholder" aria-hidden="true">💵</span>
+                </td>
+                <td class="cell-center">
+                  <button type="button" class="btn-kebab" aria-label="Mais ações">⋮</button>
+                </td>
+              </tr>
+
+              <tr data-row>
+                <td class="cell-checkbox">
+                  <label class="checkbox">
+                    <input type="checkbox" />
+                    <span></span>
+                  </label>
+                </td>
+                <td>
+                  <div class="category-main">
+                    <span class="color-dot" style="background: #3b82f6" aria-hidden="true"></span>
+                    <div class="category-text">
+                      <span class="category-name">Aluguel</span>
+                      <span class="category-description"> Despesas com moradia. </span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="badge badge-type-despesa">
+                    <span>📉</span>
+                    <span>Despesa</span>
+                  </span>
+                </td>
+                <td>
+                  <span class="badge badge-status-ativo">
+                    <span class="badge-dot" style="background: var(--success)"></span>
+                    <span>Ativo</span>
+                  </span>
+                </td>
+                <td class="cell-center">
+                  <span class="icon-placeholder" aria-hidden="true">🏠</span>
+                </td>
+                <td class="cell-center">
+                  <button type="button" class="btn-kebab" aria-label="Mais ações">⋮</button>
+                </td>
+              </tr>
+
+              <tr data-row>
+                <td class="cell-checkbox">
+                  <label class="checkbox">
+                    <input type="checkbox" />
+                    <span></span>
+                  </label>
+                </td>
+                <td>
+                  <div class="category-main">
+                    <span class="color-dot" style="background: #a855f7" aria-hidden="true"></span>
+                    <div class="category-text">
+                      <span class="category-name">Freelance</span>
+                      <span class="category-description"> Trabalhos pontuais. </span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="badge badge-type-receita">
+                    <span>📈</span>
+                    <span>Receita</span>
+                  </span>
+                </td>
+                <td>
+                  <span class="badge badge-status-inativo">
+                    <span class="badge-dot" style="background: #6b7280"></span>
+                    <span>Inativo</span>
+                  </span>
+                </td>
+                <td class="cell-center">
+                  <span class="icon-placeholder" aria-hidden="true">🧰</span>
+                </td>
+                <td class="cell-center">
+                  <button type="button" class="btn-kebab" aria-label="Mais ações">⋮</button>
+                </td>
+              </tr>
+
+              <tr data-row>
+                <td class="cell-checkbox">
+                  <label class="checkbox">
+                    <input type="checkbox" />
+                    <span></span>
+                  </label>
+                </td>
+                <td>
+                  <div class="category-main">
+                    <span class="color-dot" style="background: #f97316" aria-hidden="true"></span>
+                    <div class="category-text">
+                      <span class="category-name">Supermercado</span>
+                      <span class="category-description"> Supermercado e alimentos. </span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="badge badge-type-despesa">
+                    <span>📉</span>
+                    <span>Despesa</span>
+                  </span>
+                </td>
+                <td>
+                  <span class="badge badge-status-ativo">
+                    <span class="badge-dot" style="background: var(--success)"></span>
+                    <span>Ativo</span>
+                  </span>
+                </td>
+                <td class="cell-center">
+                  <span class="icon-placeholder" aria-hidden="true">🛒</span>
+                </td>
+                <td class="cell-center">
+                  <button type="button" class="btn-kebab" aria-label="Mais ações">⋮</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- TABLE FOOTER -->
+        <footer class="table-footer">
+          <div class="selection-info">
+            <span id="selection-count">0 de 4 linha(s) selecionada(s)</span>
+            <div class="selection-actions" id="selection-actions">
+              <button type="button" class="btn btn-outline">Arquivar</button>
+              <button type="button" class="btn btn-outline">Excluir</button>
+            </div>
           </div>
-          <div class="card-meta">Exibindo 6 de 6 categorias</div>
-        </header>
 
-        <table class="table">
-          <thead>
-            <tr>
-              <th class="checkbox-cell">
-                <span class="checkbox" aria-hidden="true"></span>
-              </th>
-              <th>Nome</th>
-              <th>Tipo</th>
-              <th>Status</th>
-              <th>Atualizado em</th>
-              <th class="actions-cell"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="table-row">
-              <td class="checkbox-cell">
-                <span class="checkbox" aria-hidden="true"></span>
-              </td>
-              <td>
-                <div class="task-name">
-                  <span class="task-name-title">Salário</span>
-                  <span class="task-name-description"> Receitas fixas mensais. </span>
-                </div>
-              </td>
-              <td>
-                <span class="badge badge-accent">Receita</span>
-              </td>
-              <td>
-                <div class="status-cell">
-                  <span class="status-dot status-dot-active"></span>
-                  <span class="status-text">Ativo</span>
-                </div>
-              </td>
-              <td>
-                <span class="date-text">2025-12-01</span>
-              </td>
-              <td class="actions-cell">
-                <button class="kebab" aria-label="Mais ações">⋯</button>
-              </td>
-            </tr>
+          <div class="pagination" aria-label="Paginação">
+            <div class="pagination-group">
+              <span class="pagination-label">Linhas por página</span>
+              <div class="select-wrapper">
+                <select id="page-size">
+                  <option value="10" selected>10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+              </div>
+            </div>
 
-            <tr class="table-row">
-              <td class="checkbox-cell">
-                <span class="checkbox" aria-hidden="true"></span>
-              </td>
-              <td>
-                <div class="task-name">
-                  <span class="task-name-title">Aluguel</span>
-                  <span class="task-name-description"> Despesas com moradia. </span>
-                </div>
-              </td>
-              <td>
-                <span class="badge">Despesa</span>
-              </td>
-              <td>
-                <div class="status-cell">
-                  <span class="status-dot status-dot-active"></span>
-                  <span class="status-text">Ativo</span>
-                </div>
-              </td>
-              <td>
-                <span class="date-text">2025-11-25</span>
-              </td>
-              <td class="actions-cell">
-                <button class="kebab" aria-label="Mais ações">⋯</button>
-              </td>
-            </tr>
-
-            <tr class="table-row">
-              <td class="checkbox-cell">
-                <span class="checkbox" aria-hidden="true"></span>
-              </td>
-              <td>
-                <div class="task-name">
-                  <span class="task-name-title">Mercado</span>
-                  <span class="task-name-description"> Supermercado e alimentos. </span>
-                </div>
-              </td>
-              <td>
-                <span class="badge">Despesa</span>
-              </td>
-              <td>
-                <div class="status-cell">
-                  <span class="status-dot"></span>
-                  <span class="status-text">Inativo</span>
-                </div>
-              </td>
-              <td>
-                <span class="date-text">2025-10-10</span>
-              </td>
-              <td class="actions-cell">
-                <button class="kebab" aria-label="Mais ações">⋯</button>
-              </td>
-            </tr>
-
-            <tr class="table-row">
-              <td class="checkbox-cell">
-                <span class="checkbox" aria-hidden="true"></span>
-              </td>
-              <td>
-                <div class="task-name">
-                  <span class="task-name-title">Transferência interna</span>
-                  <span class="task-name-description"> Transferências entre contas. </span>
-                </div>
-              </td>
-              <td>
-                <span class="badge">Transferência</span>
-              </td>
-              <td>
-                <div class="status-cell">
-                  <span class="status-dot status-dot-active"></span>
-                  <span class="status-text">Ativo</span>
-                </div>
-              </td>
-              <td>
-                <span class="date-text">2025-09-18</span>
-              </td>
-              <td class="actions-cell">
-                <button class="kebab" aria-label="Mais ações">⋯</button>
-              </td>
-            </tr>
-
-            <tr class="table-row">
-              <td class="checkbox-cell">
-                <span class="checkbox" aria-hidden="true"></span>
-              </td>
-              <td>
-                <div class="task-name">
-                  <span class="task-name-title">Freelance</span>
-                  <span class="task-name-description"> Trabalhos pontuais. </span>
-                </div>
-              </td>
-              <td>
-                <span class="badge badge-accent">Receita</span>
-              </td>
-              <td>
-                <div class="status-cell">
-                  <span class="status-dot"></span>
-                  <span class="status-text">Inativo</span>
-                </div>
-              </td>
-              <td>
-                <span class="date-text">2025-08-05</span>
-              </td>
-              <td class="actions-cell">
-                <button class="kebab" aria-label="Mais ações">⋯</button>
-              </td>
-            </tr>
-
-            <tr class="table-row">
-              <td class="checkbox-cell">
-                <span class="checkbox" aria-hidden="true"></span>
-              </td>
-              <td>
-                <div class="task-name">
-                  <span class="task-name-title">Transporte</span>
-                  <span class="task-name-description"> Combustível, apps, etc. </span>
-                </div>
-              </td>
-              <td>
-                <span class="badge">Despesa</span>
-              </td>
-              <td>
-                <div class="status-cell">
-                  <span class="status-dot status-dot-active"></span>
-                  <span class="status-text">Ativo</span>
-                </div>
-              </td>
-              <td>
-                <span class="date-text">2025-11-30</span>
-              </td>
-              <td class="actions-cell">
-                <button class="kebab" aria-label="Mais ações">⋯</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <footer class="card-footer">
-          <span>Mostrando 1–6 de 6 categorias</span>
-
-          <div class="pagination">
-            <button aria-label="Página anterior">‹</button>
-            <button class="page-active">1</button>
-            <button>2</button>
-            <button aria-label="Próxima página">›</button>
+            <div class="pagination-group">
+              <span class="pagination-label">Página 1 de 1</span>
+              <div class="pagination-buttons">
+                <button class="pagination-btn" disabled>&laquo;</button>
+                <button class="pagination-btn" disabled>&lsaquo;</button>
+                <button class="pagination-btn" disabled>&rsaquo;</button>
+                <button class="pagination-btn" disabled>&raquo;</button>
+              </div>
+            </div>
           </div>
         </footer>
       </section>
     </div>
+
+    <script>
+      // selection logic
+      const rows = Array.from(document.querySelectorAll("tr[data-row]"));
+      const masterCheckbox = document.querySelector('[data-checkbox="master"]');
+      const selectionCountEl = document.getElementById("selection-count");
+      const selectionActionsEl = document.getElementById("selection-actions");
+
+      function updateCheckboxVisual(labelEl, checked) {
+        labelEl.dataset.checked = checked ? "true" : "false";
+      }
+
+      function getRowCheckboxes() {
+        return rows.map((row) => row.querySelector(".cell-checkbox .checkbox"));
+      }
+
+      function updateSelectionInfo() {
+        const rowCheckboxes = getRowCheckboxes();
+        const checkedCount = rowCheckboxes.filter((c) => c.dataset.checked === "true").length;
+
+        selectionCountEl.textContent = `${checkedCount} de ${rows.length} linha(s) selecionada(s)`;
+        if (checkedCount > 0) {
+          selectionActionsEl.classList.add("visible");
+        } else {
+          selectionActionsEl.classList.remove("visible");
+        }
+
+        if (checkedCount === rows.length && rows.length > 0) {
+          updateCheckboxVisual(masterCheckbox, true);
+        } else {
+          updateCheckboxVisual(masterCheckbox, false);
+        }
+      }
+
+      // attach row checkbox listeners
+      getRowCheckboxes().forEach((checkboxLabel) => {
+        checkboxLabel.addEventListener("click", (event) => {
+          event.preventDefault();
+          const isChecked = checkboxLabel.dataset.checked === "true";
+          updateCheckboxVisual(checkboxLabel, !isChecked);
+          updateSelectionInfo();
+        });
+      });
+
+      // master checkbox
+      masterCheckbox.addEventListener("click", (event) => {
+        event.preventDefault();
+        const nowChecked = masterCheckbox.dataset.checked !== "true";
+        updateCheckboxVisual(masterCheckbox, nowChecked);
+
+        getRowCheckboxes().forEach((checkboxLabel) => {
+          updateCheckboxVisual(checkboxLabel, nowChecked);
+        });
+
+        updateSelectionInfo();
+      });
+
+      // filters chips
+      const chips = Array.from(document.querySelectorAll(".chip"));
+      const clearFiltersBtn = document.getElementById("filter-clear");
+
+      function refreshClearFiltersVisibility() {
+        const hasActive = chips.some((chip) => chip.classList.contains("chip--active"));
+        if (hasActive) {
+          clearFiltersBtn.classList.add("visible");
+        } else {
+          clearFiltersBtn.classList.remove("visible");
+        }
+      }
+
+      chips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+          chip.classList.toggle("chip--active");
+          refreshClearFiltersVisibility();
+        });
+      });
+
+      clearFiltersBtn.addEventListener("click", () => {
+        chips.forEach((chip) => chip.classList.remove("chip--active"));
+        refreshClearFiltersVisibility();
+      });
+
+      // fake page size handler (placeholder only)
+      document.getElementById("page-size").addEventListener("change", (event) => {
+        console.log("Page size changed to", event.target.value);
+      });
+
+      updateSelectionInfo();
+    </script>
   </body>
 </html>

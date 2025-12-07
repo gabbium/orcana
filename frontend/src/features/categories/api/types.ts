@@ -1,13 +1,18 @@
-export type CategoryKind = "income" | "expense";
-
-export type CategoryStatus = "active" | "inactive";
-
 export type CategoryDto = {
   id: string;
   name: string;
   description: string;
-  kind: CategoryKind;
+  kind: string;
   icon: string;
   color: string;
-  status: CategoryStatus;
+  status: string;
+};
+
+export type ListCategoriesRequest = {
+  pageNumber?: number;
+  pageSize?: number;
+  order?: string;
+  name?: string;
+  kind?: string[];
+  status?: string[];
 };

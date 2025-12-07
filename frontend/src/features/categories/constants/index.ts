@@ -1,28 +1,26 @@
 import { BriefcaseIcon, DollarSignIcon, HomeIcon, ShoppingCartIcon } from "lucide-react";
 
-import type { CategoryKind, CategoryStatus } from "../api/types";
-
 export const CATEGORY_KIND_OPTIONS = [
   {
     label: "Despesa",
-    value: "expense" as const,
+    value: "expense",
   },
   {
     label: "Receita",
-    value: "income" as const,
+    value: "income",
   },
-] satisfies Array<{ label: string; value: CategoryKind }>;
+];
 
 export const CATEGORY_STATUS_OPTIONS = [
   {
     label: "Ativo",
-    value: "active" as const,
+    value: "active",
   },
   {
     label: "Inativo",
-    value: "inactive" as const,
+    value: "inactive",
   },
-] satisfies Array<{ label: string; value: CategoryStatus }>;
+];
 
 export const CATEGORY_ICON_MAP = {
   "dollar-sign": DollarSignIcon,

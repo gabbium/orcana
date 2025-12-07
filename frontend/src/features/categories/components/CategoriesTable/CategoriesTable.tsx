@@ -2,10 +2,12 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { CircleIcon, CircleSmallIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import { useMemo } from "react";
 
-import { DataTable, DataTableColumnHeader } from "@/components/compound/DataTable";
+import {
+  DataTable,
+  DataTableColumnHeader,
+  type DataTableBaseProps,
+} from "@/components/compound/DataTable";
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { Checkbox } from "@/components/ui/Checkbox";
 
 import type { CategoryDto } from "../../api/types";
 import {
@@ -16,36 +18,14 @@ import {
 } from "../../constants";
 import { CategoriesTableAction } from "../CategoriesTableAction";
 
-export const CategoriesTable = () => {
-  const columns = useMemo<ColumnDef<CategoryDto>[]>(
+type CategoriesTableProps = DataTableBaseProps<CategoryDto>;
+
+const useCategoriesColumns = (): ColumnDef<CategoryDto>[] => {
+  return useMemo<ColumnDef<CategoryDto>[]>(
     () => [
       {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            checked={
-              table.getIsAllPageRowsSelected() ||
-              (table.getIsSomePageRowsSelected() && "indeterminate")
-            }
-            onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-            aria-label="Select all"
-            className="translate-y-0.5"
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label="Select row"
-            className="translate-y-0.5"
-          />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-      },
-      {
         accessorKey: "name",
-        header: ({ column }) => <DataTableColumnHeader column={column} />,
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Nome" />,
         cell: ({ row }) => (
           <div className="flex flex-col gap-1">
             <span className="font-medium">{row.getValue("name")}</span>
@@ -55,17 +35,15 @@ export const CategoriesTable = () => {
         enableSorting: false,
         enableHiding: false,
         meta: {
-          label: "Nome",
+          label: "nome",
           filter: {
             type: "text",
           },
         },
       },
       {
-        id: "Tipo",
         accessorKey: "kind",
-        header: ({ column }) => <DataTableColumnHeader column={column} />,
-
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Tipo" />,
         cell: ({ row }) => {
           if (row.original.kind === "expense")
             return (
@@ -84,6 +62,7 @@ export const CategoriesTable = () => {
         },
         enableSorting: false,
         enableHiding: false,
+        filterFn: "arrIncludesEquals",
         meta: {
           label: "Tipo",
           filter: {
@@ -94,7 +73,7 @@ export const CategoriesTable = () => {
       },
       {
         accessorKey: "status",
-        header: ({ column }) => <DataTableColumnHeader column={column} />,
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
         cell: ({ row }) => {
           if (row.original.status === "active")
             return (
@@ -113,6 +92,7 @@ export const CategoriesTable = () => {
         },
         enableSorting: false,
         enableHiding: false,
+        filterFn: "arrIncludesEquals",
         meta: {
           label: "Status",
           filter: {
@@ -123,7 +103,7 @@ export const CategoriesTable = () => {
       },
       {
         accessorKey: "icon",
-        header: ({ column }) => <DataTableColumnHeader column={column} />,
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Ícone" />,
         cell: ({ row }) => {
           const icon = row.getValue("icon") as string;
           const IconComponent = CATEGORY_ICON_MAP[icon as keyof typeof CATEGORY_ICON_MAP];
@@ -146,7 +126,7 @@ export const CategoriesTable = () => {
       },
       {
         accessorKey: "color",
-        header: ({ column }) => <DataTableColumnHeader column={column} />,
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Cor" />,
         cell: ({ row }) => {
           const color = row.getValue("color") as string;
 
@@ -171,53 +151,10 @@ export const CategoriesTable = () => {
     ],
     [],
   );
+};
 
-  return (
-    <DataTable
-      columns={columns}
-      data={
-        [
-          {
-            id: "1",
-            name: "Salário",
-            description: "Receitas fixas mensais.",
-            kind: "income",
-            icon: "dollar-sign",
-            color: "green",
-            status: "active",
-          },
-          {
-            id: "2",
-            name: "Aluguel",
-            description: "Despesas com moradia.",
-            kind: "expense",
-            icon: "home",
-            color: "blue",
-            status: "active",
-          },
-          {
-            id: "3",
-            name: "Freelance",
-            description: "Trabalhos pontuais.",
-            kind: "income",
-            icon: "briefcase",
-            color: "purple",
-            status: "inactive",
-          },
-          {
-            id: "4",
-            name: "Supermercado",
-            description: "Supermercado e alimentos.",
-            kind: "expense",
-            icon: "shopping-cart",
-            color: "orange",
-            status: "active",
-          },
-        ] satisfies CategoryDto[]
-      }
-      toolbarSlots={{
-        actions: <Button size="sm">Nova categoria</Button>,
-      }}
-    />
-  );
+export const CategoriesTable = ({ ...props }: CategoriesTableProps) => {
+  const columns = useCategoriesColumns();
+
+  return <DataTable columns={columns} {...props} />;
 };

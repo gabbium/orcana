@@ -1,132 +1,92 @@
 import {
   flexRender,
   getCoreRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
   type ColumnDef,
   type ColumnFiltersState,
-  type SortingState,
-  type VisibilityState,
+  type PaginationState,
 } from "@tanstack/react-table";
-import { useState } from "react";
 
 import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/Table";
 
 import { DataTablePagination } from "../DataTablePagination";
-import { DataTableToolbar, type DataTableToolbarSlots } from "../DataTableToolbar";
+import { DataTableToolbar } from "../DataTableToolbar";
 
-export type DataTableProps<TData, TValue> = {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+export type DataTableBaseProps<TData> = {
   serverSide?: boolean;
-  pagination?: {
-    pageIndex: number;
-    pageSize: number;
-    pageCount: number;
-  };
-  onPaginationChange?: (page: number, pageSize: number) => void;
-  onFilterChange?: (filters: ColumnFiltersState) => void;
-  onSortingChange?: (sorting: SortingState) => void;
-  toolbarSlots?: DataTableToolbarSlots;
+  data: TData[];
+  pageCount: number;
+  pagination: PaginationState;
+  columnFilters: ColumnFiltersState;
+  onPaginationChange: (pagination: PaginationState) => void;
+  onColumnFiltersChange: (columnFilters: ColumnFiltersState) => void;
+};
+
+export type DataTableProps<TData, TValue> = DataTableBaseProps<TData> & {
+  columns: ColumnDef<TData, TValue>[];
 };
 
 export const DataTable = <TData, TValue>({
   columns,
   data,
   serverSide = false,
+  pageCount,
   pagination,
   onPaginationChange,
-  onSortingChange,
-  onFilterChange,
-  toolbarSlots,
+  columnFilters,
+  onColumnFiltersChange,
 }: DataTableProps<TData, TValue>) => {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
-  const [sorting, setSorting] = useState<SortingState>([]);
-
-  const shouldUsePagination = serverSide && pagination;
-
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,
     state: {
-      sorting,
-      columnVisibility,
-      rowSelection,
+      pagination,
       columnFilters,
-      ...(shouldUsePagination
-        ? {
-            pagination: {
-              pageIndex: pagination.pageIndex,
-              pageSize: pagination.pageSize,
-            },
-          }
-        : {}),
     },
+    pageCount,
     manualPagination: serverSide,
-    manualSorting: serverSide,
     manualFiltering: serverSide,
-    pageCount: shouldUsePagination ? pagination.pageCount : undefined,
-    enableRowSelection: true,
-    onRowSelectionChange: setRowSelection,
-    onSortingChange: (updaterOrValue) => {
-      setSorting(updaterOrValue);
-      if (serverSide && onSortingChange) {
-        const newValue =
-          typeof updaterOrValue === "function" ? updaterOrValue(sorting) : updaterOrValue;
-        onSortingChange(newValue);
-      }
+    getCoreRowModel: getCoreRowModel(),
+    onPaginationChange: (updater) => {
+      const next = typeof updater === "function" ? updater(table.getState().pagination) : updater;
+      onPaginationChange(next);
     },
     onColumnFiltersChange: (updaterOrValue) => {
-      setColumnFilters(updaterOrValue);
-      if (serverSide && onFilterChange) {
-        const newValue =
-          typeof updaterOrValue === "function" ? updaterOrValue(columnFilters) : updaterOrValue;
-        onFilterChange(newValue);
-      }
+      const newValue =
+        typeof updaterOrValue === "function" ? updaterOrValue(columnFilters) : updaterOrValue;
+      onColumnFiltersChange(newValue);
     },
-    onColumnVisibilityChange: setColumnVisibility,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-    ...(serverSide && onPaginationChange
-      ? {
-          onPaginationChange: (updater) => {
-            const next =
-              typeof updater === "function" ? updater(table.getState().pagination) : updater;
-            onPaginationChange(next.pageIndex, next.pageSize);
-          },
-        }
-      : {}),
+    filterFns: {
+      arrIncludesEquals: (row, columnId, filterValue) => {
+        return filterValue.includes(row.getValue(columnId));
+      },
+    },
   });
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} slots={toolbarSlots} />
-      <div className="rounded-md border">
+      <DataTableToolbar table={table} />
+      <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader className="bg-muted/50">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} colSpan={header.colSpan}>
+                    <TableHead
+                      key={header.id}
+                      colSpan={header.colSpan}
+                      className="text-muted-foreground px-2"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())}
@@ -155,9 +115,15 @@ export const DataTable = <TData, TValue>({
               </TableRow>
             )}
           </TableBody>
+          <TableFooter className="bg-background">
+            <TableRow>
+              <TableCell colSpan={columns.length}>
+                <DataTablePagination table={table} />
+              </TableCell>
+            </TableRow>
+          </TableFooter>
         </Table>
       </div>
-      <DataTablePagination table={table} />
     </div>
   );
 };

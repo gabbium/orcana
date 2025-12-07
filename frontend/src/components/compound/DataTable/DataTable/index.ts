@@ -1,1 +1,1 @@
-export { DataTable, type DataTableProps } from "./DataTable";
+export { DataTable, type DataTableBaseProps, type DataTableProps } from "./DataTable";

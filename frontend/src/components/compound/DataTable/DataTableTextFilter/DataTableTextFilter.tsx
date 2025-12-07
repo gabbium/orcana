@@ -1,7 +1,8 @@
 import type { Column } from "@tanstack/react-table";
+import { SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { Input } from "@/components/ui/Input";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/InputGroup";
 
 export type DataTableTextFilterProps<TData> = {
   column: Column<TData>;
@@ -30,11 +31,15 @@ export const DataTableTextFilter = <TData,>({ column }: DataTableTextFilterProps
   }
 
   return (
-    <Input
-      placeholder={column.columnDef.meta?.label ?? column.id}
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-      className="h-8 w-[150px] lg:w-[250px]"
-    />
+    <InputGroup className="h-8 w-[150px] lg:w-[250px]">
+      <InputGroupInput
+        placeholder={`Buscar por ${column.columnDef.meta?.label ?? column.id}...`}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <InputGroupAddon>
+        <SearchIcon />
+      </InputGroupAddon>
+    </InputGroup>
   );
 };

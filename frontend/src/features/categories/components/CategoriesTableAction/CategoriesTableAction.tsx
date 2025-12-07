@@ -1,5 +1,5 @@
 import type { Row } from "@tanstack/react-table";
-import { MoreHorizontalIcon } from "lucide-react";
+import { MoreVerticalIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 import {
@@ -23,11 +23,11 @@ export const CategoriesTableAction = ({ row }: CategoriesTableActionProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
-          <MoreHorizontalIcon />
+          <MoreVerticalIcon />
           <span className="sr-only">Abrir menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[160px]">
+      <DropdownMenuContent align="end" className="w-40">
         <DropdownMenuLabel>Ações</DropdownMenuLabel>
         <DropdownMenuItem onClick={() => navigator.clipboard.writeText(category.id)}>
           Copiar ID

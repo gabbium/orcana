@@ -14,6 +14,7 @@ import { cn } from "@/utils/cn";
 
 export type DataTableColumnHeaderProps<TData, TValue> = ComponentProps<"div"> & {
   column: Column<TData, TValue>;
+  title: string;
 };
 
 export const DataTableColumnHeader = <TData, TValue>({
@@ -21,12 +22,11 @@ export const DataTableColumnHeader = <TData, TValue>({
   title,
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) => {
-  const columnTitle = column.columnDef.meta?.label ?? title;
   const canSort = column.getCanSort();
   const canHide = column.getCanHide();
 
   if (!canSort && !canHide) {
-    return <div className={cn(className)}>{columnTitle}</div>;
+    return <div className={cn(className)}>{title}</div>;
   }
 
   const isSorted = column.getIsSorted();
@@ -36,7 +36,7 @@ export const DataTableColumnHeader = <TData, TValue>({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="sm" className="-ml-3 h-8 data-[state=open]:bg-accent">
-            <span>{columnTitle}</span>
+            <span>{title}</span>
             {canSort && (
               <>
                 {isSorted === "desc" ? (

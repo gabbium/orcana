@@ -9,4 +9,8 @@ declare module "@tanstack/react-table" {
     hideOnMobile?: boolean;
     label?: string;
   }
+
+  interface FilterFns {
+    arrIncludesEquals: FilterFn<unknown>;
+  }
 }
