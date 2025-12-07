@@ -9,7 +9,10 @@ export const Table = ({ className, ...props }: TableProps) => {
     <div data-slot="table-container" className="relative w-full overflow-x-auto">
       <table
         data-slot="table"
-        className={cn("w-full caption-bottom text-sm [&_th:first-child]:pl-8 [&_td:first-child]:pl-8", className)}
+        className={cn(
+          "w-full caption-bottom text-sm [&_th:first-child]:pl-8 [&_td:first-child]:pl-8",
+          className,
+        )}
         {...props}
       />
     </div>

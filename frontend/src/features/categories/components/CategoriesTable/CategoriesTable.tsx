@@ -11,10 +11,7 @@ import {
   getCategoryKind,
   getCategoryStatus,
 } from "../../constants/helpers";
-import {
-  CATEGORY_KIND_OPTIONS,
-  CATEGORY_STATUS_OPTIONS,
-} from "../../constants/maps";
+import { CATEGORY_KIND_OPTIONS, CATEGORY_STATUS_OPTIONS } from "../../constants/maps";
 import type { Category } from "../../types/categories";
 import { CategoriesRowActions } from "../CategoriesRowActions";
 
