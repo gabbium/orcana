@@ -1,12 +1,12 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 
-import { DashboardLayout } from "@/components/layouts/DashboardLayout";
+import { AppLayout } from "@/components/layouts/AppLayout";
 
 const AppRoot = () => {
   return (
-    <DashboardLayout>
+    <AppLayout>
       <Outlet />
-    </DashboardLayout>
+    </AppLayout>
   );
 };
 

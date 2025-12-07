@@ -46,3 +46,4 @@ export {
   type SidebarSeparatorProps,
   type SidebarTriggerProps,
 } from "./Sidebar";
+export { useSidebar, type SidebarContextProps } from "./Sidebar.context";
