@@ -18,7 +18,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -114,15 +113,9 @@ export const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData
               </TableRow>
             )}
           </TableBody>
-          <TableFooter className="bg-background">
-            <TableRow>
-              <TableCell colSpan={columns.length}>
-                <DataTablePagination table={table} />
-              </TableCell>
-            </TableRow>
-          </TableFooter>
         </Table>
       </div>
+      {table.getPageCount() > 0 && <DataTablePagination table={table} />}
     </div>
   );
 };

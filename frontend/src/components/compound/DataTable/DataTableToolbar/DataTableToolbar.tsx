@@ -8,7 +8,7 @@ export type DataTableToolbarProps<TData> = {
 
 export const DataTableToolbar = <TData,>({ table }: DataTableToolbarProps<TData>) => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
       {table
         .getAllColumns()
         .filter((col) => col.getCanFilter())

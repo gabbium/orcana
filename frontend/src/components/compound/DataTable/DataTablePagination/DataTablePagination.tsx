@@ -26,7 +26,7 @@ export const DataTablePagination = <TData,>({
 }: DataTablePaginationProps<TData>) => {
   return (
     <div className="flex items-center justify-end sm:justify-end px-2 text-sm text-muted-foreground font-normal space-x-3">
-      <div className="flex items-center space-x-2">
+      <div className="hidden items-center space-x-2 lg:flex ">
         <p>Linhas por página</p>
         <Select
           value={`${table.getState().pagination.pageSize}`}

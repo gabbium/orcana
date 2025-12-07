@@ -31,7 +31,7 @@ export const DataTableTextFilter = <TData,>({ column }: DataTableTextFilterProps
   }
 
   return (
-    <InputGroup className="h-8 w-[150px] lg:w-[250px]">
+    <InputGroup className="h-8 w-full sm:w-48">
       <InputGroupInput
         placeholder={`Buscar por ${column.columnDef.meta?.label ?? column.id}...`}
         value={value}
