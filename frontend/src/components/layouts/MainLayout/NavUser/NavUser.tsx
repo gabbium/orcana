@@ -78,21 +78,21 @@ export const NavUser = ({ user }: NavUserProps) => {
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <UserCircleIcon />
-                Account
+                Conta
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <CreditCardIcon />
-                Billing
+                Faturamento
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <BellIcon />
-                Notifications
+                Notificações
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <LogOutIcon />
-              Log out
+              Sair
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PlusIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
+import { PageContent } from "@/components/ui/PageContent";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { CategoriesTable, categoriesQueries } from "@/features/categories";
 import type { Category } from "@/features/categories/types/categories";
@@ -15,7 +16,7 @@ export const CategoriesListPage = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+    <PageContent>
       <PageHeader
         title="Categorias"
         description="Gerencie categorias e aplique filtros para encontrar o que precisa."
@@ -29,7 +30,7 @@ export const CategoriesListPage = () => {
         }
       />
       <CategoriesTable categories={categoriesQuery.data} onRowDelete={handleDelete} />
-    </div>
+    </PageContent>
   );
 };
 

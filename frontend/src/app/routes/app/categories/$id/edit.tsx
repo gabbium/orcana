@@ -1,15 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { PageContent } from "@/components/ui/PageContent";
 import { PageHeader } from "@/components/ui/PageHeader";
 
 export const CategoryEditPage = () => {
   return (
-    <div className="flex flex-1 flex-col space-y-4">
+    <PageContent>
       <PageHeader
         title="Editar categoria"
         description="Ajuste os detalhes desta categoria. Alterações afetam lançamentos futuros."
       />
-    </div>
+    </PageContent>
   );
 };
 
