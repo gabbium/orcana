@@ -1,1 +1,1 @@
-export { CategoriesTable } from "./CategoriesTable";
+export { CategoriesTable, type CategoriesTableProps } from "./CategoriesTable";

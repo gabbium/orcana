@@ -1,9 +1,9 @@
-import type { CategoryDto } from "./types";
+import type { Category } from "../types/categories";
 
-export const listCategories = async (): Promise<CategoryDto[]> => {
+export const listCategories = async (): Promise<Category[]> => {
   await new Promise((resolve) => setTimeout(resolve, 300));
 
-  const mockData: CategoryDto[] = [
+  const mockData: Category[] = [
     {
       id: "1",
       name: "Salário",
@@ -48,8 +48,8 @@ export const listCategories = async (): Promise<CategoryDto[]> => {
 // import { api } from "@/lib/api-client";
 //
 // export const listCategories = async (
-// ): Promise<CategoryDto[]> => {
-//   const response = await api.get<CategoryDto[]>("/v1/categories", {
+// ): Promise<Category[]> => {
+//   const response = await api.get<Category[]>("/v1/categories", {
 //     params,
 //   });
 //   return response.data;

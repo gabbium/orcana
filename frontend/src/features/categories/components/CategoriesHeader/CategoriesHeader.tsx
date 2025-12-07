@@ -2,7 +2,11 @@ import { PlusIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 
-export const CategoriesHeader = () => {
+export type CategoriesHeaderProps = {
+  onCreate?: () => void;
+};
+
+export const CategoriesHeader = ({ onCreate }: CategoriesHeaderProps) => {
   return (
     <header className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex flex-col gap-1">
@@ -12,7 +16,7 @@ export const CategoriesHeader = () => {
         </p>
       </div>
       <div className="flex items-center gap-2">
-        <Button size="sm">
+        <Button size="sm" onClick={onCreate}>
           <PlusIcon className="h-4 w-4" />
           Nova categoria
         </Button>

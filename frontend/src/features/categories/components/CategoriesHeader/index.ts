@@ -1,1 +1,1 @@
-export { CategoriesHeader } from "./CategoriesHeader";
+export { CategoriesHeader, type CategoriesHeaderProps } from "./CategoriesHeader";

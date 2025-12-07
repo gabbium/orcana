@@ -10,13 +10,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 
-import type { CategoryDto } from "../../api/types";
+import type { Category } from "../../types/categories";
 
-export interface CategoriesTableActionProps {
-  row: Row<CategoryDto>;
-}
+export type CategoriesRowActionsProps = {
+  row: Row<Category>;
+  onEdit?: (category: Category) => void;
+  onDelete?: (category: Category) => void;
+};
 
-export const CategoriesTableAction = ({ row }: CategoriesTableActionProps) => {
+export const CategoriesRowActions = ({ row, onEdit, onDelete }: CategoriesRowActionsProps) => {
   const category = row.original;
 
   return (
@@ -32,8 +34,8 @@ export const CategoriesTableAction = ({ row }: CategoriesTableActionProps) => {
         <DropdownMenuItem onClick={() => navigator.clipboard.writeText(category.id)}>
           Copiar ID
         </DropdownMenuItem>
-        <DropdownMenuItem>Editar</DropdownMenuItem>
-        <DropdownMenuItem>Deletar</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onEdit?.(category)}>Editar</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onDelete?.(category)}>Deletar</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

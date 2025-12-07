@@ -1,25 +1,31 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { CircleIcon, CircleSmallIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
+import { CircleIcon } from "lucide-react";
 import { useMemo } from "react";
 
 import { DataTable, DataTableColumnHeader } from "@/components/compound/DataTable";
 import { Badge } from "@/components/ui/Badge";
 
-import type { CategoryDto } from "../../api/types";
 import {
-  CATEGORY_COLOR_MAP,
-  CATEGORY_ICON_MAP,
+  getCategoryColor,
+  getCategoryIcon,
+  getCategoryKind,
+  getCategoryStatus,
+} from "../../constants/helpers";
+import {
   CATEGORY_KIND_OPTIONS,
   CATEGORY_STATUS_OPTIONS,
-} from "../../constants";
-import { CategoriesTableAction } from "../CategoriesTableAction";
+} from "../../constants/maps";
+import type { Category } from "../../types/categories";
+import { CategoriesRowActions } from "../CategoriesRowActions";
 
-type CategoriesTableProps = {
-  categories: CategoryDto[];
+export type CategoriesTableProps = {
+  categories: Category[];
+  onRowEdit?: (category: Category) => void;
+  onRowDelete?: (category: Category) => void;
 };
 
-const useCategoriesColumns = (): ColumnDef<CategoryDto>[] => {
-  return useMemo<ColumnDef<CategoryDto>[]>(
+export const CategoriesTable = ({ categories, onRowEdit, onRowDelete }: CategoriesTableProps) => {
+  const columns = useMemo<ColumnDef<Category>[]>(
     () => [
       {
         accessorKey: "name",
@@ -43,18 +49,12 @@ const useCategoriesColumns = (): ColumnDef<CategoryDto>[] => {
         accessorKey: "kind",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Tipo" />,
         cell: ({ row }) => {
-          if (row.original.kind === "expense")
-            return (
-              <Badge variant="outline" className="text-muted-foreground px-1.5">
-                <TrendingDownIcon className="text-red-600" />
-                Despesa
-              </Badge>
-            );
+          const kind = getCategoryKind(row.original.kind);
 
           return (
             <Badge variant="outline" className="text-muted-foreground px-1.5">
-              <TrendingUpIcon className="text-emerald-600" />
-              Receita
+              <kind.icon className={kind.className} />
+              {kind.label}
             </Badge>
           );
         },
@@ -73,18 +73,12 @@ const useCategoriesColumns = (): ColumnDef<CategoryDto>[] => {
         accessorKey: "status",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
         cell: ({ row }) => {
-          if (row.original.status === "active")
-            return (
-              <Badge variant="outline" className="text-muted-foreground px-1.5">
-                <CircleSmallIcon className="text-emerald-600 fill-current" />
-                Ativo
-              </Badge>
-            );
+          const status = getCategoryStatus(row.original.status);
 
           return (
             <Badge variant="outline" className="text-muted-foreground px-1.5">
-              <CircleSmallIcon className="text-slate-600 fill-current" />
-              Inativo
+              <CircleIcon className={`${status.className} fill-current`} />
+              {status.label}
             </Badge>
           );
         },
@@ -103,18 +97,9 @@ const useCategoriesColumns = (): ColumnDef<CategoryDto>[] => {
         accessorKey: "icon",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Ícone" />,
         cell: ({ row }) => {
-          const icon = row.getValue("icon") as string;
-          const IconComponent = CATEGORY_ICON_MAP[icon as keyof typeof CATEGORY_ICON_MAP];
+          const icon = getCategoryIcon(row.original.icon);
 
-          return (
-            <div>
-              {IconComponent ? (
-                <IconComponent className="h-5 w-5 text-muted-foreground" />
-              ) : (
-                <CircleSmallIcon className="h-5 w-5" />
-              )}
-            </div>
-          );
+          return <icon.icon className="h-5 w-5 text-muted-foreground" />;
         },
         enableSorting: false,
         enableHiding: false,
@@ -126,13 +111,9 @@ const useCategoriesColumns = (): ColumnDef<CategoryDto>[] => {
         accessorKey: "color",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Cor" />,
         cell: ({ row }) => {
-          const color = row.getValue("color") as string;
+          const color = getCategoryColor(row.original.color);
 
-          return (
-            <CircleIcon
-              className={`h-6 w-6 fill-current ${CATEGORY_COLOR_MAP[color] || "text-gray-300"}`}
-            />
-          );
+          return <CircleIcon className={`h-6 w-6 fill-current ${color.className}`} />;
         },
         enableSorting: false,
         enableHiding: false,
@@ -142,17 +123,15 @@ const useCategoriesColumns = (): ColumnDef<CategoryDto>[] => {
       },
       {
         id: "actions",
-        cell: ({ row }) => <CategoriesTableAction row={row} />,
+        cell: ({ row }) => (
+          <CategoriesRowActions row={row} onEdit={onRowEdit} onDelete={onRowDelete} />
+        ),
         enableSorting: false,
         enableHiding: false,
       },
     ],
-    [],
+    [onRowEdit, onRowDelete],
   );
-};
-
-export const CategoriesTable = ({ categories }: CategoriesTableProps) => {
-  const columns = useCategoriesColumns();
 
   return <DataTable columns={columns} data={categories} />;
 };
