@@ -22,7 +22,7 @@ export type DataTablePaginationProps<TData> = {
 
 export const DataTablePagination = <TData,>({
   table,
-  pageSizeOptions = [1, 10, 20, 40, 50],
+  pageSizeOptions = [10, 20, 30, 40, 50],
 }: DataTablePaginationProps<TData>) => {
   return (
     <div className="flex items-center justify-end sm:justify-end px-2 text-sm text-muted-foreground font-normal space-x-3">

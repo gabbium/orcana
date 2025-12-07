@@ -2,11 +2,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { CircleIcon, CircleSmallIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import { useMemo } from "react";
 
-import {
-  DataTable,
-  DataTableColumnHeader,
-  type DataTableBaseProps,
-} from "@/components/compound/DataTable";
+import { DataTable, DataTableColumnHeader } from "@/components/compound/DataTable";
 import { Badge } from "@/components/ui/Badge";
 
 import type { CategoryDto } from "../../api/types";
@@ -18,7 +14,9 @@ import {
 } from "../../constants";
 import { CategoriesTableAction } from "../CategoriesTableAction";
 
-type CategoriesTableProps = DataTableBaseProps<CategoryDto>;
+type CategoriesTableProps = {
+  categories: CategoryDto[];
+};
 
 const useCategoriesColumns = (): ColumnDef<CategoryDto>[] => {
   return useMemo<ColumnDef<CategoryDto>[]>(
@@ -153,8 +151,8 @@ const useCategoriesColumns = (): ColumnDef<CategoryDto>[] => {
   );
 };
 
-export const CategoriesTable = ({ ...props }: CategoriesTableProps) => {
+export const CategoriesTable = ({ categories }: CategoriesTableProps) => {
   const columns = useCategoriesColumns();
 
-  return <DataTable columns={columns} {...props} />;
+  return <DataTable columns={columns} data={categories} />;
 };

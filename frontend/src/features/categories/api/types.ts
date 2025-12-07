@@ -7,12 +7,3 @@ export type CategoryDto = {
   color: string;
   status: string;
 };
-
-export type ListCategoriesRequest = {
-  pageNumber?: number;
-  pageSize?: number;
-  order?: string;
-  name?: string;
-  kind?: string[];
-  status?: string[];
-};

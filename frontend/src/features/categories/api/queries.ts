@@ -1,13 +1,12 @@
 import { queryOptions } from "@tanstack/react-query";
 
 import { listCategories } from "./client";
-import type { ListCategoriesRequest } from "./types";
 
 export const categoriesQueries = {
   all: ["categories"],
-  list: (params: ListCategoriesRequest) =>
+  list: () =>
     queryOptions({
-      queryKey: [...categoriesQueries.all, "list", params],
-      queryFn: () => listCategories(params),
+      queryKey: [...categoriesQueries.all, "list"],
+      queryFn: () => listCategories(),
     }),
 };

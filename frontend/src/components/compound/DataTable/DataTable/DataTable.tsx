@@ -1,11 +1,18 @@
 import {
   flexRender,
   getCoreRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
   type ColumnDef,
   type ColumnFiltersState,
-  type PaginationState,
+  type SortingState,
+  type VisibilityState,
 } from "@tanstack/react-table";
+import { useState } from "react";
 
 import {
   Table,
@@ -20,51 +27,43 @@ import {
 import { DataTablePagination } from "../DataTablePagination";
 import { DataTableToolbar } from "../DataTableToolbar";
 
-export type DataTableBaseProps<TData> = {
-  serverSide?: boolean;
-  data: TData[];
-  pageCount: number;
-  pagination: PaginationState;
-  columnFilters: ColumnFiltersState;
-  onPaginationChange: (pagination: PaginationState) => void;
-  onColumnFiltersChange: (columnFilters: ColumnFiltersState) => void;
-};
-
-export type DataTableProps<TData, TValue> = DataTableBaseProps<TData> & {
+export type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 };
 
-export const DataTable = <TData, TValue>({
-  columns,
-  data,
-  serverSide = false,
-  pageCount,
-  pagination,
-  onPaginationChange,
-  columnFilters,
-  onColumnFiltersChange,
-}: DataTableProps<TData, TValue>) => {
+export const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) => {
+  const [rowSelection, setRowSelection] = useState({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
+
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,
     state: {
-      pagination,
+      sorting,
+      columnVisibility,
+      rowSelection,
       columnFilters,
     },
-    pageCount,
-    manualPagination: serverSide,
-    manualFiltering: serverSide,
+    initialState: {
+      pagination: {
+        pageSize: 10,
+      },
+    },
+    enableRowSelection: true,
+    onRowSelectionChange: setRowSelection,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
-    onPaginationChange: (updater) => {
-      const next = typeof updater === "function" ? updater(table.getState().pagination) : updater;
-      onPaginationChange(next);
-    },
-    onColumnFiltersChange: (updaterOrValue) => {
-      const newValue =
-        typeof updaterOrValue === "function" ? updaterOrValue(columnFilters) : updaterOrValue;
-      onColumnFiltersChange(newValue);
-    },
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
     filterFns: {
       arrIncludesEquals: (row, columnId, filterValue) => {
         return filterValue.includes(row.getValue(columnId));

@@ -1,10 +1,6 @@
-import type { PaginatedList } from "@/types/api";
+import type { CategoryDto } from "./types";
 
-import type { CategoryDto, ListCategoriesRequest } from "./types";
-
-export const listCategories = async (
-  params: ListCategoriesRequest,
-): Promise<PaginatedList<CategoryDto>> => {
+export const listCategories = async (): Promise<CategoryDto[]> => {
   await new Promise((resolve) => setTimeout(resolve, 300));
 
   const mockData: CategoryDto[] = [
@@ -46,28 +42,14 @@ export const listCategories = async (
     },
   ];
 
-  const pageNumber = params.pageNumber ?? 1;
-  const pageSize = params.pageSize ?? 10;
-  const totalItems = mockData.length;
-  const totalPages = Math.ceil(totalItems / pageSize);
-
-  return {
-    items: mockData,
-    pageNumber,
-    pageSize,
-    totalItems,
-    totalPages,
-    hasPreviousPage: pageNumber > 1,
-    hasNextPage: pageNumber < totalPages,
-  };
+  return mockData;
 };
 
 // import { api } from "@/lib/api-client";
 //
 // export const listCategories = async (
-//   params: ListCategoriesRequest,
-// ): Promise<PaginatedList<CategoryDto>> => {
-//   const response = await api.get<PaginatedList<CategoryDto>>("/v1/categories", {
+// ): Promise<CategoryDto[]> => {
+//   const response = await api.get<CategoryDto[]>("/v1/categories", {
 //     params,
 //   });
 //   return response.data;
