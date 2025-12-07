@@ -1,1 +1,0 @@
-export { MovementsIncomeForm } from "./MovementsIncomeForm";

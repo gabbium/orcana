@@ -1,6 +1,6 @@
 import type { RowData } from "@tanstack/react-table";
 
-import type { FilterMeta } from "../components/compound/DataTable/DataTableToolbarFilter/DataTableToolbarFilter";
+import type { FilterMeta } from "../components/ui/DataTable/DataTableToolbarFilter/DataTableToolbarFilter";
 
 declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

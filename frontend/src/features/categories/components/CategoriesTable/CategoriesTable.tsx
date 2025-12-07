@@ -1,8 +1,8 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { CircleIcon } from "lucide-react";
+import { CircleIcon, CircleSmallIcon } from "lucide-react";
 import { useMemo } from "react";
 
-import { DataTable, DataTableColumnHeader } from "@/components/compound/DataTable";
+import { DataTable, DataTableColumnHeader } from "@/components/ui/DataTable";
 import { Badge } from "@/components/ui/Badge";
 
 import {
@@ -17,11 +17,10 @@ import { CategoriesRowActions } from "../CategoriesRowActions";
 
 export type CategoriesTableProps = {
   categories: Category[];
-  onRowEdit?: (category: Category) => void;
   onRowDelete?: (category: Category) => void;
 };
 
-export const CategoriesTable = ({ categories, onRowEdit, onRowDelete }: CategoriesTableProps) => {
+export const CategoriesTable = ({ categories, onRowDelete }: CategoriesTableProps) => {
   const columns = useMemo<ColumnDef<Category>[]>(
     () => [
       {
@@ -74,7 +73,7 @@ export const CategoriesTable = ({ categories, onRowEdit, onRowDelete }: Categori
 
           return (
             <Badge variant="outline" className="text-muted-foreground px-1.5">
-              <CircleIcon className={`${status.className} fill-current`} />
+              <CircleSmallIcon className={`${status.className} fill-current`} />
               {status.label}
             </Badge>
           );
@@ -120,14 +119,12 @@ export const CategoriesTable = ({ categories, onRowEdit, onRowDelete }: Categori
       },
       {
         id: "actions",
-        cell: ({ row }) => (
-          <CategoriesRowActions row={row} onEdit={onRowEdit} onDelete={onRowDelete} />
-        ),
+        cell: ({ row }) => <CategoriesRowActions row={row} onDelete={onRowDelete} />,
         enableSorting: false,
         enableHiding: false,
       },
     ],
-    [onRowEdit, onRowDelete],
+    [onRowDelete],
   );
 
   return <DataTable columns={columns} data={categories} />;

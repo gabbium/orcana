@@ -11,13 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/app'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthIndexRouteImport } from './routes/auth/index'
-import { Route as AppIndexRouteImport } from './routes/app/index'
-import { Route as AppMovementsRouteImport } from './routes/app/movements'
+import { Route as AuthLogoutRouteImport } from './routes/auth/logout'
+import { Route as AuthLoginRouteImport } from './routes/auth/login'
+import { Route as AppDashboardIndexRouteImport } from './routes/app/dashboard/index'
 import { Route as AppCategoriesIndexRouteImport } from './routes/app/categories/index'
-import { Route as AppMovementsCreateIncomeRouteImport } from './routes/app/movements/create/income'
-import { Route as AppMovementsCreateExpenseRouteImport } from './routes/app/movements/create/expense'
+import { Route as AppCategoriesNewRouteImport } from './routes/app/categories/new'
+import { Route as AppCategoriesIdIndexRouteImport } from './routes/app/categories/$id/index'
+import { Route as AppCategoriesIdEditRouteImport } from './routes/app/categories/$id/edit'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -29,24 +29,19 @@ const AppRoute = AppRouteImport.update({
   path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthIndexRoute = AuthIndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthLogoutRoute = AuthLogoutRouteImport.update({
+  id: '/logout',
+  path: '/logout',
   getParentRoute: () => AuthRoute,
 } as any)
-const AppIndexRoute = AppIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AppRoute,
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRoute,
 } as any)
-const AppMovementsRoute = AppMovementsRouteImport.update({
-  id: '/movements',
-  path: '/movements',
+const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
+  id: '/dashboard/',
+  path: '/dashboard/',
   getParentRoute: () => AppRoute,
 } as any)
 const AppCategoriesIndexRoute = AppCategoriesIndexRouteImport.update({
@@ -54,87 +49,93 @@ const AppCategoriesIndexRoute = AppCategoriesIndexRouteImport.update({
   path: '/categories/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppMovementsCreateIncomeRoute =
-  AppMovementsCreateIncomeRouteImport.update({
-    id: '/create/income',
-    path: '/create/income',
-    getParentRoute: () => AppMovementsRoute,
-  } as any)
-const AppMovementsCreateExpenseRoute =
-  AppMovementsCreateExpenseRouteImport.update({
-    id: '/create/expense',
-    path: '/create/expense',
-    getParentRoute: () => AppMovementsRoute,
-  } as any)
+const AppCategoriesNewRoute = AppCategoriesNewRouteImport.update({
+  id: '/categories/new',
+  path: '/categories/new',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCategoriesIdIndexRoute = AppCategoriesIdIndexRouteImport.update({
+  id: '/categories/$id/',
+  path: '/categories/$id/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCategoriesIdEditRoute = AppCategoriesIdEditRouteImport.update({
+  id: '/categories/$id/edit',
+  path: '/categories/$id/edit',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
-  '/app/movements': typeof AppMovementsRouteWithChildren
-  '/app/': typeof AppIndexRoute
-  '/auth/': typeof AuthIndexRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/logout': typeof AuthLogoutRoute
+  '/app/categories/new': typeof AppCategoriesNewRoute
   '/app/categories': typeof AppCategoriesIndexRoute
-  '/app/movements/create/expense': typeof AppMovementsCreateExpenseRoute
-  '/app/movements/create/income': typeof AppMovementsCreateIncomeRoute
+  '/app/dashboard': typeof AppDashboardIndexRoute
+  '/app/categories/$id/edit': typeof AppCategoriesIdEditRoute
+  '/app/categories/$id': typeof AppCategoriesIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/app/movements': typeof AppMovementsRouteWithChildren
-  '/app': typeof AppIndexRoute
-  '/auth': typeof AuthIndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/auth': typeof AuthRouteWithChildren
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/logout': typeof AuthLogoutRoute
+  '/app/categories/new': typeof AppCategoriesNewRoute
   '/app/categories': typeof AppCategoriesIndexRoute
-  '/app/movements/create/expense': typeof AppMovementsCreateExpenseRoute
-  '/app/movements/create/income': typeof AppMovementsCreateIncomeRoute
+  '/app/dashboard': typeof AppDashboardIndexRoute
+  '/app/categories/$id/edit': typeof AppCategoriesIdEditRoute
+  '/app/categories/$id': typeof AppCategoriesIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
-  '/app/movements': typeof AppMovementsRouteWithChildren
-  '/app/': typeof AppIndexRoute
-  '/auth/': typeof AuthIndexRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/logout': typeof AuthLogoutRoute
+  '/app/categories/new': typeof AppCategoriesNewRoute
   '/app/categories/': typeof AppCategoriesIndexRoute
-  '/app/movements/create/expense': typeof AppMovementsCreateExpenseRoute
-  '/app/movements/create/income': typeof AppMovementsCreateIncomeRoute
+  '/app/dashboard/': typeof AppDashboardIndexRoute
+  '/app/categories/$id/edit': typeof AppCategoriesIdEditRoute
+  '/app/categories/$id/': typeof AppCategoriesIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/app'
     | '/auth'
-    | '/app/movements'
-    | '/app/'
-    | '/auth/'
+    | '/auth/login'
+    | '/auth/logout'
+    | '/app/categories/new'
     | '/app/categories'
-    | '/app/movements/create/expense'
-    | '/app/movements/create/income'
+    | '/app/dashboard'
+    | '/app/categories/$id/edit'
+    | '/app/categories/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
-    | '/app/movements'
     | '/app'
     | '/auth'
+    | '/auth/login'
+    | '/auth/logout'
+    | '/app/categories/new'
     | '/app/categories'
-    | '/app/movements/create/expense'
-    | '/app/movements/create/income'
+    | '/app/dashboard'
+    | '/app/categories/$id/edit'
+    | '/app/categories/$id'
   id:
     | '__root__'
-    | '/'
     | '/app'
     | '/auth'
-    | '/app/movements'
-    | '/app/'
-    | '/auth/'
+    | '/auth/login'
+    | '/auth/logout'
+    | '/app/categories/new'
     | '/app/categories/'
-    | '/app/movements/create/expense'
-    | '/app/movements/create/income'
+    | '/app/dashboard/'
+    | '/app/categories/$id/edit'
+    | '/app/categories/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
 }
@@ -155,32 +156,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/': {
-      id: '/auth/'
-      path: '/'
-      fullPath: '/auth/'
-      preLoaderRoute: typeof AuthIndexRouteImport
+    '/auth/logout': {
+      id: '/auth/logout'
+      path: '/logout'
+      fullPath: '/auth/logout'
+      preLoaderRoute: typeof AuthLogoutRouteImport
       parentRoute: typeof AuthRoute
     }
-    '/app/': {
-      id: '/app/'
-      path: '/'
-      fullPath: '/app/'
-      preLoaderRoute: typeof AppIndexRouteImport
-      parentRoute: typeof AppRoute
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthRoute
     }
-    '/app/movements': {
-      id: '/app/movements'
-      path: '/movements'
-      fullPath: '/app/movements'
-      preLoaderRoute: typeof AppMovementsRouteImport
+    '/app/dashboard/': {
+      id: '/app/dashboard/'
+      path: '/dashboard'
+      fullPath: '/app/dashboard'
+      preLoaderRoute: typeof AppDashboardIndexRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/categories/': {
@@ -190,63 +184,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCategoriesIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/app/movements/create/income': {
-      id: '/app/movements/create/income'
-      path: '/create/income'
-      fullPath: '/app/movements/create/income'
-      preLoaderRoute: typeof AppMovementsCreateIncomeRouteImport
-      parentRoute: typeof AppMovementsRoute
+    '/app/categories/new': {
+      id: '/app/categories/new'
+      path: '/categories/new'
+      fullPath: '/app/categories/new'
+      preLoaderRoute: typeof AppCategoriesNewRouteImport
+      parentRoute: typeof AppRoute
     }
-    '/app/movements/create/expense': {
-      id: '/app/movements/create/expense'
-      path: '/create/expense'
-      fullPath: '/app/movements/create/expense'
-      preLoaderRoute: typeof AppMovementsCreateExpenseRouteImport
-      parentRoute: typeof AppMovementsRoute
+    '/app/categories/$id/': {
+      id: '/app/categories/$id/'
+      path: '/categories/$id'
+      fullPath: '/app/categories/$id'
+      preLoaderRoute: typeof AppCategoriesIdIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/categories/$id/edit': {
+      id: '/app/categories/$id/edit'
+      path: '/categories/$id/edit'
+      fullPath: '/app/categories/$id/edit'
+      preLoaderRoute: typeof AppCategoriesIdEditRouteImport
+      parentRoute: typeof AppRoute
     }
   }
 }
 
-interface AppMovementsRouteChildren {
-  AppMovementsCreateExpenseRoute: typeof AppMovementsCreateExpenseRoute
-  AppMovementsCreateIncomeRoute: typeof AppMovementsCreateIncomeRoute
-}
-
-const AppMovementsRouteChildren: AppMovementsRouteChildren = {
-  AppMovementsCreateExpenseRoute: AppMovementsCreateExpenseRoute,
-  AppMovementsCreateIncomeRoute: AppMovementsCreateIncomeRoute,
-}
-
-const AppMovementsRouteWithChildren = AppMovementsRoute._addFileChildren(
-  AppMovementsRouteChildren,
-)
-
 interface AppRouteChildren {
-  AppMovementsRoute: typeof AppMovementsRouteWithChildren
-  AppIndexRoute: typeof AppIndexRoute
+  AppCategoriesNewRoute: typeof AppCategoriesNewRoute
   AppCategoriesIndexRoute: typeof AppCategoriesIndexRoute
+  AppDashboardIndexRoute: typeof AppDashboardIndexRoute
+  AppCategoriesIdEditRoute: typeof AppCategoriesIdEditRoute
+  AppCategoriesIdIndexRoute: typeof AppCategoriesIdIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
-  AppMovementsRoute: AppMovementsRouteWithChildren,
-  AppIndexRoute: AppIndexRoute,
+  AppCategoriesNewRoute: AppCategoriesNewRoute,
   AppCategoriesIndexRoute: AppCategoriesIndexRoute,
+  AppDashboardIndexRoute: AppDashboardIndexRoute,
+  AppCategoriesIdEditRoute: AppCategoriesIdEditRoute,
+  AppCategoriesIdIndexRoute: AppCategoriesIdIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface AuthRouteChildren {
-  AuthIndexRoute: typeof AuthIndexRoute
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthLogoutRoute: typeof AuthLogoutRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-  AuthIndexRoute: AuthIndexRoute,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthLogoutRoute: AuthLogoutRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
 }
