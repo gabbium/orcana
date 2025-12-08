@@ -36,27 +36,31 @@ const data: Record<string, NavItem[]> = {
       icon: LayoutDashboardIcon,
     },
     {
-      title: "Transações",
+      title: "Transactions",
       icon: ArrowLeftRightIcon,
+      to: "/app/transactions",
     },
     {
-      title: "Categorias",
+      title: "Categories",
       icon: TagsIcon,
       to: "/app/categories",
     },
     {
-      title: "Assistente",
+      title: "Assistant",
       icon: WandIcon,
+      to: "/app/assistent",
     },
   ],
   navSecondary: [
     {
-      title: "Configurações",
+      title: "Settings",
       icon: SettingsIcon,
+      to: "/app/settings",
     },
     {
-      title: "Ajuda & suporte",
+      title: "Help",
       icon: HelpCircleIcon,
+      to: "/app/help",
     },
   ],
 };
@@ -95,9 +99,9 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
         <SidebarFooter>
           <NavUser
             user={{
-              name: "shadcn",
-              email: "m@example.com",
-              avatar: "/avatars/shadcn.jpg",
+              name: "Gabriel",
+              email: "me@gabbium.com",
+              avatar: "https://avatars.githubusercontent.com/u/222840396",
             }}
           />
         </SidebarFooter>

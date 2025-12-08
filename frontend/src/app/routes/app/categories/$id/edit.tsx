@@ -6,14 +6,16 @@ import { PageHeader } from "@/components/ui/PageHeader";
 export const CategoryEditPage = () => {
   return (
     <PageContent>
-      <PageHeader
-        title="Editar categoria"
-        description="Ajuste os detalhes desta categoria. Alterações afetam lançamentos futuros."
-      />
+      <PageHeader title="Edit Category" />
     </PageContent>
   );
 };
 
 export const Route = createFileRoute("/app/categories/$id/edit")({
+  loader: async () => {
+    return {
+      crumb: "Edit",
+    };
+  },
   component: CategoryEditPage,
 });

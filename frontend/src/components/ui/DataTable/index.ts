@@ -1,5 +1,4 @@
 export { DataTable, type DataTableProps } from "./DataTable";
-export { DataTableColumnHeader, type DataTableColumnHeaderProps } from "./DataTableColumnHeader";
 export { DataTableFacetedFilter, type DataTableFacetedFilterProps } from "./DataTableFacetedFilter";
 export { DataTablePagination, type DataTablePaginationProps } from "./DataTablePagination";
 export { DataTableTextFilter, type DataTableTextFilterProps } from "./DataTableTextFilter";

@@ -31,9 +31,9 @@ export const DataTableTextFilter = <TData,>({ column }: DataTableTextFilterProps
   }
 
   return (
-    <InputGroup className="h-8 w-full sm:w-48">
+    <InputGroup className="h-8 w-48">
       <InputGroupInput
-        placeholder={`Buscar por ${column.columnDef.meta?.label ?? column.id}...`}
+        placeholder={`Search by ${column.id}...`}
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />

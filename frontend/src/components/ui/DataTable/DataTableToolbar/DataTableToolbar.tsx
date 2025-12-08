@@ -1,6 +1,7 @@
 import type { Table } from "@tanstack/react-table";
 
-import { DataTableToolbarFilter } from "../DataTableToolbarFilter/DataTableToolbarFilter";
+import { DataTableToolbarFilter } from "../DataTableToolbarFilter";
+import { DataTableViewOptions } from "../DataTableViewOptions";
 
 export type DataTableToolbarProps<TData> = {
   table: Table<TData>;
@@ -8,13 +9,18 @@ export type DataTableToolbarProps<TData> = {
 
 export const DataTableToolbar = <TData,>({ table }: DataTableToolbarProps<TData>) => {
   return (
-    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-      {table
-        .getAllColumns()
-        .filter((col) => col.getCanFilter())
-        .map((col) => (
-          <DataTableToolbarFilter key={col.id} column={col} />
-        ))}
+    <div className="flex items-center justify-between">
+      <div className="flex flex-1 items-center space-x-2">
+        {table
+          .getAllColumns()
+          .filter((col) => col.getCanFilter())
+          .map((col) => (
+            <DataTableToolbarFilter key={col.id} column={col} />
+          ))}
+      </div>
+      <div className="flex items-center gap-2">
+        <DataTableViewOptions table={table} />
+      </div>
     </div>
   );
 };

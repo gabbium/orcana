@@ -7,13 +7,17 @@ export const CategoryCreatePage = () => {
   return (
     <PageContent>
       <PageHeader
-        title="Nova categoria"
-        description="Defina as informações da categoria para começar a utilizá-la."
+        title="New Category"
       />
     </PageContent>
   );
 };
 
 export const Route = createFileRoute("/app/categories/new")({
+  loader: async () => {
+    return {
+      crumb: "New Category",
+    };
+  },
   component: CategoryCreatePage,
 });

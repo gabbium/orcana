@@ -14,7 +14,7 @@ export function getCategoryKind(kind: string) {
   if (!mapping) {
     console.warn(`Unknown category kind: ${kind}`);
     return {
-      label: "Desconhecido",
+      label: "Unknown kind",
       icon: AlertCircleIcon,
       className: "text-slate-400",
     };
@@ -29,7 +29,7 @@ export function getCategoryIcon(icon: string) {
   if (!mapping) {
     console.warn(`Unknown category icon: ${icon}`);
     return {
-      label: "Ícone desconhecido",
+      label: "Unknown icon",
       icon: AlertCircleIcon,
     };
   }
@@ -43,7 +43,7 @@ export function getCategoryColor(color: string) {
   if (!mapping) {
     console.warn(`Unknown category color: ${color}`);
     return {
-      label: "Cor desconhecida",
+      label: "Unknown color",
       className: "text-slate-400",
     };
   }
@@ -57,7 +57,7 @@ export function getCategoryStatus(status: string) {
   if (!mapping) {
     console.warn(`Unknown category status: ${status}`);
     return {
-      label: "Status desconhecido",
+      label: "Unknown status",
       className: "text-slate-400",
     };
   }

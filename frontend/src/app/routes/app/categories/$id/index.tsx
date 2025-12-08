@@ -6,10 +6,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 export const CategoryViewPage = () => {
   return (
     <PageContent>
-      <PageHeader
-        title="Detalhes da categoria"
-        description="Informações completas sobre esta categoria."
-      />
+      <PageHeader title="Category Details" />
     </PageContent>
   );
 };

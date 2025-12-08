@@ -18,13 +18,12 @@ export const CategoriesListPage = () => {
   return (
     <PageContent>
       <PageHeader
-        title="Categorias"
-        description="Gerencie categorias e aplique filtros para encontrar o que precisa."
+        title="Categories"
         action={
           <Button size="sm" asChild>
             <Link to="/app/categories/new">
               <PlusIcon />
-              Nova categoria
+              New Category
             </Link>
           </Button>
         }

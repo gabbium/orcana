@@ -19,12 +19,12 @@ export const CATEGORY_KIND_MAP: Record<
   }
 > = {
   [CATEGORY_KIND.EXPENSE]: {
-    label: "Despesa",
+    label: "Expense",
     icon: TrendingDownIcon,
     className: "text-red-500",
   },
   [CATEGORY_KIND.INCOME]: {
-    label: "Receita",
+    label: "Income",
     icon: TrendingUpIcon,
     className: "text-emerald-500",
   },
@@ -80,19 +80,19 @@ export const CATEGORY_COLOR_MAP: Record<
   }
 > = {
   [CATEGORY_COLOR.GREEN]: {
-    label: "Verde",
+    label: "Green",
     className: "text-emerald-500",
   },
   [CATEGORY_COLOR.BLUE]: {
-    label: "Azul",
+    label: "Blue",
     className: "text-blue-500",
   },
   [CATEGORY_COLOR.PURPLE]: {
-    label: "Roxo",
+    label: "Purple",
     className: "text-purple-500",
   },
   [CATEGORY_COLOR.ORANGE]: {
-    label: "Laranja",
+    label: "Orange",
     className: "text-orange-500",
   },
 };
@@ -113,11 +113,11 @@ export const CATEGORY_STATUS_MAP: Record<
   }
 > = {
   [CATEGORY_STATUS.ACTIVE]: {
-    label: "Ativo",
+    label: "Active",
     className: "text-emerald-500",
   },
   [CATEGORY_STATUS.INACTIVE]: {
-    label: "Inativo",
+    label: "Inactive",
     className: "text-slate-500",
   },
 };

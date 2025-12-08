@@ -73,18 +73,14 @@ export const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData
   return (
     <div className="space-y-4">
       <DataTableToolbar table={table} />
-      <div className="overflow-hidden rounded-md border">
+      <div className="overflow-hidden rounded-lg border">
         <Table>
-          <TableHeader className="bg-muted/50">
+          <TableHeader className="bg-muted sticky top-0 z-10">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead
-                      key={header.id}
-                      colSpan={header.colSpan}
-                      className="text-muted-foreground px-2"
-                    >
+                    <TableHead key={header.id} colSpan={header.colSpan}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())}
@@ -108,14 +104,14 @@ export const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  Nenhum resultado encontrado.
+                  No results found.
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </div>
-      {table.getPageCount() > 0 && <DataTablePagination table={table} />}
+      <DataTablePagination table={table} />
     </div>
   );
 };

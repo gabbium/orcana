@@ -1,12 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import type { Row } from "@tanstack/react-table";
-import { MoreHorizontalIcon } from "lucide-react";
+import { MoreVerticalIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 
@@ -25,28 +26,27 @@ export const CategoriesRowActions = ({ row, onDelete }: CategoriesRowActionsProp
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-          aria-label="Abrir menu"
+          className="data-[state=open]:bg-muted text-muted-foreground flex size-8"
+          size="icon"
         >
-          <MoreHorizontalIcon className="h-4 w-4" />
+          <MoreVerticalIcon />
+          <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-40">
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(category.id)}>
-          Copiar ID
-        </DropdownMenuItem>
+      <DropdownMenuContent align="end" className="w-32">
         <DropdownMenuItem asChild>
           <Link to="/app/categories/$id" params={{ id: category.id }}>
-            Visualizar
+            View
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link to="/app/categories/$id/edit" params={{ id: category.id }}>
-            Editar
+            Edit
           </Link>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => onDelete?.(category)} variant="destructive">
-          Deletar
+          Delete
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

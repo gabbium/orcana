@@ -2,8 +2,9 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { CircleIcon, CircleSmallIcon } from "lucide-react";
 import { useMemo } from "react";
 
-import { DataTable, DataTableColumnHeader } from "@/components/ui/DataTable";
 import { Badge } from "@/components/ui/Badge";
+import { Checkbox } from "@/components/ui/Checkbox";
+import { DataTable } from "@/components/ui/DataTable";
 
 import {
   getCategoryColor,
@@ -11,7 +12,6 @@ import {
   getCategoryKind,
   getCategoryStatus,
 } from "../../constants/helpers";
-import { CATEGORY_KIND_OPTIONS, CATEGORY_STATUS_OPTIONS } from "../../constants/maps";
 import type { Category } from "../../types/categories";
 import { CategoriesRowActions } from "../CategoriesRowActions";
 
@@ -24,18 +24,31 @@ export const CategoriesTable = ({ categories, onRowDelete }: CategoriesTableProp
   const columns = useMemo<ColumnDef<Category>[]>(
     () => [
       {
-        accessorKey: "name",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Nome" />,
-        cell: ({ row }) => (
-          <div className="flex flex-col gap-1">
-            <span className="font-medium">{row.getValue("name")}</span>
-            <span className="text-xs text-muted-foreground">{row.original.description}</span>
-          </div>
+        id: "select",
+        header: ({ table }) => (
+          <Checkbox
+            checked={
+              table.getIsAllPageRowsSelected() ||
+              (table.getIsSomePageRowsSelected() && "indeterminate")
+            }
+            onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+            aria-label="Select all"
+            className="translate-y-0.5"
+          />
         ),
-        enableSorting: false,
-        enableHiding: false,
+        cell: ({ row }) => (
+          <Checkbox
+            checked={row.getIsSelected()}
+            onCheckedChange={(value) => row.toggleSelected(!!value)}
+            aria-label="Select row"
+            className="translate-y-0.5"
+          />
+        ),
+      },
+      {
+        accessorKey: "name",
+        header: "Name",
         meta: {
-          label: "nome",
           filter: {
             type: "text",
           },
@@ -43,10 +56,9 @@ export const CategoriesTable = ({ categories, onRowDelete }: CategoriesTableProp
       },
       {
         accessorKey: "kind",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Tipo" />,
+        header: "Type",
         cell: ({ row }) => {
           const kind = getCategoryKind(row.original.kind);
-
           return (
             <Badge variant="outline" className="text-muted-foreground px-1.5">
               <kind.icon className={kind.className} />
@@ -54,23 +66,12 @@ export const CategoriesTable = ({ categories, onRowDelete }: CategoriesTableProp
             </Badge>
           );
         },
-        enableSorting: false,
-        enableHiding: false,
-        filterFn: "arrIncludesEquals",
-        meta: {
-          label: "Tipo",
-          filter: {
-            type: "select",
-            options: CATEGORY_KIND_OPTIONS,
-          },
-        },
       },
       {
         accessorKey: "status",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
+        header: "Status",
         cell: ({ row }) => {
           const status = getCategoryStatus(row.original.status);
-
           return (
             <Badge variant="outline" className="text-muted-foreground px-1.5">
               <CircleSmallIcon className={`${status.className} fill-current`} />
@@ -78,50 +79,26 @@ export const CategoriesTable = ({ categories, onRowDelete }: CategoriesTableProp
             </Badge>
           );
         },
-        enableSorting: false,
-        enableHiding: false,
-        filterFn: "arrIncludesEquals",
-        meta: {
-          label: "Status",
-          filter: {
-            type: "select",
-            options: CATEGORY_STATUS_OPTIONS,
-          },
-        },
       },
       {
         accessorKey: "icon",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Ícone" />,
+        header: "Icon",
         cell: ({ row }) => {
           const icon = getCategoryIcon(row.original.icon);
-
           return <icon.icon className="h-5 w-5 text-muted-foreground" />;
-        },
-        enableSorting: false,
-        enableHiding: false,
-        meta: {
-          label: "Ícone",
         },
       },
       {
         accessorKey: "color",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Cor" />,
+        header: "Color",
         cell: ({ row }) => {
           const color = getCategoryColor(row.original.color);
-
           return <CircleIcon className={`h-6 w-6 fill-current ${color.className}`} />;
-        },
-        enableSorting: false,
-        enableHiding: false,
-        meta: {
-          label: "Cor",
         },
       },
       {
         id: "actions",
         cell: ({ row }) => <CategoriesRowActions row={row} onDelete={onRowDelete} />,
-        enableSorting: false,
-        enableHiding: false,
       },
     ],
     [onRowDelete],

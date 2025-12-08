@@ -19,13 +19,14 @@ export const DataTableViewOptions = <TData,>({ table }: DataTableViewOptionsProp
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="ml-auto flex h-8">
+        <Button variant="outline" size="sm">
           <Settings2Icon />
-          Visualizar
+          <span className="hidden lg:inline">Customize Columns</span>
+          <span className="lg:hidden">Columns</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[150px]">
-        <DropdownMenuLabel>Alternar colunas</DropdownMenuLabel>
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
           .getAllColumns()
@@ -38,7 +39,7 @@ export const DataTableViewOptions = <TData,>({ table }: DataTableViewOptionsProp
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.columnDef.meta?.label || column.id}
+                {column.id}
               </DropdownMenuCheckboxItem>
             );
           })}

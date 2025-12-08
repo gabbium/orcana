@@ -1,621 +1,841 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Movimentos Financeiros</title>
+    <title>Wireframe - Categorias com Shell</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <style>
+      :root {
+        --bg: #f4f4f5;
+        --bg-sidebar: #0f172a;
+        --bg-sidebar-hover: #1f2937;
+        --bg-sidebar-active: #111827;
+        --bg-topbar: #ffffff;
+        --card-bg: #ffffff;
+        --border: #e4e4e7;
+        --border-muted: #f4f4f5;
+        --text: #020617;
+        --text-muted: #6b7280;
+        --text-invert: #e5e7eb;
+        --primary: #111827;
+        --primary-foreground: #f9fafb;
+        --radius-lg: 0.75rem;
+        --radius-md: 0.5rem;
+        --radius-sm: 0.375rem;
+        --shadow-soft: 0 10px 15px -3px rgba(15, 23, 42, 0.08),
+          0 4px 6px -4px rgba(15, 23, 42, 0.06);
+      }
+
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
+
       body {
-        font-family: Arial, sans-serif;
-        background: #fafafa;
-        color: #111;
-        padding: 20px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
       }
 
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
+      /* ===== APP SHELL ===== */
 
-      .flex {
+      .app-layout {
         display: flex;
+        min-height: 100vh;
+        background: var(--bg);
       }
-      .between {
-        justify-content: space-between;
+
+      /* Sidebar */
+
+      .sidebar {
+        width: 260px;
+        background: var(--bg-sidebar);
+        color: var(--text-invert);
+        display: flex;
+        flex-direction: column;
+        padding: 16px 12px;
       }
-      .center {
+
+      .sidebar-header {
+        display: flex;
         align-items: center;
+        gap: 8px;
+        padding: 8px 10px 16px;
       }
-      .gap-8 {
+
+      .sidebar-logo {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: #22c55e;
+      }
+
+      .sidebar-app-name {
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+
+      .sidebar-section {
+        margin-top: 12px;
+      }
+
+      .sidebar-section-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #6b7280;
+        padding: 8px 10px;
+      }
+
+      .sidebar-nav {
+        list-style: none;
+      }
+
+      .sidebar-item {
+        margin-bottom: 4px;
+      }
+
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 0.5rem;
+        font-size: 0.85rem;
+        color: #e5e7eb;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .sidebar-link:hover {
+        background: var(--bg-sidebar-hover);
+      }
+
+      .sidebar-link.is-active {
+        background: var(--bg-sidebar-active);
+      }
+
+      .sidebar-icon {
+        width: 18px;
+        height: 18px;
+        border-radius: 999px;
+        border: 1px solid #4b5563;
+      }
+
+      .sidebar-footer {
+        margin-top: auto;
+        padding-top: 16px;
+        border-top: 1px solid rgba(148, 163, 184, 0.3);
+      }
+
+      .sidebar-user {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 0.75rem;
+      }
+
+      .sidebar-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        background: #f97316;
+      }
+
+      .sidebar-user-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .sidebar-user-name {
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .sidebar-user-email {
+        font-size: 0.7rem;
+        color: #9ca3af;
+      }
+
+      /* Main (topbar + conteúdo) */
+
+      .main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+
+      .topbar {
+        height: 56px;
+        background: var(--bg-topbar);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+      }
+
+      .topbar-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      .breadcrumb {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.8rem;
+      }
+
+      .breadcrumb-current {
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      .topbar-right {
+        display: flex;
+        align-items: center;
         gap: 8px;
       }
-      .gap-12 {
-        gap: 12px;
-      }
-      .gap-16 {
-        gap: 16px;
+
+      .topbar-search {
+        width: 220px;
+        max-width: 100%;
+        position: relative;
       }
 
-      button {
-        padding: 10px 16px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-        background: #fff;
-        cursor: pointer;
-        font-size: 14px;
-        white-space: nowrap;
-      }
-      button:hover {
-        background: #f1f1f1;
-      }
-
-      input,
-      select,
-      textarea {
-        padding: 10px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
+      .topbar-search-input {
         width: 100%;
-        font-size: 14px;
-        font-family: inherit;
-      }
-      textarea {
-        resize: vertical;
-        min-height: 70px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        padding: 6px 10px 6px 26px;
+        font-size: 0.8rem;
       }
 
-      .card {
-        background: #fff;
-        border-radius: 8px;
-        border: 1px solid #e5e5e5;
-        padding: 16px;
+      .topbar-search-icon {
+        position: absolute;
+        left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.75rem;
+        color: var(--text-muted);
       }
 
-      .stat-label {
-        font-size: 12px;
-        color: #777;
-        margin-bottom: 4px;
-        display: block;
-      }
-      .stat-number {
-        font-size: 20px;
-        font-weight: bold;
-      }
-      .positive {
-        color: #16a34a;
-      }
-      .negative {
-        color: #dc2626;
-      }
-      .neutral {
-        color: #111;
-      }
-
-      /* Grid layouts */
-      @media (min-width: 768px) {
-        .grid-3 {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 16px;
-        }
-        .grid-filters {
-          display: grid;
-          grid-template-columns: 2fr 1fr 1fr 1fr;
-          gap: 12px;
-        }
-        .grid-form-2 {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
-        }
-      }
-
-      /* Desktop x mobile */
-      .desktop-only {
-        display: none;
-      }
-      .mobile-only {
-        display: block;
-      }
-
-      @media (min-width: 768px) {
-        .desktop-only {
-          display: block;
-        }
-        .mobile-only {
-          display: none;
-        }
-      }
-
-      /* Tabela */
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        background: #fff;
-        border-radius: 8px;
-        overflow: hidden;
-        border: 1px solid #e5e5e5;
-      }
-      th,
-      td {
-        padding: 12px;
-        font-size: 14px;
-        border-bottom: 1px solid #eee;
-      }
-      th {
-        background: #f7f7f7;
-        text-align: left;
-        font-weight: 600;
-        font-size: 13px;
-        color: #555;
-      }
-      tr:last-child td {
-        border-bottom: none;
-      }
-
-      .badge {
+      .topbar-icon-button {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        border: 1px solid transparent;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 4px 8px;
-        border-radius: 999px;
-        font-size: 11px;
-        border: 1px solid #e5e5e5;
-        background: #fafafa;
-      }
-      .badge-income {
-        border-color: #bbf7d0;
-        background: #dcfce7;
-        color: #166534;
-      }
-      .badge-expense {
-        border-color: #fecaca;
-        background: #fee2e2;
-        color: #b91c1c;
+        font-size: 0.8rem;
+        background: transparent;
+        cursor: pointer;
       }
 
-      .amount-income {
-        color: #16a34a;
-        font-weight: 600;
-      }
-      .amount-expense {
-        color: #dc2626;
-        font-weight: 600;
+      .topbar-icon-button:hover {
+        background: rgba(15, 23, 42, 0.04);
       }
 
-      .movement-card {
-        background: #fff;
-        border-radius: 8px;
-        border: 1px solid #e5e5e5;
-        padding: 16px;
-      }
-      .movement-card + .movement-card {
-        margin-top: 12px;
-      }
-      .movement-title {
-        font-size: 15px;
-        font-weight: 600;
-        margin-bottom: 4px;
-      }
-      .movement-sub {
-        font-size: 12px;
-        color: #666;
+      /* ===== CONTEÚDO DA PÁGINA (Categorias) ===== */
+
+      .page {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 24px 24px 40px;
       }
 
-      .chip {
+      .page-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .page-header-main {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .page-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+
+      .page-description {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+      }
+
+      .page-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn {
         display: inline-flex;
         align-items: center;
-        padding: 4px 8px;
-        border-radius: 999px;
-        border: 1px solid #e5e5e5;
-        font-size: 11px;
-        color: #555;
-        background: #fafafa;
+        justify-content: center;
+        gap: 8px;
+        border-radius: var(--radius-md);
+        border: 1px solid transparent;
+        font-size: 0.875rem;
+        line-height: 1;
+        padding: 8px 12px;
+        cursor: pointer;
+        background: transparent;
+        color: var(--text);
+        transition: background 0.15s ease, border-color 0.15s ease,
+          box-shadow 0.15s ease, transform 0.05s ease;
       }
 
-      /* Paginação */
-      .pagination {
-        margin-top: 16px;
+      .btn-primary {
+        background: var(--primary);
+        color: var(--primary-foreground);
+        border-color: var(--primary);
+      }
+
+      .btn-primary:hover {
+        filter: brightness(1.05);
+        box-shadow: 0 8px 16px -6px rgba(15, 23, 42, 0.35);
+        transform: translateY(-1px);
+      }
+
+      .btn-ghost {
+        border-color: transparent;
+        background: transparent;
+      }
+
+      .btn-ghost:hover {
+        background: rgba(15, 23, 42, 0.04);
+      }
+
+      .btn-icon {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        border-radius: 999px;
+        font-size: 16px;
+      }
+
+      .card {
+        background: var(--card-bg);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-soft);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-header {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .card-content {
+        padding: 0;
+      }
+
+      .card-footer {
+        padding: 10px 16px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .toolbar {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
         gap: 8px;
-        font-size: 13px;
-        color: #555;
       }
-      .pagination-controls {
+
+      .toolbar-left {
+        display: flex;
+        flex: 1 1 260px;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .toolbar-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .input {
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border);
+        padding: 8px 10px;
+        font-size: 0.875rem;
+        width: 100%;
+        min-width: 0;
+      }
+
+      .input::placeholder {
+        color: var(--text-muted);
+      }
+
+      .input-group {
+        position: relative;
+        flex: 1 1 160px;
+      }
+
+      .input-prefix {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        font-size: 13px;
+        color: var(--text-muted);
+        pointer-events: none;
+      }
+
+      .input-with-icon {
+        padding-left: 28px;
+      }
+
+      .filter-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        padding: 6px 10px;
+        background: #f9fafb;
+        font-size: 0.75rem;
+        color: #4b5563;
+        cursor: pointer;
+      }
+
+      .filter-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: #22c55e;
+      }
+
+      .filter-label {
+        font-weight: 500;
+      }
+
+      .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+      }
+
+      thead {
+        background: #f9fafb;
+        border-bottom: 1px solid var(--border);
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 10px 16px;
+        white-space: nowrap;
+      }
+
+      th {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        font-weight: 500;
+      }
+
+      tbody tr {
+        border-bottom: 1px solid var(--border-muted);
+        background: #ffffff;
+      }
+
+      tbody tr:hover {
+        background: #f9fafb;
+      }
+
+      tbody tr:last-child {
+        border-bottom: none;
+      }
+
+      .cell-name-main {
+        font-weight: 500;
+      }
+
+      .cell-name-sub {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 999px;
+        padding: 4px 8px;
+        font-size: 0.75rem;
+        border: 1px solid var(--border);
+        background: #f9fafb;
+        color: #4b5563;
+      }
+
+      .badge-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+      }
+
+      .badge-type-receita .badge-dot {
+        background: #16a34a;
+      }
+
+      .badge-type-despesa .badge-dot {
+        background: #dc2626;
+      }
+
+      .badge-status-ativo .badge-dot {
+        background: #22c55e;
+      }
+
+      .badge-status-inativo .badge-dot {
+        background: #9ca3af;
+      }
+
+      .badge-soft {
+        background: #ecfdf3;
+        border-color: #bbf7d0;
+        color: #15803d;
+      }
+
+      .icon-placeholder {
+        width: 26px;
+        height: 26px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+      }
+
+      .color-dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 999px;
+      }
+
+      .row-actions {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .btn-icon-ghost {
+        border-radius: 999px;
+        border: 1px solid transparent;
+        width: 30px;
+        height: 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .btn-icon-ghost:hover {
+        background: rgba(15, 23, 42, 0.05);
+      }
+
+      .pagination-meta {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      .pagination {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .pagination-group {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      .select {
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        padding: 4px 8px;
+        font-size: 0.75rem;
+        background: #ffffff;
+      }
+
+      .pagination-buttons {
         display: flex;
         align-items: center;
         gap: 4px;
       }
-      .page-btn {
-        padding: 6px 10px;
-        border-radius: 4px;
-        border: 1px solid #ddd;
-        background: #fff;
-        cursor: pointer;
+
+      .pagination-button {
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        background: #ffffff;
+        width: 28px;
+        height: 28px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         font-size: 13px;
-      }
-      .page-btn:hover {
-        background: #f1f1f1;
-      }
-      .page-btn[disabled] {
-        opacity: 0.5;
-        cursor: default;
-      }
-      .page-btn.active {
-        background: #111;
-        color: #fff;
-        border-color: #111;
+        cursor: pointer;
       }
 
-      /* Dialog */
-      dialog {
-        border: none;
-        border-radius: 10px;
-        padding: 20px;
-        width: 90%;
-        max-width: 480px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      .pagination-button[disabled] {
+        opacity: 0.4;
+        cursor: default;
       }
-      dialog::backdrop {
-        background: rgba(0, 0, 0, 0.45);
+
+      .pagination-button:hover:not([disabled]) {
+        background: #f4f4f5;
       }
-      .dialog-header {
-        margin-bottom: 16px;
+
+      /* Responsivo */
+
+      @media (max-width: 1024px) {
+        .sidebar {
+          display: none; /* só para wireframe, simplificado */
+        }
+
+        .topbar {
+          padding-inline: 16px;
+        }
+
+        .page {
+          padding: 16px;
+        }
       }
-      .dialog-title {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 4px;
-      }
-      .dialog-subtitle {
-        font-size: 13px;
-        color: #666;
-      }
-      .dialog-footer {
-        margin-top: 16px;
-        display: flex;
-        justify-content: flex-end;
-        gap: 8px;
+
+      @media (max-width: 768px) {
+        .page-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .page-header-actions {
+          width: 100%;
+          justify-content: flex-start;
+        }
+
+        .card-header {
+          padding: 12px;
+        }
+
+        th,
+        td {
+          padding: 8px 12px;
+        }
+
+        .card-footer {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .pagination {
+          width: 100%;
+          justify-content: space-between;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <!-- HEADER -->
-      <header class="flex between center" style="margin-bottom: 20px; flex-wrap: wrap; gap: 12px">
-        <div>
-          <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 4px">
-            Movimentos Financeiros
-          </h1>
-          <p style="font-size: 13px; color: #666">
-            Acompanhe entradas, saídas e saldo no período selecionado.
-          </p>
+    <div class="app-layout">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-logo"></div>
+          <div class="sidebar-app-name">Orcana</div>
         </div>
 
-        <button onclick="openMovementForm()">+ Novo movimento</button>
-      </header>
-
-      <!-- TOTALIZADORES -->
-      <section class="grid-3" style="margin-bottom: 24px">
-        <div class="card">
-          <span class="stat-label">Entradas</span>
-          <div class="stat-number positive">R$ 12.500,00</div>
+        <div class="sidebar-section">
+          <div class="sidebar-section-label">Menu</div>
+          <ul class="sidebar-nav">
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#">
+                <span class="sidebar-icon"></span>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#">
+                <span class="sidebar-icon"></span>
+                <span>Transações</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link is-active" href="#">
+                <span class="sidebar-icon"></span>
+                <span>Categorias</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#">
+                <span class="sidebar-icon"></span>
+                <span>Assistente</span>
+              </a>
+            </li>
+          </ul>
         </div>
 
-        <div class="card">
-          <span class="stat-label">Saídas</span>
-          <div class="stat-number negative">R$ 7.320,00</div>
+        <div class="sidebar-section">
+          <div class="sidebar-section-label">Outros</div>
+          <ul class="sidebar-nav">
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#">
+                <span class="sidebar-icon"></span>
+                <span>Configurações</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#">
+                <span class="sidebar-icon"></span>
+                <span>Ajuda &amp; suporte</span>
+              </a>
+            </li>
+          </ul>
         </div>
 
-        <div class="card">
-          <span class="stat-label">Saldo</span>
-          <div class="stat-number neutral">R$ 5.180,00</div>
-        </div>
-      </section>
-
-      <!-- FILTROS -->
-      <section class="grid-filters" style="margin-bottom: 24px">
-        <div>
-          <input type="text" placeholder="Buscar por descrição ou observação..." />
-        </div>
-        <div>
-          <select>
-            <option>Todos os tipos</option>
-            <option>Entradas</option>
-            <option>Saídas</option>
-          </select>
-        </div>
-        <div>
-          <select>
-            <option>Período: Este mês</option>
-            <option>Hoje</option>
-            <option>Esta semana</option>
-            <option>Este mês</option>
-            <option>Últimos 3 meses</option>
-            <option>Personalizado</option>
-          </select>
-        </div>
-        <div>
-          <select>
-            <option>Todas as categorias</option>
-            <option>Salário</option>
-            <option>Alimentação</option>
-            <option>Moradia</option>
-            <option>Lazer</option>
-          </select>
-        </div>
-      </section>
-
-      <!-- LISTA DESKTOP (TABELA) -->
-      <section class="desktop-only">
-        <table>
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Descrição</th>
-              <th>Categoria</th>
-              <th>Tipo</th>
-              <th>Valor</th>
-              <th style="text-align: right">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Linha exemplo 1 -->
-            <tr>
-              <td>05/12/2025</td>
-              <td>Salário Dezembro</td>
-              <td>Salário</td>
-              <td><span class="badge badge-income">Entrada</span></td>
-              <td class="amount-income">R$ 8.000,00</td>
-              <td style="text-align: right">
-                <button
-                  style="font-size: 12px; padding: 6px 10px; margin-right: 4px"
-                  onclick="openMovementForm('edit')"
-                >
-                  Editar
-                </button>
-                <button style="font-size: 12px; padding: 6px 10px">Excluir</button>
-              </td>
-            </tr>
-
-            <!-- Linha exemplo 2 -->
-            <tr>
-              <td>04/12/2025</td>
-              <td>Freelance Projeto X</td>
-              <td>Serviços</td>
-              <td><span class="badge badge-income">Entrada</span></td>
-              <td class="amount-income">R$ 1.500,00</td>
-              <td style="text-align: right">
-                <button
-                  style="font-size: 12px; padding: 6px 10px; margin-right: 4px"
-                  onclick="openMovementForm('edit')"
-                >
-                  Editar
-                </button>
-                <button style="font-size: 12px; padding: 6px 10px">Excluir</button>
-              </td>
-            </tr>
-
-            <!-- Linha exemplo 3 -->
-            <tr>
-              <td>03/12/2025</td>
-              <td>Aluguel</td>
-              <td>Moradia</td>
-              <td><span class="badge badge-expense">Saída</span></td>
-              <td class="amount-expense">R$ 2.200,00</td>
-              <td style="text-align: right">
-                <button
-                  style="font-size: 12px; padding: 6px 10px; margin-right: 4px"
-                  onclick="openMovementForm('edit')"
-                >
-                  Editar
-                </button>
-                <button style="font-size: 12px; padding: 6px 10px">Excluir</button>
-              </td>
-            </tr>
-
-            <!-- Linha exemplo 4 -->
-            <tr>
-              <td>02/12/2025</td>
-              <td>Supermercado</td>
-              <td>Alimentação</td>
-              <td><span class="badge badge-expense">Saída</span></td>
-              <td class="amount-expense">R$ 480,00</td>
-              <td style="text-align: right">
-                <button
-                  style="font-size: 12px; padding: 6px 10px; margin-right: 4px"
-                  onclick="openMovementForm('edit')"
-                >
-                  Editar
-                </button>
-                <button style="font-size: 12px; padding: 6px 10px">Excluir</button>
-              </td>
-            </tr>
-
-            <!-- Linha exemplo 5 -->
-            <tr>
-              <td>01/12/2025</td>
-              <td>Streaming</td>
-              <td>Lazer</td>
-              <td><span class="badge badge-expense">Saída</span></td>
-              <td class="amount-expense">R$ 39,90</td>
-              <td style="text-align: right">
-                <button
-                  style="font-size: 12px; padding: 6px 10px; margin-right: 4px"
-                  onclick="openMovementForm('edit')"
-                >
-                  Editar
-                </button>
-                <button style="font-size: 12px; padding: 6px 10px">Excluir</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Paginação desktop -->
-        <div class="pagination">
-          <div>Mostrando <strong>1–10</strong> de <strong>34</strong> movimentos</div>
-          <div class="pagination-controls">
-            <button class="page-btn" disabled>Anterior</button>
-            <button class="page-btn active">1</button>
-            <button class="page-btn">2</button>
-            <button class="page-btn">3</button>
-            <button class="page-btn">Próximo</button>
+        <div class="sidebar-footer">
+          <div class="sidebar-user">
+            <div class="sidebar-avatar"></div>
+            <div class="sidebar-user-info">
+              <span class="sidebar-user-name">Gabriel</span>
+              <span class="sidebar-user-email">me@gabbium.com</span>
+            </div>
           </div>
         </div>
-      </section>
+      </aside>
 
-      <!-- LISTA MOBILE (CARDS) -->
-      <section class="mobile-only" style="margin-top: 8px">
-        <!-- Card exemplo 1 -->
-        <article class="movement-card">
-          <header class="flex between center gap-8">
-            <div>
-              <div class="movement-title">Salário Dezembro</div>
-              <div class="movement-sub">05/12/2025 • Salário</div>
+      <!-- MAIN -->
+      <div class="main">
+        <!-- TOPBAR -->
+        <header class="topbar">
+          <div class="topbar-left">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+              <span>Dashboard</span>
+              <span>/</span>
+              <span class="breadcrumb-current">Categorias</span>
+            </nav>
+          </div>
+          <div class="topbar-right">
+            <div class="topbar-search">
+              <span class="topbar-search-icon">🔍</span>
+              <input
+                class="topbar-search-input"
+                type="search"
+                placeholder="Buscar..."
+              />
             </div>
-            <div class="amount-income">R$ 8.000,00</div>
+            <button
+              type="button"
+              class="topbar-icon-button"
+              aria-label="Notificações"
+            >
+              🔔
+            </button>
+          </div>
+        </header>
+
+        <!-- CONTEÚDO DA PÁGINA -->
+        <main class="page">
+          <!-- Page header -->
+          <header class="page-header">
+            <div class="page-header-main">
+              <h1 class="page-title">Categorias</h1>
+              <p class="page-description">
+                Gerencie categorias e aplique filtros para encontrar o que
+                precisa.
+              </p>
+            </div>
+
+            <div class="page-header-actions">
+              <button type="button" class="btn btn-primary">
+                <span>＋</span>
+                <span>Nova categoria</span>
+              </button>
+            </div>
           </header>
 
-          <div class="flex between center" style="margin-top: 10px">
-            <span class="badge badge-income">Entrada</span>
-            <span class="chip">Conta: Principal</span>
-          </div>
+          <!-- Card principal -->
+          <section class="card" aria-label="Lista de categorias">
+            <!-- Toolbar -->
+            <div class="card-header">
+              <div class="toolbar">
+                <div class="toolbar-left">
+                  <div class="input-group">
+                    <span class="input-prefix">🔍</span>
+                    <input
+                      class="input input-with-icon"
+                      type="search"
+                      placeholder="Buscar por nome..."
+                    />
+                  </div>
 
-          <footer style="margin-top: 12px" class="flex gap-8">
-            <button style="font-size: 12px; padding: 6px 10px" onclick="openMovementForm('edit')">
-              Editar
-            </button>
-            <button style="font-size: 12px; padding: 6px 10px">Excluir</button>
-          </footer>
-        </article>
+                  <button type="button" class="filter-chip">
+                    <span class="filter-dot"></span>
+                    <span class="filter-label">Tipo</span>
+                  </button>
 
-        <!-- Card exemplo 2 -->
-        <article class="movement-card">
-          <header class="flex between center gap-8">
-            <div>
-              <div class="movement-title">Supermercado</div>
-              <div class="movement-sub">02/12/2025 • Alimentação</div>
+                  <button type="button" class="filter-chip">
+                    <span class="filter-dot"></span>
+                    <span class="filter-label">Status</span>
+                  </button>
+                </div>
+
+                <div class="toolbar-right">
+                  <button
+                    type="button"
+                    class="btn btn-ghost btn-icon"
+                    aria-label="Opções de exibição"
+                  >
+                    ⋮
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="amount-expense">R$ 480,00</div>
-          </header>
 
-          <div class="flex between center" style="margin-top: 10px">
-            <span class="badge badge-expense">Saída</span>
-            <span class="chip">Cartão crédito</span>
-          </div>
-
-          <footer style="margin-top: 12px" class="flex gap-8">
-            <button style="font-size: 12px; padding: 6px 10px" onclick="openMovementForm('edit')">
-              Editar
-            </button>
-            <button style="font-size: 12px; padding: 6px 10px">Excluir</button>
-          </footer>
-        </article>
-
-        <!-- Paginação mobile -->
-        <div class="pagination" style="margin-top: 16px">
-          <div>Página <strong>1</strong> de <strong>4</strong></div>
-          <div class="pagination-controls">
-            <button class="page-btn" disabled>Anterior</button>
-            <button class="page-btn">Próximo</button>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <!-- FORMULÁRIO DE MOVIMENTO (DIALOG) -->
-    <dialog id="movementDialog">
-      <div class="dialog-header">
-        <div class="dialog-title" id="movementDialogTitle">Novo movimento</div>
-        <div class="dialog-subtitle">Cadastre uma entrada ou saída no seu fluxo financeiro.</div>
-      </div>
-
-      <form method="dialog">
-        <div class="grid-form-2" style="margin-bottom: 12px">
-          <div>
-            <label style="font-size: 13px; display: block; margin-bottom: 4px">Data</label>
-            <input type="date" />
-          </div>
-          <div>
-            <label style="font-size: 13px; display: block; margin-bottom: 4px">Tipo</label>
-            <select>
-              <option value="income">Entrada</option>
-              <option value="expense">Saída</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid-form-2" style="margin-bottom: 12px">
-          <div>
-            <label style="font-size: 13px; display: block; margin-bottom: 4px">Categoria</label>
-            <select>
-              <option>Selecione...</option>
-              <option>Salário</option>
-              <option>Alimentação</option>
-              <option>Moradia</option>
-              <option>Lazer</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size: 13px; display: block; margin-bottom: 4px">Conta</label>
-            <select>
-              <option>Conta principal</option>
-              <option>Cartão crédito</option>
-              <option>Poupança</option>
-            </select>
-          </div>
-        </div>
-
-        <div style="margin-bottom: 12px">
-          <label style="font-size: 13px; display: block; margin-bottom: 4px">Descrição</label>
-          <input type="text" placeholder="Ex.: Salário Dezembro, Supermercado, Aluguel..." />
-        </div>
-
-        <div style="margin-bottom: 12px">
-          <label style="font-size: 13px; display: block; margin-bottom: 4px">Valor</label>
-          <input type="number" step="0.01" placeholder="0,00" />
-        </div>
-
-        <div style="margin-bottom: 12px">
-          <label style="font-size: 13px; display: block; margin-bottom: 4px"
-            >Observações (opcional)</label
-          >
-          <textarea placeholder="Detalhes adicionais, referência, etc."></textarea>
-        </div>
-
-        <div class="dialog-footer">
-          <button type="button" onclick="closeMovementForm()">Cancelar</button>
-          <button type="submit">Salvar</button>
-        </div>
-      </form>
-    </dialog>
-
-    <script>
-      const dialog = document.getElementById("movementDialog");
-      const dialogTitle = document.getElementById("movementDialogTitle");
-
-      function openMovementForm(mode) {
-        if (mode === "edit") {
-          dialogTitle.textContent = "Editar movimento";
-        } else {
-          dialogTitle.textContent = "Novo movimento";
-        }
-        dialog.showModal();
-      }
-
-      function closeMovementForm() {
-        dialog.close();
-      }
-    </script>
-  </body>
-</html>
+            <!-- Tabela -->
+            <div class="card-content">
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Tipo</th>
+                      <th>Status</th>
