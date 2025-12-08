@@ -11,15 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/app'
-import { Route as AuthLogoutRouteImport } from './routes/auth/logout'
-import { Route as AuthLoginRouteImport } from './routes/auth/login'
-import { Route as AppCategoriesRouteImport } from './routes/app/categories'
-import { Route as AppDashboardIndexRouteImport } from './routes/app/dashboard/index'
-import { Route as AppCategoriesIndexRouteImport } from './routes/app/categories/index'
-import { Route as AppCategoriesNewRouteImport } from './routes/app/categories/new'
-import { Route as AppCategoriesIdRouteImport } from './routes/app/categories/$id'
-import { Route as AppCategoriesIdIndexRouteImport } from './routes/app/categories/$id/index'
-import { Route as AppCategoriesIdEditRouteImport } from './routes/app/categories/$id/edit'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -31,133 +22,31 @@ const AppRoute = AppRouteImport.update({
   path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthLogoutRoute = AuthLogoutRouteImport.update({
-  id: '/logout',
-  path: '/logout',
-  getParentRoute: () => AuthRoute,
-} as any)
-const AuthLoginRoute = AuthLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => AuthRoute,
-} as any)
-const AppCategoriesRoute = AppCategoriesRouteImport.update({
-  id: '/categories',
-  path: '/categories',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
-  id: '/dashboard/',
-  path: '/dashboard/',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppCategoriesIndexRoute = AppCategoriesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AppCategoriesRoute,
-} as any)
-const AppCategoriesNewRoute = AppCategoriesNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => AppCategoriesRoute,
-} as any)
-const AppCategoriesIdRoute = AppCategoriesIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AppCategoriesRoute,
-} as any)
-const AppCategoriesIdIndexRoute = AppCategoriesIdIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AppCategoriesIdRoute,
-} as any)
-const AppCategoriesIdEditRoute = AppCategoriesIdEditRouteImport.update({
-  id: '/edit',
-  path: '/edit',
-  getParentRoute: () => AppCategoriesIdRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
-  '/app': typeof AppRouteWithChildren
-  '/auth': typeof AuthRouteWithChildren
-  '/app/categories': typeof AppCategoriesRouteWithChildren
-  '/auth/login': typeof AuthLoginRoute
-  '/auth/logout': typeof AuthLogoutRoute
-  '/app/categories/$id': typeof AppCategoriesIdRouteWithChildren
-  '/app/categories/new': typeof AppCategoriesNewRoute
-  '/app/categories/': typeof AppCategoriesIndexRoute
-  '/app/dashboard': typeof AppDashboardIndexRoute
-  '/app/categories/$id/edit': typeof AppCategoriesIdEditRoute
-  '/app/categories/$id/': typeof AppCategoriesIdIndexRoute
+  '/app': typeof AppRoute
+  '/auth': typeof AuthRoute
 }
 export interface FileRoutesByTo {
-  '/app': typeof AppRouteWithChildren
-  '/auth': typeof AuthRouteWithChildren
-  '/auth/login': typeof AuthLoginRoute
-  '/auth/logout': typeof AuthLogoutRoute
-  '/app/categories/new': typeof AppCategoriesNewRoute
-  '/app/categories': typeof AppCategoriesIndexRoute
-  '/app/dashboard': typeof AppDashboardIndexRoute
-  '/app/categories/$id/edit': typeof AppCategoriesIdEditRoute
-  '/app/categories/$id': typeof AppCategoriesIdIndexRoute
+  '/app': typeof AppRoute
+  '/auth': typeof AuthRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/app': typeof AppRouteWithChildren
-  '/auth': typeof AuthRouteWithChildren
-  '/app/categories': typeof AppCategoriesRouteWithChildren
-  '/auth/login': typeof AuthLoginRoute
-  '/auth/logout': typeof AuthLogoutRoute
-  '/app/categories/$id': typeof AppCategoriesIdRouteWithChildren
-  '/app/categories/new': typeof AppCategoriesNewRoute
-  '/app/categories/': typeof AppCategoriesIndexRoute
-  '/app/dashboard/': typeof AppDashboardIndexRoute
-  '/app/categories/$id/edit': typeof AppCategoriesIdEditRoute
-  '/app/categories/$id/': typeof AppCategoriesIdIndexRoute
+  '/app': typeof AppRoute
+  '/auth': typeof AuthRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/app'
-    | '/auth'
-    | '/app/categories'
-    | '/auth/login'
-    | '/auth/logout'
-    | '/app/categories/$id'
-    | '/app/categories/new'
-    | '/app/categories/'
-    | '/app/dashboard'
-    | '/app/categories/$id/edit'
-    | '/app/categories/$id/'
+  fullPaths: '/app' | '/auth'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/app'
-    | '/auth'
-    | '/auth/login'
-    | '/auth/logout'
-    | '/app/categories/new'
-    | '/app/categories'
-    | '/app/dashboard'
-    | '/app/categories/$id/edit'
-    | '/app/categories/$id'
-  id:
-    | '__root__'
-    | '/app'
-    | '/auth'
-    | '/app/categories'
-    | '/auth/login'
-    | '/auth/logout'
-    | '/app/categories/$id'
-    | '/app/categories/new'
-    | '/app/categories/'
-    | '/app/dashboard/'
-    | '/app/categories/$id/edit'
-    | '/app/categories/$id/'
+  to: '/app' | '/auth'
+  id: '__root__' | '/app' | '/auth'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AppRoute: typeof AppRouteWithChildren
-  AuthRoute: typeof AuthRouteWithChildren
+  AppRoute: typeof AppRoute
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -176,129 +65,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/logout': {
-      id: '/auth/logout'
-      path: '/logout'
-      fullPath: '/auth/logout'
-      preLoaderRoute: typeof AuthLogoutRouteImport
-      parentRoute: typeof AuthRoute
-    }
-    '/auth/login': {
-      id: '/auth/login'
-      path: '/login'
-      fullPath: '/auth/login'
-      preLoaderRoute: typeof AuthLoginRouteImport
-      parentRoute: typeof AuthRoute
-    }
-    '/app/categories': {
-      id: '/app/categories'
-      path: '/categories'
-      fullPath: '/app/categories'
-      preLoaderRoute: typeof AppCategoriesRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/app/dashboard/': {
-      id: '/app/dashboard/'
-      path: '/dashboard'
-      fullPath: '/app/dashboard'
-      preLoaderRoute: typeof AppDashboardIndexRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/app/categories/': {
-      id: '/app/categories/'
-      path: '/'
-      fullPath: '/app/categories/'
-      preLoaderRoute: typeof AppCategoriesIndexRouteImport
-      parentRoute: typeof AppCategoriesRoute
-    }
-    '/app/categories/new': {
-      id: '/app/categories/new'
-      path: '/new'
-      fullPath: '/app/categories/new'
-      preLoaderRoute: typeof AppCategoriesNewRouteImport
-      parentRoute: typeof AppCategoriesRoute
-    }
-    '/app/categories/$id': {
-      id: '/app/categories/$id'
-      path: '/$id'
-      fullPath: '/app/categories/$id'
-      preLoaderRoute: typeof AppCategoriesIdRouteImport
-      parentRoute: typeof AppCategoriesRoute
-    }
-    '/app/categories/$id/': {
-      id: '/app/categories/$id/'
-      path: '/'
-      fullPath: '/app/categories/$id/'
-      preLoaderRoute: typeof AppCategoriesIdIndexRouteImport
-      parentRoute: typeof AppCategoriesIdRoute
-    }
-    '/app/categories/$id/edit': {
-      id: '/app/categories/$id/edit'
-      path: '/edit'
-      fullPath: '/app/categories/$id/edit'
-      preLoaderRoute: typeof AppCategoriesIdEditRouteImport
-      parentRoute: typeof AppCategoriesIdRoute
-    }
   }
 }
 
-interface AppCategoriesIdRouteChildren {
-  AppCategoriesIdEditRoute: typeof AppCategoriesIdEditRoute
-  AppCategoriesIdIndexRoute: typeof AppCategoriesIdIndexRoute
-}
-
-const AppCategoriesIdRouteChildren: AppCategoriesIdRouteChildren = {
-  AppCategoriesIdEditRoute: AppCategoriesIdEditRoute,
-  AppCategoriesIdIndexRoute: AppCategoriesIdIndexRoute,
-}
-
-const AppCategoriesIdRouteWithChildren = AppCategoriesIdRoute._addFileChildren(
-  AppCategoriesIdRouteChildren,
-)
-
-interface AppCategoriesRouteChildren {
-  AppCategoriesIdRoute: typeof AppCategoriesIdRouteWithChildren
-  AppCategoriesNewRoute: typeof AppCategoriesNewRoute
-  AppCategoriesIndexRoute: typeof AppCategoriesIndexRoute
-}
-
-const AppCategoriesRouteChildren: AppCategoriesRouteChildren = {
-  AppCategoriesIdRoute: AppCategoriesIdRouteWithChildren,
-  AppCategoriesNewRoute: AppCategoriesNewRoute,
-  AppCategoriesIndexRoute: AppCategoriesIndexRoute,
-}
-
-const AppCategoriesRouteWithChildren = AppCategoriesRoute._addFileChildren(
-  AppCategoriesRouteChildren,
-)
-
-interface AppRouteChildren {
-  AppCategoriesRoute: typeof AppCategoriesRouteWithChildren
-  AppDashboardIndexRoute: typeof AppDashboardIndexRoute
-}
-
-const AppRouteChildren: AppRouteChildren = {
-  AppCategoriesRoute: AppCategoriesRouteWithChildren,
-  AppDashboardIndexRoute: AppDashboardIndexRoute,
-}
-
-const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
-
-interface AuthRouteChildren {
-  AuthLoginRoute: typeof AuthLoginRoute
-  AuthLogoutRoute: typeof AuthLogoutRoute
-}
-
-const AuthRouteChildren: AuthRouteChildren = {
-  AuthLoginRoute: AuthLoginRoute,
-  AuthLogoutRoute: AuthLogoutRoute,
-}
-
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
-  AppRoute: AppRouteWithChildren,
-  AuthRoute: AuthRouteWithChildren,
+  AppRoute: AppRoute,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
