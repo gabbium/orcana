@@ -6,9 +6,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 export const CategoryCreatePage = () => {
   return (
     <PageContent>
-      <PageHeader
-        title="New Category"
-      />
+      <PageHeader title="New Category" />
     </PageContent>
   );
 };

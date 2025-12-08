@@ -18,7 +18,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/Drawer";
-import { useMediaQuery } from "@/hooks/use-media-query";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export type ResponsiveDialogProps = {
   open: boolean;
@@ -39,9 +39,9 @@ export const ResponsiveDialog = ({
   closeButton,
   submitButton,
 }: ResponsiveDialogProps) => {
-  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const isMobile = useIsMobile();
 
-  if (isDesktop) {
+  if (!isMobile) {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent>

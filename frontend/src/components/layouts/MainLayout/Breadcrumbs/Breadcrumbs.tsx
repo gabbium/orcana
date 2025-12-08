@@ -15,8 +15,6 @@ export const Breadcrumbs = () => {
 
   if (matches.some((match) => match.status === "pending")) return null;
 
-  console.log(matches);
-
   const items = matches
     .filter((m) => m.loaderData?.crumb)
     .map((m) => ({

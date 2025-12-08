@@ -607,6 +607,7 @@ export const SidebarMenuSkeleton = ({
   ...props
 }: SidebarMenuSkeletonProps) => {
   const width = useMemo(() => {
+    // eslint-disable-next-line react-hooks/purity
     return `${Math.floor(Math.random() * 40) + 50}%`;
   }, []);
 
