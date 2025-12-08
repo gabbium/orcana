@@ -7,7 +7,7 @@ export {
   SheetFooter,
   SheetTitle,
   SheetDescription,
-} from "./Sheet"
+} from "./Sheet";
 export type {
   SheetProps,
   SheetTriggerProps,
@@ -17,4 +17,4 @@ export type {
   SheetFooterProps,
   SheetTitleProps,
   SheetDescriptionProps,
-} from "./Sheet"
+} from "./Sheet";

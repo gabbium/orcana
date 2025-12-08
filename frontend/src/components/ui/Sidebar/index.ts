@@ -22,7 +22,7 @@ export {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
-} from "./Sidebar"
+} from "./Sidebar";
 export type {
   SidebarProps,
   SidebarProviderProps,
@@ -47,10 +47,7 @@ export type {
   SidebarMenuSubProps,
   SidebarMenuSubItemProps,
   SidebarMenuSubButtonProps,
-} from "./Sidebar"
-export { useSidebar } from "./Sidebar.context"
-export { SidebarContext, type SidebarContextProps } from "./Sidebar.context"
-export {
-  sidebarMenuButtonVariants,
-  type SidebarMenuButtonVariants,
-} from "./Sidebar.variants"
+} from "./Sidebar";
+export { useSidebar } from "./Sidebar.context";
+export { SidebarContext, type SidebarContextProps } from "./Sidebar.context";
+export { sidebarMenuButtonVariants, type SidebarMenuButtonVariants } from "./Sidebar.variants";
