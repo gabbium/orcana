@@ -15,7 +15,7 @@ export const BottomNavigation = ({ className, ...props }: BottomNavigationProps)
     <nav
       data-slot="bottom-navigation"
       className={cn(
-        "fixed bottom-0 left-0 right-0 z-40 border-t flex items-center justify-around p-1",
+        "fixed bottom-0 left-0 right-0 z-40 border-t flex items-center justify-around p-1 bg-background",
         className,
       )}
       {...props}

@@ -98,8 +98,8 @@ export const NAV_LOGO = {
   icon: WalletIcon,
 };
 
-export const NAV_QUICK_CREATE = {
-  title: "Criação Rápida",
+export const NAV_QUICK_ACTION = {
+  title: "Ação Rápida",
   url: "#",
   icon: PlusIcon,
 };

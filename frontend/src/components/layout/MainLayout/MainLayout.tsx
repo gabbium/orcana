@@ -21,7 +21,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 import {
   NAV_LOGO,
-  NAV_QUICK_CREATE,
+  NAV_QUICK_ACTION,
   NAV_OVERVIEW_GROUP,
   NAV_GENERAL_GROUP,
   NAV_ABOUT_GROUP,
@@ -41,8 +41,8 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
     const planning = NAV_OVERVIEW_GROUP.items[2];
 
     return (
-      <div className="flex min-h-svh flex-col">
-        <main className="flex-1 overflow-auto pb-20">{children}</main>
+      <div className="flex flex-col min-h-screen">
+        {children}
         <BottomNavigation>
           <BottomNavigationButton asChild>
             <Link
@@ -70,7 +70,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
             className="h-14 w-14 rounded-full bg-primary p-0 hover:bg-primary/90 -mt-10"
             size="icon"
           >
-            <NAV_QUICK_CREATE.icon className="size-7" />
+            <NAV_QUICK_ACTION.icon className="size-7" />
           </Button>
           <BottomNavigationButton asChild>
             <Link
@@ -103,16 +103,10 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:p-1.5!">
-                <Link to={NAV_LOGO.url}>
-                  <NAV_LOGO.icon className="size-5!" />
-                  <span className="text-base font-semibold">{NAV_LOGO.title}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
+          <div className="flex items-center gap-2 px-2 py-1.5">
+            <NAV_LOGO.icon className="size-5" />
+            <span className="text-base font-semibold">{NAV_LOGO.title}</span>
+          </div>
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
@@ -120,11 +114,11 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton
-                    tooltip={NAV_QUICK_CREATE.title}
+                    tooltip={NAV_QUICK_ACTION.title}
                     className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
                   >
-                    <NAV_QUICK_CREATE.icon />
-                    <span>{NAV_QUICK_CREATE.title}</span>
+                    <NAV_QUICK_ACTION.icon />
+                    <span>{NAV_QUICK_ACTION.title}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               </SidebarMenu>
@@ -174,7 +168,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
         </SidebarContent>
         <SidebarFooter></SidebarFooter>
       </Sidebar>
-      <main className="w-full">{children}</main>
+      {children}
     </SidebarProvider>
   );
 };
