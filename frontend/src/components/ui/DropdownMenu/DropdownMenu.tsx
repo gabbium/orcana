@@ -13,27 +13,16 @@ export const DropdownMenu = ({ ...props }: DropdownMenuProps) => {
 export type DropdownMenuPortalProps = ComponentProps<typeof DropdownMenuPrimitive.Portal>;
 
 export const DropdownMenuPortal = ({ ...props }: DropdownMenuPortalProps) => {
-  return (
-    <DropdownMenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />
-  );
+  return <DropdownMenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />;
 };
 
-export type DropdownMenuTriggerProps = ComponentProps<
-  typeof DropdownMenuPrimitive.Trigger
->;
+export type DropdownMenuTriggerProps = ComponentProps<typeof DropdownMenuPrimitive.Trigger>;
 
 export const DropdownMenuTrigger = ({ ...props }: DropdownMenuTriggerProps) => {
-  return (
-    <DropdownMenuPrimitive.Trigger
-      data-slot="dropdown-menu-trigger"
-      {...props}
-    />
-  );
+  return <DropdownMenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />;
 };
 
-export type DropdownMenuContentProps = ComponentProps<
-  typeof DropdownMenuPrimitive.Content
->;
+export type DropdownMenuContentProps = ComponentProps<typeof DropdownMenuPrimitive.Content>;
 
 export const DropdownMenuContent = ({
   className,
@@ -55,22 +44,13 @@ export const DropdownMenuContent = ({
   );
 };
 
-export type DropdownMenuGroupProps = ComponentProps<
-  typeof DropdownMenuPrimitive.Group
->;
+export type DropdownMenuGroupProps = ComponentProps<typeof DropdownMenuPrimitive.Group>;
 
 export const DropdownMenuGroup = ({ ...props }: DropdownMenuGroupProps) => {
-  return (
-    <DropdownMenuPrimitive.Group
-      data-slot="dropdown-menu-group"
-      {...props}
-    />
-  );
+  return <DropdownMenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />;
 };
 
-export type DropdownMenuItemProps = ComponentProps<
-  typeof DropdownMenuPrimitive.Item
-> & {
+export type DropdownMenuItemProps = ComponentProps<typeof DropdownMenuPrimitive.Item> & {
   inset?: boolean;
   variant?: "default" | "destructive";
 };
@@ -125,24 +105,13 @@ export const DropdownMenuCheckboxItem = ({
   );
 };
 
-export type DropdownMenuRadioGroupProps = ComponentProps<
-  typeof DropdownMenuPrimitive.RadioGroup
->;
+export type DropdownMenuRadioGroupProps = ComponentProps<typeof DropdownMenuPrimitive.RadioGroup>;
 
-export const DropdownMenuRadioGroup = ({
-  ...props
-}: DropdownMenuRadioGroupProps) => {
-  return (
-    <DropdownMenuPrimitive.RadioGroup
-      data-slot="dropdown-menu-radio-group"
-      {...props}
-    />
-  );
+export const DropdownMenuRadioGroup = ({ ...props }: DropdownMenuRadioGroupProps) => {
+  return <DropdownMenuPrimitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />;
 };
 
-export type DropdownMenuRadioItemProps = ComponentProps<
-  typeof DropdownMenuPrimitive.RadioItem
->;
+export type DropdownMenuRadioItemProps = ComponentProps<typeof DropdownMenuPrimitive.RadioItem>;
 
 export const DropdownMenuRadioItem = ({
   className,
@@ -168,17 +137,11 @@ export const DropdownMenuRadioItem = ({
   );
 };
 
-export type DropdownMenuLabelProps = ComponentProps<
-  typeof DropdownMenuPrimitive.Label
-> & {
+export type DropdownMenuLabelProps = ComponentProps<typeof DropdownMenuPrimitive.Label> & {
   inset?: boolean;
 };
 
-export const DropdownMenuLabel = ({
-  className,
-  inset,
-  ...props
-}: DropdownMenuLabelProps) => {
+export const DropdownMenuLabel = ({ className, inset, ...props }: DropdownMenuLabelProps) => {
   return (
     <DropdownMenuPrimitive.Label
       data-slot="dropdown-menu-label"
@@ -189,14 +152,9 @@ export const DropdownMenuLabel = ({
   );
 };
 
-export type DropdownMenuSeparatorProps = ComponentProps<
-  typeof DropdownMenuPrimitive.Separator
->;
+export type DropdownMenuSeparatorProps = ComponentProps<typeof DropdownMenuPrimitive.Separator>;
 
-export const DropdownMenuSeparator = ({
-  className,
-  ...props
-}: DropdownMenuSeparatorProps) => {
+export const DropdownMenuSeparator = ({ className, ...props }: DropdownMenuSeparatorProps) => {
   return (
     <DropdownMenuPrimitive.Separator
       data-slot="dropdown-menu-separator"
@@ -208,17 +166,11 @@ export const DropdownMenuSeparator = ({
 
 export type DropdownMenuShortcutProps = ComponentProps<"span">;
 
-export const DropdownMenuShortcut = ({
-  className,
-  ...props
-}: DropdownMenuShortcutProps) => {
+export const DropdownMenuShortcut = ({ className, ...props }: DropdownMenuShortcutProps) => {
   return (
     <span
       data-slot="dropdown-menu-shortcut"
-      className={cn(
-        "text-muted-foreground ml-auto text-xs tracking-widest",
-        className,
-      )}
+      className={cn("text-muted-foreground ml-auto text-xs tracking-widest", className)}
       {...props}
     />
   );
@@ -258,14 +210,9 @@ export const DropdownMenuSubTrigger = ({
   );
 };
 
-export type DropdownMenuSubContentProps = ComponentProps<
-  typeof DropdownMenuPrimitive.SubContent
->;
+export type DropdownMenuSubContentProps = ComponentProps<typeof DropdownMenuPrimitive.SubContent>;
 
-export const DropdownMenuSubContent = ({
-  className,
-  ...props
-}: DropdownMenuSubContentProps) => {
+export const DropdownMenuSubContent = ({ className, ...props }: DropdownMenuSubContentProps) => {
   return (
     <DropdownMenuPrimitive.SubContent
       data-slot="dropdown-menu-sub-content"

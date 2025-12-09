@@ -1,47 +1,57 @@
 import { Slot } from "@radix-ui/react-slot";
-import type { ComponentProps } from "react";
+import { type ComponentProps } from "react";
 
 import { cn } from "@/utils/cn";
 
-import {
-  bottomNavigationButtonVariants,
-  type BottomNavigationButtonVariants,
-} from "./BottomNavigation.variants";
+export type BottomNavigationProps = ComponentProps<"div">;
 
-export type BottomNavigationProps = ComponentProps<"nav">;
-
-export const BottomNavigation = ({ className, ...props }: BottomNavigationProps) => {
+export const BottomNavigation = ({ children, className, ...props }: BottomNavigationProps) => {
   return (
-    <nav
+    <div
       data-slot="bottom-navigation"
       className={cn(
-        "fixed bottom-0 left-0 right-0 z-40 border-t flex items-center justify-around p-1 bg-background",
+        "fixed inset-x-0 bottom-0 px-3 py-2 pb-2.5",
+        "bg-linear-to-t from-background to-transparent",
         className,
       )}
       {...props}
-    />
+    >
+      <nav
+        className={cn(
+          "mx-auto max-w-[480px]",
+          "rounded-lg bg-card border border-border shadow-sm",
+          "p-1 flex items-center justify-between gap-1",
+        )}
+      >
+        {children}
+      </nav>
+    </div>
   );
 };
 
-export type BottomNavigationButtonProps = ComponentProps<"button"> & {
-  isActive?: boolean;
+export type BottomNavigationItemProps = ComponentProps<"button"> & {
   asChild?: boolean;
-} & BottomNavigationButtonVariants;
+};
 
-export const BottomNavigationButton = ({
-  isActive = false,
+export const BottomNavigationItem = ({
   asChild = false,
-  variant = "default",
   className,
   ...props
-}: BottomNavigationButtonProps) => {
+}: BottomNavigationItemProps) => {
   const Comp = asChild ? Slot : "button";
 
   return (
     <Comp
-      data-slot="bottom-navigation-button"
-      data-active={isActive}
-      className={cn(bottomNavigationButtonVariants({ variant }), className)}
+      data-slot="bottom-navigation-item"
+      className={cn(
+        "flex-1 rounded-full px-1 py-1.5",
+        "text-xs font-medium",
+        "flex flex-col items-center gap-0.5",
+        "transition-colors duration-200",
+        "text-muted-foreground hover:bg-muted/50",
+        "data-[active=true]:bg-muted data-[active=true]:text-foreground",
+        className,
+      )}
       {...props}
     />
   );

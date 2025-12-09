@@ -9,17 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AppTransactionsRouteImport } from './routes/app/transactions'
-import { Route as AppPlanningRouteImport } from './routes/app/planning'
-import { Route as AppHomeRouteImport } from './routes/app/home'
+import { Route as AppOverviewRouteImport } from './routes/app/overview'
+import { Route as AppCategoriesRouteImport } from './routes/app/categories'
 
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppRoute = AppRouteImport.update({
   id: '/app',
   path: '/app',
@@ -30,72 +24,55 @@ const AppTransactionsRoute = AppTransactionsRouteImport.update({
   path: '/transactions',
   getParentRoute: () => AppRoute,
 } as any)
-const AppPlanningRoute = AppPlanningRouteImport.update({
-  id: '/planning',
-  path: '/planning',
+const AppOverviewRoute = AppOverviewRouteImport.update({
+  id: '/overview',
+  path: '/overview',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHomeRoute = AppHomeRouteImport.update({
-  id: '/home',
-  path: '/home',
+const AppCategoriesRoute = AppCategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
   getParentRoute: () => AppRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
-  '/auth': typeof AuthRoute
-  '/app/home': typeof AppHomeRoute
-  '/app/planning': typeof AppPlanningRoute
+  '/app/categories': typeof AppCategoriesRoute
+  '/app/overview': typeof AppOverviewRoute
   '/app/transactions': typeof AppTransactionsRoute
 }
 export interface FileRoutesByTo {
   '/app': typeof AppRouteWithChildren
-  '/auth': typeof AuthRoute
-  '/app/home': typeof AppHomeRoute
-  '/app/planning': typeof AppPlanningRoute
+  '/app/categories': typeof AppCategoriesRoute
+  '/app/overview': typeof AppOverviewRoute
   '/app/transactions': typeof AppTransactionsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/app': typeof AppRouteWithChildren
-  '/auth': typeof AuthRoute
-  '/app/home': typeof AppHomeRoute
-  '/app/planning': typeof AppPlanningRoute
+  '/app/categories': typeof AppCategoriesRoute
+  '/app/overview': typeof AppOverviewRoute
   '/app/transactions': typeof AppTransactionsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/app'
-    | '/auth'
-    | '/app/home'
-    | '/app/planning'
-    | '/app/transactions'
+  fullPaths: '/app' | '/app/categories' | '/app/overview' | '/app/transactions'
   fileRoutesByTo: FileRoutesByTo
-  to: '/app' | '/auth' | '/app/home' | '/app/planning' | '/app/transactions'
+  to: '/app' | '/app/categories' | '/app/overview' | '/app/transactions'
   id:
     | '__root__'
     | '/app'
-    | '/auth'
-    | '/app/home'
-    | '/app/planning'
+    | '/app/categories'
+    | '/app/overview'
     | '/app/transactions'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren
-  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/app': {
       id: '/app'
       path: '/app'
@@ -110,32 +87,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTransactionsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/app/planning': {
-      id: '/app/planning'
-      path: '/planning'
-      fullPath: '/app/planning'
-      preLoaderRoute: typeof AppPlanningRouteImport
+    '/app/overview': {
+      id: '/app/overview'
+      path: '/overview'
+      fullPath: '/app/overview'
+      preLoaderRoute: typeof AppOverviewRouteImport
       parentRoute: typeof AppRoute
     }
-    '/app/home': {
-      id: '/app/home'
-      path: '/home'
-      fullPath: '/app/home'
-      preLoaderRoute: typeof AppHomeRouteImport
+    '/app/categories': {
+      id: '/app/categories'
+      path: '/categories'
+      fullPath: '/app/categories'
+      preLoaderRoute: typeof AppCategoriesRouteImport
       parentRoute: typeof AppRoute
     }
   }
 }
 
 interface AppRouteChildren {
-  AppHomeRoute: typeof AppHomeRoute
-  AppPlanningRoute: typeof AppPlanningRoute
+  AppCategoriesRoute: typeof AppCategoriesRoute
+  AppOverviewRoute: typeof AppOverviewRoute
   AppTransactionsRoute: typeof AppTransactionsRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
-  AppHomeRoute: AppHomeRoute,
-  AppPlanningRoute: AppPlanningRoute,
+  AppCategoriesRoute: AppCategoriesRoute,
+  AppOverviewRoute: AppOverviewRoute,
   AppTransactionsRoute: AppTransactionsRoute,
 }
 
@@ -143,7 +120,6 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
-  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
