@@ -1,4 +1,5 @@
 import { Slot } from "@radix-ui/react-slot";
+import type { ComponentProps } from "react";
 
 import { Separator } from "@/components/ui/Separator";
 import { cn } from "@/utils/cn";
@@ -10,7 +11,7 @@ import {
   type ItemMediaVariants,
 } from "./Item.variants";
 
-export type ItemGroupProps = React.ComponentProps<"div">;
+export type ItemGroupProps = ComponentProps<"div">;
 
 export const ItemGroup = ({ className, ...props }: ItemGroupProps) => {
   return (
@@ -23,7 +24,7 @@ export const ItemGroup = ({ className, ...props }: ItemGroupProps) => {
   );
 };
 
-export type ItemSeparatorProps = React.ComponentProps<typeof Separator>;
+export type ItemSeparatorProps = ComponentProps<typeof Separator>;
 
 export const ItemSeparator = ({ className, ...props }: ItemSeparatorProps) => {
   return (
@@ -36,7 +37,7 @@ export const ItemSeparator = ({ className, ...props }: ItemSeparatorProps) => {
   );
 };
 
-export type ItemProps = React.ComponentProps<"div"> & ItemVariants & { asChild?: boolean };
+export type ItemProps = ComponentProps<"div"> & ItemVariants & { asChild?: boolean };
 
 export const Item = ({
   className,
@@ -57,7 +58,7 @@ export const Item = ({
   );
 };
 
-export type ItemMediaProps = React.ComponentProps<"div"> & ItemMediaVariants;
+export type ItemMediaProps = ComponentProps<"div"> & ItemMediaVariants;
 
 export const ItemMedia = ({ className, variant = "default", ...props }: ItemMediaProps) => {
   return (
@@ -70,7 +71,7 @@ export const ItemMedia = ({ className, variant = "default", ...props }: ItemMedi
   );
 };
 
-export type ItemContentProps = React.ComponentProps<"div">;
+export type ItemContentProps = ComponentProps<"div">;
 
 export const ItemContent = ({ className, ...props }: ItemContentProps) => {
   return (
@@ -82,7 +83,7 @@ export const ItemContent = ({ className, ...props }: ItemContentProps) => {
   );
 };
 
-export type ItemTitleProps = React.ComponentProps<"div">;
+export type ItemTitleProps = ComponentProps<"div">;
 
 export const ItemTitle = ({ className, ...props }: ItemTitleProps) => {
   return (
@@ -94,7 +95,7 @@ export const ItemTitle = ({ className, ...props }: ItemTitleProps) => {
   );
 };
 
-export type ItemDescriptionProps = React.ComponentProps<"p">;
+export type ItemDescriptionProps = ComponentProps<"p">;
 
 export const ItemDescription = ({ className, ...props }: ItemDescriptionProps) => {
   return (
@@ -110,7 +111,7 @@ export const ItemDescription = ({ className, ...props }: ItemDescriptionProps) =
   );
 };
 
-export type ItemActionsProps = React.ComponentProps<"div">;
+export type ItemActionsProps = ComponentProps<"div">;
 
 export const ItemActions = ({ className, ...props }: ItemActionsProps) => {
   return (
@@ -118,7 +119,7 @@ export const ItemActions = ({ className, ...props }: ItemActionsProps) => {
   );
 };
 
-export type ItemHeaderProps = React.ComponentProps<"div">;
+export type ItemHeaderProps = ComponentProps<"div">;
 
 export const ItemHeader = ({ className, ...props }: ItemHeaderProps) => {
   return (
@@ -130,7 +131,7 @@ export const ItemHeader = ({ className, ...props }: ItemHeaderProps) => {
   );
 };
 
-export type ItemFooterProps = React.ComponentProps<"div">;
+export type ItemFooterProps = ComponentProps<"div">;
 
 export const ItemFooter = ({ className, ...props }: ItemFooterProps) => {
   return (

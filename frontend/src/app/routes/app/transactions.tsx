@@ -1,5 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Calendar, ChevronLeft, ChevronRight, MoreVertical, Plus } from "lucide-react";
+import {
+  CalendarIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  MoreVerticalIcon,
+  PlusIcon,
+} from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/Button";
@@ -119,10 +125,12 @@ const TransactionsPage = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
   };
 
-  const monthLabel = currentMonth.toLocaleDateString("pt-BR", {
-    month: "long",
-    year: "numeric",
-  }).toLowerCase();
+  const monthLabel = currentMonth
+    .toLocaleDateString("pt-BR", {
+      month: "long",
+      year: "numeric",
+    })
+    .toLowerCase();
 
   // Calcular totais do mês
   const confirmedIncome = transactions
@@ -202,7 +210,7 @@ const TransactionsPage = () => {
             className="text-muted-foreground hover:text-foreground h-8 w-8"
             aria-label="Mais opções"
           >
-            <MoreVertical className="w-4 h-4" />
+            <MoreVerticalIcon className="w-4 h-4" />
           </Button>
         </div>
         <div className="flex items-center justify-center gap-3 px-3 py-2">
@@ -213,11 +221,11 @@ const TransactionsPage = () => {
             className="text-muted-foreground hover:text-foreground h-8 w-8"
             aria-label="Mês anterior"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeftIcon className="w-4 h-4" />
           </Button>
 
           <div className="flex items-center gap-2 min-w-fit">
-            <Calendar className="w-4 h-4 text-muted-foreground" />
+            <CalendarIcon className="w-4 h-4 text-muted-foreground" />
             <p className="text-sm font-medium text-foreground">{monthLabel}</p>
           </div>
 
@@ -228,7 +236,7 @@ const TransactionsPage = () => {
             className="text-muted-foreground hover:text-foreground h-8 w-8"
             aria-label="Próximo mês"
           >
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRightIcon className="w-4 h-4" />
           </Button>
         </div>
       </div>
@@ -253,11 +261,11 @@ const TransactionsPage = () => {
             className="text-muted-foreground hover:text-foreground h-8 w-8"
             aria-label="Mês anterior"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeftIcon className="w-4 h-4" />
           </Button>
 
           <div className="flex items-center gap-2 min-w-fit">
-            <Calendar className="w-4 h-4 text-muted-foreground" />
+            <CalendarIcon className="w-4 h-4 text-muted-foreground" />
             <p className="text-sm font-medium text-foreground">{monthLabel}</p>
           </div>
 
@@ -268,7 +276,7 @@ const TransactionsPage = () => {
             className="text-muted-foreground hover:text-foreground h-8 w-8"
             aria-label="Próximo mês"
           >
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRightIcon className="w-4 h-4" />
           </Button>
         </div>
 
@@ -278,7 +286,7 @@ const TransactionsPage = () => {
           className="text-muted-foreground hover:text-foreground h-8 w-8"
           aria-label="Mais opções"
         >
-          <MoreVertical className="w-4 h-4" />
+          <MoreVerticalIcon className="w-4 h-4" />
         </Button>
       </div>
 
@@ -287,7 +295,12 @@ const TransactionsPage = () => {
         <Item variant="muted" size="sm">
           <ItemContent>
             <ItemDescription className="text-xs">{firstLabel}</ItemDescription>
-            <ItemTitle className={cn("text-lg sm:text-xl font-semibold", firstIsPositive ? "text-green-600" : "text-red-600")}>
+            <ItemTitle
+              className={cn(
+                "text-lg sm:text-xl font-semibold",
+                firstIsPositive ? "text-green-600" : "text-red-600",
+              )}
+            >
               R$ {firstValue.toFixed(2).replace(".", ",")}
             </ItemTitle>
           </ItemContent>
@@ -295,7 +308,12 @@ const TransactionsPage = () => {
         <Item variant="muted" size="sm">
           <ItemContent>
             <ItemDescription className="text-xs">{secondLabel}</ItemDescription>
-            <ItemTitle className={cn("text-lg sm:text-xl font-semibold", secondIsPositive ? "text-green-600" : "text-red-600")}>
+            <ItemTitle
+              className={cn(
+                "text-lg sm:text-xl font-semibold",
+                secondIsPositive ? "text-green-600" : "text-red-600",
+              )}
+            >
               R$ {secondValue.toFixed(2).replace(".", ",")}
             </ItemTitle>
           </ItemContent>
@@ -312,7 +330,7 @@ const TransactionsPage = () => {
       </section>
 
       {/* FAB Mobile */}
-      <FloatingActionButton icon={<Plus className="w-6 h-6" />} />
+      <FloatingActionButton icon={<PlusIcon className="w-6 h-6" />} />
     </div>
   );
 };

@@ -1,17 +1,18 @@
-import * as React from "react";
+import type { ComponentProps, ReactNode } from "react";
 
 import { cn } from "@/utils/cn";
 
-export interface FloatingActionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  icon?: React.ReactNode;
-}
+export type FloatingActionButtonProps = ComponentProps<"button"> & {
+  icon?: ReactNode;
+};
 
-export const FloatingActionButton = React.forwardRef<
-  HTMLButtonElement,
-  FloatingActionButtonProps
->(({ className, icon, children, ...props }, ref) => (
+export const FloatingActionButton = ({
+  className,
+  icon,
+  children,
+  ...props
+}: FloatingActionButtonProps) => (
   <button
-    ref={ref}
     className={cn(
       "sm:hidden fixed bottom-20 right-4 w-14 h-14 rounded-full",
       "bg-primary text-primary-foreground",
@@ -19,12 +20,12 @@ export const FloatingActionButton = React.forwardRef<
       "shadow-[0_10px_20px_rgba(37,99,235,0.4)]",
       "hover:shadow-[0_12px_24px_rgba(37,99,235,0.5)] transition-shadow",
       "cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
-      className
+      className,
     )}
     {...props}
   >
     {icon || children}
   </button>
-));
+);
 
 FloatingActionButton.displayName = "FloatingActionButton";

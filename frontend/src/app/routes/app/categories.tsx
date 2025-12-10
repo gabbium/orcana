@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MoreVertical } from "lucide-react";
+import { MoreVerticalIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { FloatingActionButton } from "@/components/ui/FloatingActionButton";
 import {
   Item,
   ItemContent,
@@ -67,7 +68,7 @@ const CategoriesPage = () => {
           className="text-muted-foreground hover:text-foreground h-8 w-8"
           aria-label="Mais opções"
         >
-          <MoreVertical className="w-4 h-4" />
+          <MoreVerticalIcon className="w-4 h-4" />
         </Button>
       </header>
 
@@ -97,6 +98,8 @@ const CategoriesPage = () => {
           </TabsContent>
         </Tabs>
       </section>
+
+      <FloatingActionButton icon={<PlusIcon />} />
     </div>
   );
 };

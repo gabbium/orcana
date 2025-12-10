@@ -22,4 +22,4 @@ export const toggleVariants = cva(
   },
 );
 
-export type ToggleVariantProps = VariantProps<typeof toggleVariants>;
+export type ToggleVariants = VariantProps<typeof toggleVariants>;

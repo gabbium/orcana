@@ -1,8 +1,9 @@
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
+import type { ComponentProps } from "react";
 
 import { cn } from "@/utils/cn";
 
-export type AvatarProps = React.ComponentProps<typeof AvatarPrimitive.Root>;
+export type AvatarProps = ComponentProps<typeof AvatarPrimitive.Root>;
 
 export const Avatar = ({ className, ...props }: AvatarProps) => {
   return (
@@ -14,7 +15,7 @@ export const Avatar = ({ className, ...props }: AvatarProps) => {
   );
 };
 
-export type AvatarImageProps = React.ComponentProps<typeof AvatarPrimitive.Image>;
+export type AvatarImageProps = ComponentProps<typeof AvatarPrimitive.Image>;
 
 export const AvatarImage = ({ className, ...props }: AvatarImageProps) => {
   return (
@@ -26,7 +27,7 @@ export const AvatarImage = ({ className, ...props }: AvatarImageProps) => {
   );
 };
 
-export type AvatarFallbackProps = React.ComponentProps<typeof AvatarPrimitive.Fallback>;
+export type AvatarFallbackProps = ComponentProps<typeof AvatarPrimitive.Fallback>;
 
 export const AvatarFallback = ({ className, ...props }: AvatarFallbackProps) => {
   return (

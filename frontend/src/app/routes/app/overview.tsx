@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Calendar, ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/Button";
@@ -24,10 +24,12 @@ const OverviewPage = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
   };
 
-  const monthLabel = currentMonth.toLocaleDateString("pt-BR", {
-    month: "long",
-    year: "numeric",
-  }).toLowerCase();
+  const monthLabel = currentMonth
+    .toLocaleDateString("pt-BR", {
+      month: "long",
+      year: "numeric",
+    })
+    .toLowerCase();
 
   const balance = 2450.0;
   const totalIncome = 5000.0;
@@ -57,11 +59,11 @@ const OverviewPage = () => {
           className="text-muted-foreground hover:text-foreground h-8 w-8"
           aria-label="Mês anterior"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeftIcon className="w-4 h-4" />
         </Button>
 
         <div className="flex items-center gap-2 min-w-fit">
-          <Calendar className="w-4 h-4 text-muted-foreground" />
+          <CalendarIcon className="w-4 h-4 text-muted-foreground" />
           <p className="text-sm font-medium text-foreground">{monthLabel}</p>
         </div>
 
@@ -72,14 +74,14 @@ const OverviewPage = () => {
           className="text-muted-foreground hover:text-foreground h-8 w-8"
           aria-label="Próximo mês"
         >
-          <ChevronRight className="w-4 h-4" />
+          <ChevronRightIcon className="w-4 h-4" />
         </Button>
       </div>
 
       {/* FAB Mobile */}
-      <FloatingActionButton icon={<Plus className="w-6 h-6" />} />
+      <FloatingActionButton icon={<PlusIcon className="w-6 h-6" />} />
 
-      <Item variant="muted" size="sm" >
+      <Item variant="muted" size="sm">
         <ItemContent>
           <ItemDescription className="text-xs">Saldo do mês</ItemDescription>
           <ItemTitle className="text-base sm:text-lg">
@@ -103,7 +105,7 @@ const OverviewPage = () => {
           <p className="text-xs font-medium text-foreground">Pendências</p>
         </div>
         <ItemGroup className="grid grid-cols-2 gap-3">
-          <Item variant="muted" size="sm" >
+          <Item variant="muted" size="sm">
             <ItemContent>
               <div className="text-xs text-muted-foreground">A receber</div>
               <div className={`text-base sm:text-lg font-semibold text-green-600`}>
