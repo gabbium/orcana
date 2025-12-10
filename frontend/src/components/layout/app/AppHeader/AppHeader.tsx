@@ -1,10 +1,10 @@
 import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
 
-export type SiteHeaderProps = {
+export type AppHeaderProps = {
   month?: string;
 };
 
-export const SiteHeader = ({ month = "Set 2025" }: SiteHeaderProps) => {
+export const AppHeader = ({ month = "Set 2025" }: AppHeaderProps) => {
   return (
     <header className="flex items-center justify-between gap-2 px-3 py-2.5 sm:px-6 sm:py-3 rounded-lg bg-background border border-border">
       <div className="flex items-center gap-2">
