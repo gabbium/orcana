@@ -16,4 +16,4 @@ export const alertVariants = cva(
   },
 );
 
-export type { VariantProps as AlertVariantProps };
+export type AlertVariantProps = VariantProps<typeof alertVariants>;

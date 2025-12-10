@@ -28,7 +28,7 @@ const AppLayout = () => {
               </SidebarItem>
             ))}
           </Sidebar>
-          <main className="bg-background border border-border rounded-lg shadow-sm p-2.5 sm:p-3.5 flex flex-col">
+          <main className="border border-border rounded-lg p-2.5 sm:p-3.5 flex flex-col">
             <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
               <div className="p-0.5 flex flex-col gap-2">
                 <Outlet />

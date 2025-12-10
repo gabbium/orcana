@@ -1,69 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { Card } from "@/components/ui/Card";
-import { Item, ItemMedia, ItemTitle, ItemDescription } from "@/components/ui/Item";
-
-interface CategorySpending {
-  id: string;
-  icon: string;
-  name: string;
-  amount: number;
-  transactionCount: number;
-  percentage: number;
-}
-
-const categorySpending: CategorySpending[] = [
-  {
-    id: "1",
-    icon: "🍽",
-    name: "Alimentação",
-    amount: 950.0,
-    transactionCount: 12,
-    percentage: 38,
-  },
-  {
-    id: "2",
-    icon: "🏠",
-    name: "Moradia",
-    amount: 800.0,
-    transactionCount: 2,
-    percentage: 31,
-  },
-  {
-    id: "3",
-    icon: "🚗",
-    name: "Transporte",
-    amount: 400.0,
-    transactionCount: 6,
-    percentage: 16,
-  },
-];
-
-function SummaryCard({
-  label,
-  value,
-  hint,
-  color = "text-foreground",
-}: {
-  label: string;
-  value: string;
-  hint: string;
-  color?: string;
-}) {
-  return (
-    <div className="bg-muted/40 rounded-md border border-border p-2 sm:p-2.5 flex flex-col gap-1">
-      <div className="text-xs text-muted-foreground">{label}</div>
-      <div className={`text-base sm:text-lg font-semibold ${color}`}>{value}</div>
-      <div className="text-xs text-muted-foreground">{hint}</div>
-    </div>
-  );
-}
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/Item";
 
 const OverviewPage = () => {
   const balance = 2450.0;
   const totalIncome = 5000.0;
   const totalExpense = 2550.0;
-  const target = 2000.0;
 
   const pendingReceivable = 800.0;
   const pendingPayable = 350.0;
@@ -72,122 +21,85 @@ const OverviewPage = () => {
 
   const formatCurrency = (value: number) => `R$ ${value.toFixed(2).replace(".", ",")}`;
 
+  const categories = [
+    { icon: "🍽", name: "Alimentação", amount: 950.0, count: 12, percentage: 38 },
+    { icon: "🚗", name: "Transporte", amount: 680.0, count: 8, percentage: 27 },
+    { icon: "🎬", name: "Lazer", amount: 520.0, count: 5, percentage: 20 },
+  ];
+
   return (
     <div className="flex flex-col gap-3 sm:gap-4">
-      <div className="text-xs uppercase tracking-wider text-muted-foreground">Resumo do mês</div>
+      <header className="text-xs uppercase tracking-wider text-muted-foreground">Resumo do mês</header>
 
-      {/* SALDO DO MÊS CARD */}
-      <Card>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 mb-3 sm:mb-4">
-          <div className="flex flex-col gap-1">
-            <h2 className="text-sm sm:text-base font-medium text-foreground">Saldo do mês</h2>
-            <p className="text-xs sm:text-sm text-muted-foreground">
-              Receitas − despesas confirmadas
-            </p>
-          </div>
-          <div className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 bg-green-100/80 border border-green-200 shrink-0">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-600"></span>
-            <span className="text-xs font-medium text-green-700">Dentro do plano</span>
-          </div>
+      <Item variant="muted" size="sm" className="border-border">
+        <ItemContent>
+          <ItemDescription className="text-xs">Saldo do mês</ItemDescription>
+          <ItemTitle className="text-base sm:text-lg">
+            R$ {balance.toFixed(2).replace(".", ",")}
+          </ItemTitle>
+        </ItemContent>
+        <ItemContent>
+          <ItemDescription className="text-xs">
+            <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+            Receitas: R$ {totalIncome.toFixed(2).replace(".", ",")}
+          </ItemDescription>
+          <ItemDescription className="text-xs">
+            <span className="inline-block w-2 h-2 rounded-full bg-red-500 mr-2"></span>
+            Despesas: R$ {totalExpense.toFixed(2).replace(".", ",")}
+          </ItemDescription>
+        </ItemContent>
+      </Item>
+
+      <section className="flex flex-col gap-2">
+        <div className="space-y-1">
+          <p className="text-xs font-medium text-foreground">Pendências</p>
+          <p className="text-xs text-muted-foreground">Lançamentos não pagos/recebidos</p>
         </div>
+        <ItemGroup className="grid grid-cols-2 gap-3">
+          <Item variant="muted" size="sm" className="border-border">
+            <ItemContent>
+              <div className="text-xs text-muted-foreground">A receber</div>
+              <div className={`text-base sm:text-lg font-semibold text-green-600`}>
+                {formatCurrency(pendingReceivable)}
+              </div>
+              <div className="text-xs text-muted-foreground">{`${pendingReceivableCount} lançamentos`}</div>
+            </ItemContent>
+          </Item>
+          <Item variant="muted" size="sm" className="border-border">
+            <ItemContent>
+              <div className="text-xs text-muted-foreground">A pagar</div>
+              <div className={`text-base sm:text-lg font-semibold text-red-600`}>
+                {formatCurrency(pendingPayable)}
+              </div>
+              <div className="text-xs text-muted-foreground">{`${pendingPayableCount} lançamentos`}</div>
+            </ItemContent>
+          </Item>
+        </ItemGroup>
+      </section>
 
-        {/* Main balance */}
-        <div className="flex items-baseline justify-between gap-2 mb-3">
-          <div className="text-2xl sm:text-3xl font-bold text-foreground">
-            {formatCurrency(balance)}
-          </div>
-          <div className="text-right text-xs text-muted-foreground space-y-1">
-            <div>
-              Meta: <span className="font-medium text-foreground">{formatCurrency(target)}</span>
-            </div>
-            <div>Baseado no mês selecionado</div>
-          </div>
+      <section className="flex flex-col gap-2">
+        <div className="space-y-1">
+          <p className="text-xs font-medium text-foreground">Por categoria</p>
+          <p className="text-xs text-muted-foreground">Distribuição das despesas do mês</p>
         </div>
-
-        {/* Summary grid - Receitas e Despesas */}
-        <div className="grid grid-cols-2 gap-2">
-          <SummaryCard
-            label="Receitas"
-            value={formatCurrency(totalIncome)}
-            hint="2 pendentes a receber"
-            color="text-green-600 font-semibold"
-          />
-          <SummaryCard
-            label="Despesas"
-            value={formatCurrency(totalExpense)}
-            hint="3 pendentes a pagar"
-            color="text-red-600 font-semibold"
-          />
-        </div>
-      </Card>
-
-      {/* PENDENCIES AND CATEGORIES ROW */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-        {/* PENDÊNCIAS CARD */}
-        <Card>
-          <div className="flex flex-col gap-1 mb-3 sm:mb-4">
-            <h2 className="text-sm sm:text-base font-medium text-foreground">Pendências</h2>
-            <p className="text-xs sm:text-sm text-muted-foreground">
-              Lançamentos ainda não pagos/recebidos
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2">
-            <SummaryCard
-              label="A receber"
-              value={formatCurrency(pendingReceivable)}
-              hint={`${pendingReceivableCount} lançamentos`}
-              color="text-green-600 font-semibold"
-            />
-            <SummaryCard
-              label="A pagar"
-              value={formatCurrency(pendingPayable)}
-              hint={`${pendingPayableCount} lançamentos`}
-              color="text-red-600 font-semibold"
-            />
-          </div>
-        </Card>
-
-        {/* POR CATEGORIA CARD */}
-        <Card>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="flex flex-col gap-1">
-              <h2 className="text-sm sm:text-base font-medium text-foreground">Por categoria</h2>
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                Distribuição das despesas do mês
-              </p>
-            </div>
-            <span className="text-xs px-2 py-1 rounded-full border border-border bg-muted/40 text-muted-foreground whitespace-nowrap">
-              Lista simples
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-2 mb-3">
-            {categorySpending.map((category) => (
-              <Item key={category.id} variant="muted" size="sm" className="cursor-pointer">
-                <ItemMedia variant="icon">{category.icon}</ItemMedia>
-                <div className="flex-1">
-                  <ItemTitle>{category.name}</ItemTitle>
-                  <ItemDescription>
-                    {formatCurrency(category.amount)} em {category.transactionCount} lançamentos
-                  </ItemDescription>
-                </div>
-                <div className="text-right shrink-0">
-                  <div className="text-sm font-semibold text-foreground">
-                    {category.percentage}%
-                  </div>
-                  <div className="text-xs text-muted-foreground">do total</div>
-                </div>
-              </Item>
-            ))}
-          </div>
-
-          <div className="text-xs text-muted-foreground leading-relaxed pt-2 border-t border-border/50">
-            No produto final, este bloco pode virar gráfico (pizza ou barras) usando os mesmos
-            dados.
-          </div>
-        </Card>
-      </div>
+        <ItemGroup className="gap-2">
+          {categories.map((category, index) => (
+            <Item key={index} variant="muted" size="sm" className="border-border">
+              <ItemMedia variant="icon">{category.icon}</ItemMedia>
+              <ItemContent>
+                <ItemTitle>{category.name}</ItemTitle>
+                <ItemDescription className="text-xs">
+                  {formatCurrency(category.amount)} em {category.count} lançamentos
+                </ItemDescription>
+              </ItemContent>
+              <ItemContent>
+                <ItemTitle>{category.percentage}%</ItemTitle>
+                <ItemDescription className="text-xs text-right">do total</ItemDescription>
+              </ItemContent>
+            </Item>
+          ))}
+        </ItemGroup>
+      </section>
     </div>
   );
 };

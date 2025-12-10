@@ -14,7 +14,7 @@ export const Sidebar = ({ title = "Navegação", children, className, ...props }
       className={cn("hidden sm:flex flex-col gap-2", className)}
       {...props}
     >
-      <div className="bg-background border border-border rounded-lg p-2.5 sm:p-3.5 shadow-sm">
+      <div className="bg-background border border-border rounded-lg p-2.5 sm:p-3.5">
         {title && (
           <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5">
             {title}

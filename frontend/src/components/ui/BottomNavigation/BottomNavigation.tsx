@@ -44,7 +44,7 @@ export const BottomNavigationItem = ({
     <Comp
       data-slot="bottom-navigation-item"
       className={cn(
-        "flex-1 rounded-full px-1 py-1.5",
+        "flex-1 rounded-lg px-1 py-1.5",
         "text-xs font-medium",
         "flex flex-col items-center gap-0.5",
         "transition-colors duration-200",
