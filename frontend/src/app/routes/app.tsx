@@ -6,7 +6,7 @@ const AppLayout = () => {
   return (
     <div className="flex flex-col">
       <div className="w-full max-w-[1200px] mx-auto px-3 pt-3 pb-0 sm:px-6 sm:pt-5">
-        <AppHeader month="Set 2025" />
+        <AppHeader />
       </div>
       <div className="w-full max-w-[1200px] mx-auto px-3 py-3 sm:px-6 sm:py-4 flex flex-col gap-3 sm:gap-4">
         <div className="grid grid-cols-1 sm:grid-cols-[220px_minmax(0,1fr)] gap-3 sm:gap-4">

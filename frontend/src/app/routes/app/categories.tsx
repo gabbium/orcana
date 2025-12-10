@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/Button";
@@ -10,7 +11,7 @@ import {
   ItemMedia,
   ItemTitle,
 } from "@/components/ui/Item";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { Tabs, TabsContent } from "@/components/ui/Tabs";
 
 interface Category {
   id: string;
@@ -47,31 +48,42 @@ function CategoryLine({ category }: { category: Category }) {
 }
 
 const CategoriesPage = () => {
-  const [activeTab, setActiveTab] = useState<string>("expense");
+  const [activeTab, setActiveTab] = useState<string>("all");
 
   return (
     <div className="flex flex-col gap-3 sm:gap-4 relative">
-      <header className="flex items-start justify-between gap-3">
-        <div className="space-y-1">
-          <p className="text-xs uppercase tracking-wider text-muted-foreground">Categorias</p>
-          <p className="text-xs text-muted-foreground">Grupos para receitas e despesas</p>
-        </div>
-        <Button size="sm" className="text-xs">
-          Nova categoria
+      <header className="flex items-center justify-between gap-2">
+        <select
+          value={activeTab}
+          onChange={(e) => setActiveTab(e.target.value)}
+          className="px-3 py-1 rounded-lg border border-border/60 bg-muted/30 text-sm text-foreground cursor-pointer hover:border-primary/50 transition-colors"
+        >
+          <option value="all">Categorias</option>
+          <option value="expense">Despesas</option>
+          <option value="income">Receitas</option>
+        </select>
+        <Button
+          size="icon"
+          variant="ghost"
+          className="text-muted-foreground hover:text-foreground h-8 w-8"
+          aria-label="Mais opções"
+        >
+          <MoreVertical className="w-4 h-4" />
         </Button>
       </header>
 
       <section>
         <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value)}>
-          <TabsList className="w-full">
-            <TabsTrigger value="expense">Despesas</TabsTrigger>
-            <TabsTrigger value="income">Receitas</TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </section>
-
-      <section>
-        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value)}>
+          <TabsContent value="all" className="">
+            <ItemGroup className="gap-2">
+              {expenseCategories.map((category) => (
+                <CategoryLine key={category.id} category={category} />
+              ))}
+              {incomeCategories.map((category) => (
+                <CategoryLine key={category.id} category={category} />
+              ))}
+            </ItemGroup>
+          </TabsContent>
           <TabsContent value="expense" className="">
             <ItemGroup className="gap-2">
               {expenseCategories.map((category) => (

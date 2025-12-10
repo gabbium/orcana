@@ -1,5 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Calendar, ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { useState } from "react";
 
+import { Button } from "@/components/ui/Button";
+import { FloatingActionButton } from "@/components/ui/FloatingActionButton";
 import {
   Item,
   ItemContent,
@@ -10,6 +14,21 @@ import {
 } from "@/components/ui/Item";
 
 const OverviewPage = () => {
+  const [currentMonth, setCurrentMonth] = useState(new Date("2025-09-01"));
+
+  const handlePreviousMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
+  };
+
+  const monthLabel = currentMonth.toLocaleDateString("pt-BR", {
+    month: "long",
+    year: "numeric",
+  }).toLowerCase();
+
   const balance = 2450.0;
   const totalIncome = 5000.0;
   const totalExpense = 2550.0;
@@ -28,10 +47,39 @@ const OverviewPage = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-3 sm:gap-4">
-      <header className="text-xs uppercase tracking-wider text-muted-foreground">Resumo do mês</header>
+    <div className="flex flex-col gap-4 relative">
+      {/* Seletor de Mês */}
+      <div className="flex items-center justify-center gap-3">
+        <Button
+          size="icon"
+          variant="ghost"
+          onClick={handlePreviousMonth}
+          className="text-muted-foreground hover:text-foreground h-8 w-8"
+          aria-label="Mês anterior"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </Button>
 
-      <Item variant="muted" size="sm" className="border-border">
+        <div className="flex items-center gap-2 min-w-fit">
+          <Calendar className="w-4 h-4 text-muted-foreground" />
+          <p className="text-sm font-medium text-foreground">{monthLabel}</p>
+        </div>
+
+        <Button
+          size="icon"
+          variant="ghost"
+          onClick={handleNextMonth}
+          className="text-muted-foreground hover:text-foreground h-8 w-8"
+          aria-label="Próximo mês"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </Button>
+      </div>
+
+      {/* FAB Mobile */}
+      <FloatingActionButton icon={<Plus className="w-6 h-6" />} />
+
+      <Item variant="muted" size="sm" >
         <ItemContent>
           <ItemDescription className="text-xs">Saldo do mês</ItemDescription>
           <ItemTitle className="text-base sm:text-lg">
@@ -51,12 +99,11 @@ const OverviewPage = () => {
       </Item>
 
       <section className="flex flex-col gap-2">
-        <div className="space-y-1">
+        <div>
           <p className="text-xs font-medium text-foreground">Pendências</p>
-          <p className="text-xs text-muted-foreground">Lançamentos não pagos/recebidos</p>
         </div>
         <ItemGroup className="grid grid-cols-2 gap-3">
-          <Item variant="muted" size="sm" className="border-border">
+          <Item variant="muted" size="sm" >
             <ItemContent>
               <div className="text-xs text-muted-foreground">A receber</div>
               <div className={`text-base sm:text-lg font-semibold text-green-600`}>
@@ -65,7 +112,7 @@ const OverviewPage = () => {
               <div className="text-xs text-muted-foreground">{`${pendingReceivableCount} lançamentos`}</div>
             </ItemContent>
           </Item>
-          <Item variant="muted" size="sm" className="border-border">
+          <Item variant="muted" size="sm">
             <ItemContent>
               <div className="text-xs text-muted-foreground">A pagar</div>
               <div className={`text-base sm:text-lg font-semibold text-red-600`}>
@@ -78,13 +125,12 @@ const OverviewPage = () => {
       </section>
 
       <section className="flex flex-col gap-2">
-        <div className="space-y-1">
-          <p className="text-xs font-medium text-foreground">Por categoria</p>
-          <p className="text-xs text-muted-foreground">Distribuição das despesas do mês</p>
+        <div>
+          <p className="text-xs font-medium text-foreground">Despesas por categoria</p>
         </div>
         <ItemGroup className="gap-2">
           {categories.map((category, index) => (
-            <Item key={index} variant="muted" size="sm" className="border-border">
+            <Item key={index} variant="muted" size="sm">
               <ItemMedia variant="icon">{category.icon}</ItemMedia>
               <ItemContent>
                 <ItemTitle>{category.name}</ItemTitle>
