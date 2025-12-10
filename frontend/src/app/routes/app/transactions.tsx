@@ -190,7 +190,7 @@ const TransactionsPage = () => {
           <select
             value={filterType}
             onChange={(e) => setFilterType(e.target.value as "all" | "income" | "expense")}
-            className="px-3 py-2 rounded-lg border border-border/60 bg-muted/30 text-sm text-foreground cursor-pointer hover:border-primary/50 transition-colors"
+            className="px-3 py-1 rounded-lg border border-border/60 bg-muted/30 text-sm text-foreground cursor-pointer hover:border-primary/50 transition-colors"
           >
             <option value="all">Transações</option>
             <option value="income">Receitas</option>

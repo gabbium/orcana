@@ -48,7 +48,7 @@ function CategoryLine({ category }: { category: Category }) {
 }
 
 const CategoriesPage = () => {
-  const [activeTab, setActiveTab] = useState<string>("all");
+  const [activeTab, setActiveTab] = useState<string>("expense");
 
   return (
     <div className="flex flex-col gap-3 sm:gap-4 relative">
@@ -58,9 +58,8 @@ const CategoriesPage = () => {
           onChange={(e) => setActiveTab(e.target.value)}
           className="px-3 py-1 rounded-lg border border-border/60 bg-muted/30 text-sm text-foreground cursor-pointer hover:border-primary/50 transition-colors"
         >
-          <option value="all">Categorias</option>
-          <option value="expense">Despesas</option>
-          <option value="income">Receitas</option>
+          <option value="expense">Categorias de despesa</option>
+          <option value="income">Categorias de receitas</option>
         </select>
         <Button
           size="icon"
