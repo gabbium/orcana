@@ -1,10 +1,11 @@
 import { Item, ItemContent, ItemDescription, ItemTitle } from "@/components/ui/Item";
+import { cn } from "@/utils/cn";
 
 export type OverviewPendingCardProps = {
   label: string;
   value: number;
   count: number;
-  isPositive: boolean;
+  isPositive?: boolean;
 };
 
 export const OverviewPendingCard = ({
@@ -20,7 +21,7 @@ export const OverviewPendingCard = ({
     <Item variant="muted" size="sm">
       <ItemContent>
         <ItemDescription className="text-xs">{label}</ItemDescription>
-        <ItemTitle className={`text-base sm:text-lg font-semibold ${textColor}`}>
+        <ItemTitle className={cn("text-base sm:text-lg font-semibold", textColor)}>
           {formatCurrency(value)}
         </ItemTitle>
         <ItemDescription className="text-xs">{count} lançamentos</ItemDescription>

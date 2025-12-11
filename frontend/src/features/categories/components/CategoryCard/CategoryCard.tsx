@@ -1,20 +1,21 @@
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/Item";
 
-import type { Category } from "../../types/category";
-
 export type CategoryCardProps = {
-  category: Category;
+  name: string;
+  icon: string;
+  status: string;
+  transactionCount: number;
 };
 
-export const CategoryCard = ({ category }: CategoryCardProps) => {
+export const CategoryCard = ({ name, icon, status, transactionCount }: CategoryCardProps) => {
   return (
     <Item className="cursor-pointer" variant="outline" size="sm">
-      <ItemMedia variant="icon">{category.icon}</ItemMedia>
+      <ItemMedia variant="icon">{icon}</ItemMedia>
       <ItemContent>
-        <ItemTitle>{category.name}</ItemTitle>
+        <ItemTitle>{name}</ItemTitle>
         <ItemDescription className="text-xs">
-          {category.status}
-          {category.transactionCount > 0 && ` • ${category.transactionCount} transações`}
+          {status}
+          {transactionCount > 0 && ` • ${transactionCount} transações`}
         </ItemDescription>
       </ItemContent>
     </Item>

@@ -4,7 +4,7 @@ import { cn } from "@/utils/cn";
 export type TransactionSummaryCardProps = {
   label: string;
   value: number;
-  isPositive: boolean;
+  isPositive?: boolean;
 };
 
 export const TransactionSummaryCard = ({
@@ -12,16 +12,13 @@ export const TransactionSummaryCard = ({
   value,
   isPositive,
 }: TransactionSummaryCardProps) => {
+  const textColor = isPositive ? "text-green-600" : "text-red-600";
+
   return (
     <Item variant="muted" size="sm">
       <ItemContent>
         <ItemDescription className="text-xs">{label}</ItemDescription>
-        <ItemTitle
-          className={cn(
-            "text-lg sm:text-xl font-semibold",
-            isPositive ? "text-green-600" : "text-red-600",
-          )}
-        >
+        <ItemTitle className={cn("text-lg sm:text-xl font-semibold", textColor)}>
           R$ {value.toFixed(2).replace(".", ",")}
         </ItemTitle>
       </ItemContent>

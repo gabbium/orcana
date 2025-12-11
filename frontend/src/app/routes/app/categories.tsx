@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PlusIcon } from "lucide-react";
 
 import { FloatingActionButton } from "@/components/ui/FloatingActionButton";
-import { CategoryList, CategoryToolbar } from "@/features/categories";
+import { ItemGroup } from "@/components/ui/Item";
+import { CategoryCard, CategoryToolbar } from "@/features/categories";
 
 const mockCategories = [
   {
@@ -51,7 +52,13 @@ const CategoriesPage = () => {
   return (
     <div className="flex flex-col gap-4 relative">
       <CategoryToolbar kind="expense" onKindChange={() => {}} />
-      <CategoryList categories={mockCategories.filter((c) => c.kind === "expense")} />
+
+      <ItemGroup className="gap-2">
+        {mockCategories.map((category) => (
+          <CategoryCard key={category.id} {...category} />
+        ))}
+      </ItemGroup>
+
       <FloatingActionButton icon={<PlusIcon />} />
     </div>
   );

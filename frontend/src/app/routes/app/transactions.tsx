@@ -1,12 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PlusIcon } from "lucide-react";
+import { useState } from "react";
 
 import { FloatingActionButton } from "@/components/ui/FloatingActionButton";
+import { ItemGroup } from "@/components/ui/Item";
 import {
-  TransactionList,
-  TransactionSummaryGroup,
   TransactionToolbar,
   type Transaction,
+  TransactionSummaryCard,
+  TransactionCard,
 } from "@/features/transactions";
 
 const mockTransactions: Transaction[] = [
@@ -63,24 +65,45 @@ const mockTransactions: Transaction[] = [
 ];
 
 const TransactionsPage = () => {
-  const filtered = mockTransactions;
-
-  const summaryConfigs = [
-    { label: "Saldo atual", value: 2450.0, isPositive: true },
-    { label: "Balanço do mês", value: 2450.0, isPositive: true },
-  ];
+  const [filterType, setFilterType] = useState<"all" | "expense" | "income">("all");
 
   return (
     <div className="flex flex-col gap-4 relative">
       <TransactionToolbar
-        filterType="all"
-        onFilterTypeChange={() => {}}
+        filterType={filterType}
+        onFilterTypeChange={(type) => setFilterType(type as "all" | "expense" | "income")}
         monthLabel="setembro de 2025"
         onPreviousMonth={() => {}}
         onNextMonth={() => {}}
       />
-      <TransactionSummaryGroup items={summaryConfigs} />
-      <TransactionList transactions={filtered} />
+
+      {filterType === "all" && (
+        <ItemGroup className="grid grid-cols-2 gap-3">
+          <TransactionSummaryCard label="Saldo Atual" value={2450.0} isPositive={true} />
+          <TransactionSummaryCard label="Balanço do Mês" value={2450.0} isPositive={true} />
+        </ItemGroup>
+      )}
+
+      {filterType === "expense" && (
+        <ItemGroup className="grid grid-cols-2 gap-3">
+          <TransactionSummaryCard label="Total Pago" value={1475.0} />
+          <TransactionSummaryCard label="Total Pendente" value={230.0} />
+        </ItemGroup>
+      )}
+
+      {filterType === "income" && (
+        <ItemGroup className="grid grid-cols-2 gap-3">
+          <TransactionSummaryCard label="Total Recebido" value={5800.0} isPositive />
+          <TransactionSummaryCard label="Total Pendente" value={800.0} isPositive />
+        </ItemGroup>
+      )}
+
+      <ItemGroup className="gap-2">
+        {mockTransactions.map((transaction) => (
+          <TransactionCard key={transaction.id} {...transaction} />
+        ))}
+      </ItemGroup>
+
       <FloatingActionButton icon={<PlusIcon />} />
     </div>
   );

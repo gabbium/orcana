@@ -1,9 +1,6 @@
 export { CategoryCard } from "./components/CategoryCard";
 export type { CategoryCardProps } from "./components/CategoryCard";
 
-export { CategoryList } from "./components/CategoryList";
-export type { CategoryListProps } from "./components/CategoryList";
-
 export { CategoryToolbar } from "./components/CategoryToolbar";
 export type { CategoryToolbarProps } from "./components/CategoryToolbar";
 
