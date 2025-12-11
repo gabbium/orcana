@@ -13,23 +13,15 @@ export type Transaction = {
 
 export type TransactionSummary = {
   currentBalance: number;
-  monthBalance: number;
+  monthlyBalance: number;
   income: {
-    confirmed: number;
-    pending: number;
-    total: number;
+    confirmed: { value: number; count: number };
+    pending: { value: number; count: number };
+    total: { value: number; count: number };
   };
   expense: {
-    confirmed: number;
-    pending: number;
-    total: number;
+    confirmed: { value: number; count: number };
+    pending: { value: number; count: number };
+    total: { value: number; count: number };
   };
 };
-
-export interface TransactionCategoryBreakdown {
-  icon: string;
-  name: string;
-  amount: number;
-  count: number;
-  percentage: number;
-}

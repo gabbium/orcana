@@ -5,6 +5,5 @@ export type Category = {
   name: string;
   icon: string;
   status: string;
-  transactionCount: number;
   kind: CategoryKind;
 };

@@ -2,7 +2,7 @@ import { CATEGORY_KIND, type CategoryKind } from "../constants/enums";
 import type { Category } from "../types/category";
 
 export type ListCategoriesParams = {
-  kinds?: CategoryKind[];
+  kinds?: CategoryKind | CategoryKind[];
 };
 
 export const listCategories = async (params?: ListCategoriesParams): Promise<Category[]> => {
@@ -15,7 +15,6 @@ export const listCategories = async (params?: ListCategoriesParams): Promise<Cat
       icon: "🍽",
       name: "Alimentação",
       status: "Ativa",
-      transactionCount: 12,
     },
     {
       id: "2",
@@ -23,7 +22,6 @@ export const listCategories = async (params?: ListCategoriesParams): Promise<Cat
       icon: "🏠",
       name: "Moradia",
       status: "Ativa",
-      transactionCount: 2,
     },
     {
       id: "3",
@@ -31,7 +29,6 @@ export const listCategories = async (params?: ListCategoriesParams): Promise<Cat
       icon: "🎮",
       name: "Lazer",
       status: "Arquivada",
-      transactionCount: 0,
     },
     {
       id: "4",
@@ -39,7 +36,6 @@ export const listCategories = async (params?: ListCategoriesParams): Promise<Cat
       icon: "💼",
       name: "Salário",
       status: "Ativa",
-      transactionCount: 2,
     },
     {
       id: "5",
@@ -47,7 +43,6 @@ export const listCategories = async (params?: ListCategoriesParams): Promise<Cat
       icon: "🧾",
       name: "Freelancer",
       status: "Ativa",
-      transactionCount: 0,
     },
   ];
 

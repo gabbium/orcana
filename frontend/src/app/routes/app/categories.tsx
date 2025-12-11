@@ -11,19 +11,21 @@ import {
   CategoryCard,
   CategoryCardSkeleton,
   CategoryToolbar,
-  type CategoryKind,
+  type CategoryFilter,
 } from "@/features/categories";
 
 const CategoriesPage = () => {
-  const [kind, setKind] = useState<CategoryKind>(CATEGORY_KIND.EXPENSE);
+  const [filter, setFilter] = useState<CategoryFilter>({
+    kind: CATEGORY_KIND.EXPENSE,
+  });
 
-  const { data, isPending } = useQuery(categoriesQueries.list({ kinds: [kind] }));
+  const categoriesQuery = useQuery(categoriesQueries.list({ kinds: filter.kind }));
 
   return (
     <div className="flex flex-col gap-4 relative">
-      <CategoryToolbar kind={kind} onKindChange={setKind} />
+      <CategoryToolbar filter={filter} onFilterChange={setFilter} />
 
-      {isPending && (
+      {categoriesQuery.isPending && (
         <ItemGroup className="gap-2">
           {Array.from({ length: 3 }).map((_, index) => (
             <CategoryCardSkeleton key={index} />
@@ -31,15 +33,14 @@ const CategoriesPage = () => {
         </ItemGroup>
       )}
 
-      {data && (
+      {categoriesQuery.data && (
         <ItemGroup className="gap-2">
-          {data.map((category) => (
+          {categoriesQuery.data.map((category) => (
             <CategoryCard
               key={category.id}
               name={category.name}
               icon={category.icon}
               status={category.status}
-              transactionCount={category.transactionCount}
             />
           ))}
         </ItemGroup>

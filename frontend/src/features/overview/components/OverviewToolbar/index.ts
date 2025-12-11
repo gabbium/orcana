@@ -1,2 +1,2 @@
 export { OverviewToolbar } from "./OverviewToolbar";
-export type { OverviewToolbarProps } from "./OverviewToolbar";
+export type { OverviewFilter, OverviewToolbarProps } from "./OverviewToolbar";

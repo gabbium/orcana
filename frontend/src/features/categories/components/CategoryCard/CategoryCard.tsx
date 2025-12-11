@@ -4,19 +4,15 @@ export type CategoryCardProps = {
   name: string;
   icon: string;
   status: string;
-  transactionCount: number;
 };
 
-export const CategoryCard = ({ name, icon, status, transactionCount }: CategoryCardProps) => {
+export const CategoryCard = ({ name, icon, status }: CategoryCardProps) => {
   return (
     <Item className="cursor-pointer" variant="outline" size="sm">
       <ItemMedia variant="icon">{icon}</ItemMedia>
       <ItemContent>
         <ItemTitle>{name}</ItemTitle>
-        <ItemDescription className="text-xs">
-          {status}
-          {transactionCount > 0 && ` • ${transactionCount} transações`}
-        </ItemDescription>
+        <ItemDescription className="text-xs">{status}</ItemDescription>
       </ItemContent>
     </Item>
   );

@@ -6,7 +6,7 @@ export type { CategoryCardProps } from "./components/CategoryCard";
 export { CategoryCardSkeleton } from "./components/CategoryCardSkeleton";
 
 export { CategoryToolbar } from "./components/CategoryToolbar";
-export type { CategoryToolbarProps } from "./components/CategoryToolbar";
+export type { CategoryFilter, CategoryToolbarProps } from "./components/CategoryToolbar";
 
 export { CATEGORY_KIND } from "./constants/enums";
 export type { CategoryKind } from "./constants/enums";
