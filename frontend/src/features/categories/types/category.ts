@@ -1,10 +1,10 @@
-import type { CategoryKind } from "./category-kind";
+import type { CategoryKind } from "../constants/enums";
 
 export type Category = {
   id: string;
-  kind: CategoryKind;
   name: string;
   icon: string;
   status: string;
   transactionCount: number;
+  kind: CategoryKind;
 };

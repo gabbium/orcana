@@ -2,11 +2,11 @@ import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/comp
 
 import type { Category } from "../../types/category";
 
-export type CategoryItemProps = {
+export type CategoryCardProps = {
   category: Category;
 };
 
-export const CategoryItem = ({ category }: CategoryItemProps) => {
+export const CategoryCard = ({ category }: CategoryCardProps) => {
   return (
     <Item className="cursor-pointer" variant="outline" size="sm">
       <ItemMedia variant="icon">{category.icon}</ItemMedia>

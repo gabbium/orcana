@@ -2,7 +2,7 @@ import { MoreVerticalIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 
-import { CATEGORY_KIND, type CategoryKind } from "../../types/category-kind";
+import { CATEGORY_KIND, type CategoryKind } from "../../constants/enums";
 
 export type CategoryToolbarProps = {
   kind: CategoryKind;
