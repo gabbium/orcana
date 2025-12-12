@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/Item";
 import { Skeleton } from "@/components/ui/Skeleton";
 
@@ -9,6 +11,7 @@ import {
 } from "../../constants/enums";
 
 export type TransactionCardProps = {
+  id: string;
   title: string;
   icon: string;
   category: string;
@@ -19,6 +22,7 @@ export type TransactionCardProps = {
 };
 
 export const TransactionCard = ({
+  id,
   title,
   icon,
   category,
@@ -32,18 +36,20 @@ export const TransactionCard = ({
   const statusLabel = getStatusLabel(status, kind);
 
   return (
-    <Item className="cursor-pointer" variant="outline" size="sm">
-      <ItemMedia variant="icon">{icon}</ItemMedia>
-      <ItemContent>
-        <ItemTitle>{title}</ItemTitle>
-        <ItemDescription>
-          {category} • {date}
-        </ItemDescription>
-      </ItemContent>
-      <ItemContent className="text-right">
-        <ItemTitle className={amountColor}>R$ {amount.toFixed(2).replace(".", ",")}</ItemTitle>
-        <ItemDescription>{statusLabel}</ItemDescription>
-      </ItemContent>
+    <Item className="cursor-pointer" variant="outline" size="sm" asChild>
+      <Link to="/app/transactions/$id/edit" params={{ id }}>
+        <ItemMedia variant="icon">{icon}</ItemMedia>
+        <ItemContent>
+          <ItemTitle>{title}</ItemTitle>
+          <ItemDescription>
+            {category} • {date}
+          </ItemDescription>
+        </ItemContent>
+        <ItemContent className="text-right">
+          <ItemTitle className={amountColor}>R$ {amount.toFixed(2).replace(".", ",")}</ItemTitle>
+          <ItemDescription>{statusLabel}</ItemDescription>
+        </ItemContent>
+      </Link>
     </Item>
   );
 };

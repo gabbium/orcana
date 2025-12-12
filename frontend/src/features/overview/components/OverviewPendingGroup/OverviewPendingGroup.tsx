@@ -4,10 +4,15 @@ import type { TransactionSummary } from "@/features/transactions/types/transacti
 import { OverviewPendingCard, OverviewPendingCardSkeleton } from "../OverviewPendingCard";
 
 export type OverviewPendingGroupProps = {
-  data: TransactionSummary;
+  data?: TransactionSummary;
+  isLoading?: boolean;
 };
 
-export const OverviewPendingGroup = ({ data }: OverviewPendingGroupProps) => {
+export const OverviewPendingGroup = ({ data, isLoading = false }: OverviewPendingGroupProps) => {
+  if (isLoading || !data) {
+    return <OverviewPendingGroupSkeleton />;
+  }
+
   return (
     <div className="flex flex-col gap-2">
       <p className="text-xs font-medium text-foreground">Pendências</p>

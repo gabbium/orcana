@@ -5,14 +5,24 @@ import { TransactionCard, TransactionCardSkeleton } from "../TransactionCard";
 
 export type TransactionListProps = {
   transactions: Transaction[];
+  isLoading?: boolean;
 };
 
-export const TransactionList = ({ transactions }: TransactionListProps) => {
+export const TransactionList = ({ transactions, isLoading }: TransactionListProps) => {
+  if (isLoading) {
+    return <TransactionListSkeleton />;
+  }
+
+  if (!transactions || transactions.length === 0) {
+    return null;
+  }
+
   return (
     <ItemGroup className="gap-2">
       {transactions.map((transaction) => (
         <TransactionCard
           key={transaction.id}
+          id={transaction.id}
           title={transaction.title}
           icon={transaction.icon}
           category={transaction.category}

@@ -106,7 +106,7 @@ export const MonthYearPicker = ({
                   type="button"
                   variant={selected ? "default" : "outline"}
                   size="sm"
-                  onClick={() => handleMonthSelect(idx)}
+                  onClick={() => handleMonthSelect(idx + 1)}
                   aria-selected={selected}
                 >
                   {mLabel}

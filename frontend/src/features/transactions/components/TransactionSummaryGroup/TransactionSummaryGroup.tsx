@@ -5,11 +5,20 @@ import type { TransactionSummary } from "../../types/transaction";
 import { TransactionSummaryCard, TransactionSummaryCardSkeleton } from "../TransactionSummaryCard";
 
 export type TransactionSummaryGroupProps = {
-  summary: TransactionSummary;
+  summary?: TransactionSummary;
   mode?: TransactionKind | null;
+  isLoading?: boolean;
 };
 
-export const TransactionSummaryGroup = ({ summary, mode }: TransactionSummaryGroupProps) => {
+export const TransactionSummaryGroup = ({
+  summary,
+  mode,
+  isLoading,
+}: TransactionSummaryGroupProps) => {
+  if (isLoading || !summary) {
+    return <TransactionSummaryGroupSkeleton />;
+  }
+
   if (mode === TRANSACTION_KIND.EXPENSE) {
     return (
       <ItemGroup className="grid grid-cols-2 gap-3">

@@ -5,14 +5,24 @@ import { CategoryCard, CategoryCardSkeleton } from "../CategoryCard";
 
 export type CategoryListProps = {
   categories: Category[];
+  isLoading?: boolean;
 };
 
-export const CategoryList = ({ categories }: CategoryListProps) => {
+export const CategoryList = ({ categories, isLoading }: CategoryListProps) => {
+  if (isLoading) {
+    return <CategoryListSkeleton />;
+  }
+
+  if (!categories || categories.length === 0) {
+    return null;
+  }
+
   return (
     <ItemGroup className="gap-2">
       {categories.map((category) => (
         <CategoryCard
           key={category.id}
+          id={category.id}
           name={category.name}
           icon={category.icon}
           status={category.status}

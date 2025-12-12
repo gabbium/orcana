@@ -1,7 +1,5 @@
 import { createRouter } from "@tanstack/react-router";
 
-import { queryClient } from "@/lib/react-query";
-
 import { routeTree } from "./routeTree.gen";
 
 export const router = createRouter({
@@ -9,7 +7,7 @@ export const router = createRouter({
   defaultPreload: "intent",
   defaultPreloadStaleTime: 0,
   context: {
-    queryClient,
+    queryClient: null!,
   },
 });
 

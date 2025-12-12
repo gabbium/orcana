@@ -3,16 +3,22 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { cn } from "@/utils/cn";
 
 export type OverviewBalanceCardProps = {
-  balance: number;
-  totalIncome: number;
-  totalExpense: number;
+  balance?: number;
+  totalIncome?: number;
+  totalExpense?: number;
+  isLoading?: boolean;
 };
 
 export const OverviewBalanceCard = ({
   balance,
   totalIncome,
   totalExpense,
+  isLoading = false,
 }: OverviewBalanceCardProps) => {
+  if (isLoading || balance === undefined || totalIncome === undefined || totalExpense === undefined) {
+    return <OverviewBalanceCardSkeleton />;
+  }
+
   const formatCurrency = (value: number) => `R$ ${value.toFixed(2).replace(".", ",")}`;
   const balanceColor = balance >= 0 ? "text-green-600" : "text-red-600";
 

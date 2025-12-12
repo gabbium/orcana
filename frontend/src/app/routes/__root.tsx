@@ -12,7 +12,7 @@ type RouteContext = {
 const RootLayout = () => {
   return (
     <>
-      {import.meta.env.DEV && (
+      {!import.meta.env.DEV && (
         <TanStackDevtools
           plugins={[
             {

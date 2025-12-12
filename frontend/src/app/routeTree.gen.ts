@@ -12,9 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
-import { Route as AppTransactionsRouteImport } from './routes/app/transactions'
-import { Route as AppOverviewRouteImport } from './routes/app/overview'
-import { Route as AppCategoriesRouteImport } from './routes/app/categories'
+import { Route as AppTransactionsIndexRouteImport } from './routes/app/transactions/index'
+import { Route as AppOverviewIndexRouteImport } from './routes/app/overview/index'
+import { Route as AppCategoriesIndexRouteImport } from './routes/app/categories/index'
+import { Route as AppTransactionsCreateRouteImport } from './routes/app/transactions/create'
+import { Route as AppCategoriesCreateRouteImport } from './routes/app/categories/create'
+import { Route as AppTransactionsIdEditRouteImport } from './routes/app/transactions/$id.edit'
+import { Route as AppCategoriesIdEditRouteImport } from './routes/app/categories/$id.edit'
 
 const AppRoute = AppRouteImport.update({
   id: '/app',
@@ -31,65 +35,114 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppTransactionsRoute = AppTransactionsRouteImport.update({
-  id: '/transactions',
-  path: '/transactions',
+const AppTransactionsIndexRoute = AppTransactionsIndexRouteImport.update({
+  id: '/transactions/',
+  path: '/transactions/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppOverviewRoute = AppOverviewRouteImport.update({
-  id: '/overview',
-  path: '/overview',
+const AppOverviewIndexRoute = AppOverviewIndexRouteImport.update({
+  id: '/overview/',
+  path: '/overview/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppCategoriesRoute = AppCategoriesRouteImport.update({
-  id: '/categories',
-  path: '/categories',
+const AppCategoriesIndexRoute = AppCategoriesIndexRouteImport.update({
+  id: '/categories/',
+  path: '/categories/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTransactionsCreateRoute = AppTransactionsCreateRouteImport.update({
+  id: '/transactions/create',
+  path: '/transactions/create',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCategoriesCreateRoute = AppCategoriesCreateRouteImport.update({
+  id: '/categories/create',
+  path: '/categories/create',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTransactionsIdEditRoute = AppTransactionsIdEditRouteImport.update({
+  id: '/transactions/$id/edit',
+  path: '/transactions/$id/edit',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCategoriesIdEditRoute = AppCategoriesIdEditRouteImport.update({
+  id: '/categories/$id/edit',
+  path: '/categories/$id/edit',
   getParentRoute: () => AppRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
-  '/app/categories': typeof AppCategoriesRoute
-  '/app/overview': typeof AppOverviewRoute
-  '/app/transactions': typeof AppTransactionsRoute
   '/app/': typeof AppIndexRoute
+  '/app/categories/create': typeof AppCategoriesCreateRoute
+  '/app/transactions/create': typeof AppTransactionsCreateRoute
+  '/app/categories': typeof AppCategoriesIndexRoute
+  '/app/overview': typeof AppOverviewIndexRoute
+  '/app/transactions': typeof AppTransactionsIndexRoute
+  '/app/categories/$id/edit': typeof AppCategoriesIdEditRoute
+  '/app/transactions/$id/edit': typeof AppTransactionsIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/app/categories': typeof AppCategoriesRoute
-  '/app/overview': typeof AppOverviewRoute
-  '/app/transactions': typeof AppTransactionsRoute
   '/app': typeof AppIndexRoute
+  '/app/categories/create': typeof AppCategoriesCreateRoute
+  '/app/transactions/create': typeof AppTransactionsCreateRoute
+  '/app/categories': typeof AppCategoriesIndexRoute
+  '/app/overview': typeof AppOverviewIndexRoute
+  '/app/transactions': typeof AppTransactionsIndexRoute
+  '/app/categories/$id/edit': typeof AppCategoriesIdEditRoute
+  '/app/transactions/$id/edit': typeof AppTransactionsIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
-  '/app/categories': typeof AppCategoriesRoute
-  '/app/overview': typeof AppOverviewRoute
-  '/app/transactions': typeof AppTransactionsRoute
   '/app/': typeof AppIndexRoute
+  '/app/categories/create': typeof AppCategoriesCreateRoute
+  '/app/transactions/create': typeof AppTransactionsCreateRoute
+  '/app/categories/': typeof AppCategoriesIndexRoute
+  '/app/overview/': typeof AppOverviewIndexRoute
+  '/app/transactions/': typeof AppTransactionsIndexRoute
+  '/app/categories/$id/edit': typeof AppCategoriesIdEditRoute
+  '/app/transactions/$id/edit': typeof AppTransactionsIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/app'
+    | '/app/'
+    | '/app/categories/create'
+    | '/app/transactions/create'
     | '/app/categories'
     | '/app/overview'
     | '/app/transactions'
-    | '/app/'
+    | '/app/categories/$id/edit'
+    | '/app/transactions/$id/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app/categories' | '/app/overview' | '/app/transactions' | '/app'
+  to:
+    | '/'
+    | '/app'
+    | '/app/categories/create'
+    | '/app/transactions/create'
+    | '/app/categories'
+    | '/app/overview'
+    | '/app/transactions'
+    | '/app/categories/$id/edit'
+    | '/app/transactions/$id/edit'
   id:
     | '__root__'
     | '/'
     | '/app'
-    | '/app/categories'
-    | '/app/overview'
-    | '/app/transactions'
     | '/app/'
+    | '/app/categories/create'
+    | '/app/transactions/create'
+    | '/app/categories/'
+    | '/app/overview/'
+    | '/app/transactions/'
+    | '/app/categories/$id/edit'
+    | '/app/transactions/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -120,42 +173,78 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/app/transactions': {
-      id: '/app/transactions'
+    '/app/transactions/': {
+      id: '/app/transactions/'
       path: '/transactions'
       fullPath: '/app/transactions'
-      preLoaderRoute: typeof AppTransactionsRouteImport
+      preLoaderRoute: typeof AppTransactionsIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/app/overview': {
-      id: '/app/overview'
+    '/app/overview/': {
+      id: '/app/overview/'
       path: '/overview'
       fullPath: '/app/overview'
-      preLoaderRoute: typeof AppOverviewRouteImport
+      preLoaderRoute: typeof AppOverviewIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/app/categories': {
-      id: '/app/categories'
+    '/app/categories/': {
+      id: '/app/categories/'
       path: '/categories'
       fullPath: '/app/categories'
-      preLoaderRoute: typeof AppCategoriesRouteImport
+      preLoaderRoute: typeof AppCategoriesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/transactions/create': {
+      id: '/app/transactions/create'
+      path: '/transactions/create'
+      fullPath: '/app/transactions/create'
+      preLoaderRoute: typeof AppTransactionsCreateRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/categories/create': {
+      id: '/app/categories/create'
+      path: '/categories/create'
+      fullPath: '/app/categories/create'
+      preLoaderRoute: typeof AppCategoriesCreateRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/transactions/$id/edit': {
+      id: '/app/transactions/$id/edit'
+      path: '/transactions/$id/edit'
+      fullPath: '/app/transactions/$id/edit'
+      preLoaderRoute: typeof AppTransactionsIdEditRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/categories/$id/edit': {
+      id: '/app/categories/$id/edit'
+      path: '/categories/$id/edit'
+      fullPath: '/app/categories/$id/edit'
+      preLoaderRoute: typeof AppCategoriesIdEditRouteImport
       parentRoute: typeof AppRoute
     }
   }
 }
 
 interface AppRouteChildren {
-  AppCategoriesRoute: typeof AppCategoriesRoute
-  AppOverviewRoute: typeof AppOverviewRoute
-  AppTransactionsRoute: typeof AppTransactionsRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppCategoriesCreateRoute: typeof AppCategoriesCreateRoute
+  AppTransactionsCreateRoute: typeof AppTransactionsCreateRoute
+  AppCategoriesIndexRoute: typeof AppCategoriesIndexRoute
+  AppOverviewIndexRoute: typeof AppOverviewIndexRoute
+  AppTransactionsIndexRoute: typeof AppTransactionsIndexRoute
+  AppCategoriesIdEditRoute: typeof AppCategoriesIdEditRoute
+  AppTransactionsIdEditRoute: typeof AppTransactionsIdEditRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
-  AppCategoriesRoute: AppCategoriesRoute,
-  AppOverviewRoute: AppOverviewRoute,
-  AppTransactionsRoute: AppTransactionsRoute,
   AppIndexRoute: AppIndexRoute,
+  AppCategoriesCreateRoute: AppCategoriesCreateRoute,
+  AppTransactionsCreateRoute: AppTransactionsCreateRoute,
+  AppCategoriesIndexRoute: AppCategoriesIndexRoute,
+  AppOverviewIndexRoute: AppOverviewIndexRoute,
+  AppTransactionsIndexRoute: AppTransactionsIndexRoute,
+  AppCategoriesIdEditRoute: AppCategoriesIdEditRoute,
+  AppTransactionsIdEditRoute: AppTransactionsIdEditRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
