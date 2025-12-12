@@ -1,11 +1,11 @@
 import { cva, type VariantProps } from "class-variance-authority";
 
 export const itemVariants = cva(
-  "group/item flex items-center border border-transparent text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors [button]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] hover:bg-accent/50 has-[[data-slot=item-actions]_button:hover]:hover:bg-transparent",
+  "group/item flex items-center border border-background text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors [button]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] hover:bg-accent/50 has-[[data-slot=item-actions]_button:hover]:hover:bg-background",
   {
     variants: {
       variant: {
-        default: "bg-transparent",
+        default: "bg-background",
         outline: "border-border",
         muted: "bg-muted/50",
       },
@@ -26,7 +26,7 @@ export const itemMediaVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-transparent",
+        default: "bg-background",
         icon: "size-8 border rounded-sm bg-muted [&_svg:not([class*='size-'])]:size-4",
         image: "size-10 rounded-sm overflow-hidden [&_img]:size-full [&_img]:object-cover",
       },
