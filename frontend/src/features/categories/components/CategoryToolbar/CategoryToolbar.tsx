@@ -20,7 +20,9 @@ export const CategoryToolbar = ({ filter, onFilterChange }: CategoryToolbarProps
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
       <div className="flex flex-col gap-1">
         <h1 className="text-lg font-semibold text-foreground">Categorias</h1>
-        <p className="text-xs text-muted-foreground">Gerencie suas categorias de despesas e receitas</p>
+        <p className="text-xs text-muted-foreground">
+          Gerencie suas categorias de despesas e receitas
+        </p>
       </div>
 
       <NativeSelect

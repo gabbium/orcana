@@ -18,9 +18,7 @@ export const TransactionSummaryCard = ({
     <Item variant="muted" size="sm">
       <ItemContent>
         <ItemDescription>{label}</ItemDescription>
-        <ItemTitle className={valueColor}>
-          R$ {value.toFixed(2).replace(".", ",")}
-        </ItemTitle>
+        <ItemTitle className={valueColor}>R$ {value.toFixed(2).replace(".", ",")}</ItemTitle>
       </ItemContent>
     </Item>
   );

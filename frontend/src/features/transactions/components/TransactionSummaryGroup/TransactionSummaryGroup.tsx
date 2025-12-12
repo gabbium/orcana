@@ -37,18 +37,11 @@ export const TransactionSummaryGroup = ({ summary, mode }: TransactionSummaryGro
   }
 
   return (
-    <ItemGroup className="grid grid-cols-2 gap-3">
-      <TransactionSummaryCard
-        label="Saldo Atual"
-        value={summary.currentBalance}
-        isPositive={summary.currentBalance >= 0}
-      />
-      <TransactionSummaryCard
-        label="Balanço do Mês"
-        value={summary.monthlyBalance}
-        isPositive={summary.monthlyBalance >= 0}
-      />
-    </ItemGroup>
+    <TransactionSummaryCard
+      label="Balanço do Mês"
+      value={summary.monthlyBalance}
+      isPositive={summary.monthlyBalance >= 0}
+    />
   );
 };
 

@@ -19,7 +19,7 @@ export const OverviewBalanceCard = ({
   return (
     <Item variant="muted" size="sm">
       <ItemContent>
-        <ItemDescription>Saldo do mês</ItemDescription>
+        <ItemDescription>Balanço do mês</ItemDescription>
         <ItemTitle className={cn("text-base sm:text-lg", balanceColor)}>
           {formatCurrency(balance)}
         </ItemTitle>

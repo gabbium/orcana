@@ -12,7 +12,6 @@ export type Transaction = {
 };
 
 export type TransactionSummary = {
-  currentBalance: number;
   monthlyBalance: number;
   income: {
     confirmed: { value: number; count: number };
