@@ -14,9 +14,12 @@ import {
   type TransactionFilter,
 } from "@/features/transactions";
 
+const today = new Date();
+
 const TransactionsPage = () => {
   const [filter, setFilter] = useState<TransactionFilter>({
-    month: "setembro de 2025",
+    month: today.getMonth() + 1,
+    year: today.getFullYear(),
   });
 
   const transactionsQuery = useQuery(

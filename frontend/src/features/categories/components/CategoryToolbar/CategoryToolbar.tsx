@@ -1,6 +1,4 @@
-import { MoreVerticalIcon } from "lucide-react";
-
-import { Button } from "@/components/ui/Button";
+import { NativeSelect, NativeSelectOption } from "@/components/ui/NativeSelect";
 
 import { CATEGORY_KIND, type CategoryKind } from "../../constants/enums";
 
@@ -19,18 +17,19 @@ export const CategoryToolbar = ({ filter, onFilterChange }: CategoryToolbarProps
   };
 
   return (
-    <div className="flex items-center justify-between gap-2">
-      <select
+    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-1">
+        <h1 className="text-lg font-semibold text-foreground">Categorias</h1>
+        <p className="text-xs text-muted-foreground">Gerencie suas categorias de despesas e receitas</p>
+      </div>
+
+      <NativeSelect
         value={filter.kind}
         onChange={(e) => handleKindChange(e.target.value as CategoryKind)}
-        className="px-3 py-1 rounded-lg border border-border/60 bg-muted/30 text-sm text-foreground cursor-pointer hover:border-primary/50 transition-colors"
       >
-        <option value={CATEGORY_KIND.EXPENSE}>Categorias de despesa</option>
-        <option value={CATEGORY_KIND.INCOME}>Categorias de receitas</option>
-      </select>
-      <Button size="icon-sm" variant="ghost" aria-label="Mais opções">
-        <MoreVerticalIcon />
-      </Button>
+        <NativeSelectOption value={CATEGORY_KIND.EXPENSE}>Despesas</NativeSelectOption>
+        <NativeSelectOption value={CATEGORY_KIND.INCOME}>Receitas</NativeSelectOption>
+      </NativeSelect>
     </div>
   );
 };

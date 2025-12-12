@@ -14,9 +14,12 @@ import {
 } from "@/features/overview";
 import { transactionsQueries } from "@/features/transactions/api/queries";
 
+const today = new Date();
+
 const OverviewPage = () => {
   const [filter, setFilter] = useState<OverviewFilter>({
-    month: "setembro de 2025",
+    month: today.getMonth() + 1,
+    year: today.getFullYear(),
   });
 
   const transactionsSummaryQuery = useQuery(transactionsQueries.summary({}));
