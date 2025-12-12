@@ -32,7 +32,7 @@ export const MonthYearPicker = ({
 
   const handleSetThisMonth = () => {
     const now = new Date();
-    onValueChange({ year: now.getFullYear(), month: now.getMonth() });
+    onValueChange({ year: now.getFullYear(), month: now.getMonth() + 1 });
     setOpen(false);
   };
 
