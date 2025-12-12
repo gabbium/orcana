@@ -4,12 +4,11 @@ import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 
 import { FloatingActionButton } from "@/components/ui/FloatingActionButton";
-import { ItemGroup } from "@/components/ui/Item";
 import {
   categoriesQueries,
   CATEGORY_KIND,
-  CategoryCard,
-  CategoryCardSkeleton,
+  CategoryList,
+  CategoryListSkeleton,
   CategoryToolbar,
   type CategoryFilter,
 } from "@/features/categories";
@@ -25,26 +24,8 @@ const CategoriesPage = () => {
     <div className="flex flex-col gap-4 relative">
       <CategoryToolbar filter={filter} onFilterChange={setFilter} />
 
-      {categoriesQuery.isPending && (
-        <ItemGroup className="gap-2">
-          {Array.from({ length: 3 }).map((_, index) => (
-            <CategoryCardSkeleton key={index} />
-          ))}
-        </ItemGroup>
-      )}
-
-      {categoriesQuery.data && (
-        <ItemGroup className="gap-2">
-          {categoriesQuery.data.map((category) => (
-            <CategoryCard
-              key={category.id}
-              name={category.name}
-              icon={category.icon}
-              status={category.status}
-            />
-          ))}
-        </ItemGroup>
-      )}
+      {categoriesQuery.isPending && <CategoryListSkeleton />}
+      {categoriesQuery.data && <CategoryList categories={categoriesQuery.data} />}
 
       <FloatingActionButton icon={<PlusIcon />} />
     </div>

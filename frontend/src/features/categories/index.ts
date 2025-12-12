@@ -1,9 +1,10 @@
 export { categoriesQueries } from "./api/queries";
 
-export { CategoryCard } from "./components/CategoryCard";
+export { CategoryCard, CategoryCardSkeleton } from "./components/CategoryCard";
 export type { CategoryCardProps } from "./components/CategoryCard";
 
-export { CategoryCardSkeleton } from "./components/CategoryCardSkeleton";
+export { CategoryList, CategoryListSkeleton } from "./components/CategoryList";
+export type { CategoryListProps, CategoryListSkeletonProps } from "./components/CategoryList";
 
 export { CategoryToolbar } from "./components/CategoryToolbar";
 export type { CategoryFilter, CategoryToolbarProps } from "./components/CategoryToolbar";

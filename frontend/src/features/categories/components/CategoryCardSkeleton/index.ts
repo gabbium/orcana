@@ -1,1 +1,0 @@
-export { CategoryCardSkeleton } from "./CategoryCardSkeleton";

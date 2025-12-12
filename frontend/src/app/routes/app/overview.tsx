@@ -4,12 +4,11 @@ import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 
 import { FloatingActionButton } from "@/components/ui/FloatingActionButton";
-import { ItemGroup } from "@/components/ui/Item";
 import {
   OverviewBalanceCard,
   OverviewBalanceCardSkeleton,
-  OverviewPendingCard,
-  OverviewPendingCardSkeleton,
+  OverviewPendingGroup,
+  OverviewPendingGroupSkeleton,
   OverviewToolbar,
   type OverviewFilter,
 } from "@/features/overview";
@@ -36,32 +35,11 @@ const OverviewPage = () => {
         />
       )}
 
-      <div className="flex flex-col gap-2">
-        <p className="text-xs font-medium text-foreground">Pendências</p>
+      {transactionsSummaryQuery.isPending && <OverviewPendingGroupSkeleton />}
 
-        {transactionsSummaryQuery.isPending && (
-          <ItemGroup className="grid grid-cols-2 gap-3">
-            <OverviewPendingCardSkeleton />
-            <OverviewPendingCardSkeleton />
-          </ItemGroup>
-        )}
-
-        {transactionsSummaryQuery.data && (
-          <ItemGroup className="grid grid-cols-2 gap-3">
-            <OverviewPendingCard
-              label="A receber"
-              value={transactionsSummaryQuery.data.income.pending.value}
-              count={transactionsSummaryQuery.data.income.pending.count}
-              isPositive
-            />
-            <OverviewPendingCard
-              label="A pagar"
-              value={transactionsSummaryQuery.data.expense.pending.value}
-              count={transactionsSummaryQuery.data.expense.pending.count}
-            />
-          </ItemGroup>
-        )}
-      </div>
+      {transactionsSummaryQuery.data && (
+        <OverviewPendingGroup data={transactionsSummaryQuery.data} />
+      )}
 
       <FloatingActionButton icon={<PlusIcon />} />
     </div>

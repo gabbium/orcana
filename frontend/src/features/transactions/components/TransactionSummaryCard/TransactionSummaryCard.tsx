@@ -1,5 +1,5 @@
 import { Item, ItemContent, ItemDescription, ItemTitle } from "@/components/ui/Item";
-import { cn } from "@/utils/cn";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 export type TransactionSummaryCardProps = {
   label: string;
@@ -12,15 +12,26 @@ export const TransactionSummaryCard = ({
   value,
   isPositive,
 }: TransactionSummaryCardProps) => {
-  const textColor = isPositive ? "text-green-600" : "text-red-600";
+  const valueColor = isPositive ? "text-green-600" : "text-red-600";
 
   return (
     <Item variant="muted" size="sm">
       <ItemContent>
-        <ItemDescription className="text-xs">{label}</ItemDescription>
-        <ItemTitle className={cn("text-lg sm:text-xl font-semibold", textColor)}>
+        <ItemDescription>{label}</ItemDescription>
+        <ItemTitle className={valueColor}>
           R$ {value.toFixed(2).replace(".", ",")}
         </ItemTitle>
+      </ItemContent>
+    </Item>
+  );
+};
+
+export const TransactionSummaryCardSkeleton = () => {
+  return (
+    <Item variant="muted" size="sm">
+      <ItemContent>
+        <Skeleton className="h-3 w-16 mb-2" />
+        <Skeleton className="h-6 w-24" />
       </ItemContent>
     </Item>
   );

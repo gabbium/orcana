@@ -28,13 +28,8 @@ export const CategoryToolbar = ({ filter, onFilterChange }: CategoryToolbarProps
         <option value={CATEGORY_KIND.EXPENSE}>Categorias de despesa</option>
         <option value={CATEGORY_KIND.INCOME}>Categorias de receitas</option>
       </select>
-      <Button
-        size="icon"
-        variant="ghost"
-        className="text-muted-foreground hover:text-foreground h-8 w-8"
-        aria-label="Mais opções"
-      >
-        <MoreVerticalIcon className="w-4 h-4" />
+      <Button size="icon-sm" variant="ghost" aria-label="Mais opções">
+        <MoreVerticalIcon />
       </Button>
     </div>
   );
