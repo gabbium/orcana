@@ -14,6 +14,7 @@ export const listCategories = async (params?: ListCategoriesParams): Promise<Cat
       kind: CATEGORY_KIND.EXPENSE,
       icon: "🍽",
       name: "Alimentação",
+      color: "#22c55e",
       status: "Ativa",
     },
     {
@@ -21,6 +22,7 @@ export const listCategories = async (params?: ListCategoriesParams): Promise<Cat
       kind: CATEGORY_KIND.EXPENSE,
       icon: "🏠",
       name: "Moradia",
+      color: "#f97316",
       status: "Ativa",
     },
     {
@@ -28,6 +30,7 @@ export const listCategories = async (params?: ListCategoriesParams): Promise<Cat
       kind: CATEGORY_KIND.EXPENSE,
       icon: "🎮",
       name: "Lazer",
+      color: "#a855f7",
       status: "Arquivada",
     },
     {
@@ -35,6 +38,7 @@ export const listCategories = async (params?: ListCategoriesParams): Promise<Cat
       kind: CATEGORY_KIND.INCOME,
       icon: "💼",
       name: "Salário",
+      color: "#10b981",
       status: "Ativa",
     },
     {
@@ -42,6 +46,7 @@ export const listCategories = async (params?: ListCategoriesParams): Promise<Cat
       kind: CATEGORY_KIND.INCOME,
       icon: "🧾",
       name: "Freelancer",
+      color: "#3b82f6",
       status: "Ativa",
     },
   ];
@@ -51,4 +56,17 @@ export const listCategories = async (params?: ListCategoriesParams): Promise<Cat
   }
 
   return allCategories;
+};
+
+export type CreateCategoryRequest = {
+  name: string;
+  icon: string;
+  color: string;
+  kind: CategoryKind;
+};
+
+export const createCategory = async (data: CreateCategoryRequest) => {
+  await new Promise((resolve) => setTimeout(resolve, 300));
+
+  console.log(data);
 };

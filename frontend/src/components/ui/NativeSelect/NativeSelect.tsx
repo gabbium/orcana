@@ -1,8 +1,9 @@
 import { ChevronDownIcon } from "lucide-react";
+import type { ComponentProps } from "react";
 
 import { cn } from "@/utils/cn";
 
-export type NativeSelectProps = React.ComponentProps<"select">;
+export type NativeSelectProps = ComponentProps<"select">;
 
 export const NativeSelect = ({ className, ...props }: NativeSelectProps) => {
   return (
@@ -29,13 +30,13 @@ export const NativeSelect = ({ className, ...props }: NativeSelectProps) => {
   );
 };
 
-export type NativeSelectOptionProps = React.ComponentProps<"option">;
+export type NativeSelectOptionProps = ComponentProps<"option">;
 
 export const NativeSelectOption = ({ ...props }: NativeSelectOptionProps) => {
   return <option data-slot="native-select-option" {...props} />;
 };
 
-export type NativeSelectOptGroupProps = React.ComponentProps<"optgroup">;
+export type NativeSelectOptGroupProps = ComponentProps<"optgroup">;
 
 export const NativeSelectOptGroup = ({ className, ...props }: NativeSelectOptGroupProps) => {
   return <optgroup data-slot="native-select-optgroup" className={cn(className)} {...props} />;
